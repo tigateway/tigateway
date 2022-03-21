@@ -6,6 +6,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>gateway</module>
+        <module>scg-operator</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

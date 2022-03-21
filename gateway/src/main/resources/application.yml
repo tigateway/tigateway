@@ -1,0 +1,33 @@
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 8090
+  metrics:
+    export:
+      wavefront:
+        enabled:false
+
+spring:
+  cloud:
+    loadbalancer:
+      cache:
+        ttl: 5S
+    gateway:
+      filter:
+        token-relay:
+          enabled: false
+      actuator:
+        verbose:
+          enabled: false
+  session:
+    timeout: 30m
+sso:
+  roles-attribute-name: roles

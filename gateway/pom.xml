@@ -109,6 +109,72 @@
             <artifactId>hazelcast-kubernetes</artifactId>
             <version>2.2.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-http</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-httpasyncclient</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-httpclient</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-jms</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-kafka-clients</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-kafka-streams</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-messaging</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-mongodb</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-rpc</artifactId>
+            <version>5.13.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-instrumentation-spring-rabbit</artifactId>
+            <version>5.13.7</version>
+        </dependency>
 
 
         <dependency>

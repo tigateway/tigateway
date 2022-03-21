@@ -26,7 +26,7 @@ public class LocalFileJwtKeysLocator {
     private static final String KEY_SEPARATOR = ",";
     private final Path keysFile;
     private final Clock clock;
-    private final Map<String, Key> knownKeys = new ConcurrentHashMap();
+    private final Map<String, Key> knownKeys = new ConcurrentHashMap<>();
     private long lastRefreshTime;
     private WatchService watchService;
     private final ExecutorService watcherThread = Executors.newSingleThreadExecutor();

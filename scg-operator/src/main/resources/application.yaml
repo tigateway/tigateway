@@ -1,0 +1,6 @@
+operator:
+  install-namespace: spring-cloud-gateway
+
+logging.level.io.kubernetes: INFO
+logging.level.io.kubernetes.client.informer.ResyncRunnable: INFO
+logging.level.io.kubernetes.client.informer.cache.ReflectorRunnable: OFF

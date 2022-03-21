@@ -1,0 +1,2400 @@
+[
+	{
+		"name": "io.swagger.v3.oas.models.callbacks.Callback",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.examples.Example",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.headers.Header",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.info.Contact",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.info.Info",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.info.License",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.links.Link",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.links.LinkParameter",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.ArraySchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.BinarySchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.BooleanSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.ByteArraySchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.ComposedSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.Content",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.DateSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.DateTimeSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.Discriminator",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.EmailSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.Encoding",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.EncodingProperty",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.FileSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.IntegerSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.MapSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.MediaType",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.NumberSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.ObjectSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.PasswordSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.Schema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.StringSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.UUIDSchema",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.media.XML",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.parameters.CookieParameter",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.parameters.HeaderParameter",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.parameters.Parameter",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.parameters.PathParameter",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.parameters.QueryParameter",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.parameters.RequestBody",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.responses.ApiResponse",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.responses.ApiResponses",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.security.OAuthFlow",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.security.OAuthFlows",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.security.Scopes",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.security.SecurityRequirement",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.security.SecurityScheme",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.servers.Server",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.servers.ServerVariable",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.servers.ServerVariables",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.tags.Tag",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.tags.Tag",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.Components",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.ExternalDocumentation",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.OpenAPI",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.Operation",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.PathItem",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "io.swagger.v3.oas.models.Paths",
+		"allPublicMethods": true,
+		"allPublicConstructors": true
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGateway",
+		"allDeclaredFields": true,
+		"allDeclaredMethods": true,
+		"allPublicMethods": true,
+		"allDeclaredConstructors": true
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayMapping",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayMappingList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayMappingSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayMappingSpecGatewayRef",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfig",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfigList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfigSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfigSpecModel",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfigSpecRoutes",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfigSpecService",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpec",
+		"allDeclaredFields": true,
+		"allDeclaredMethods": true,
+		"allPublicMethods": true,
+		"allDeclaredConstructors": true
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecApi",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecApiCors",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecResources",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecResourcesLimits",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecSso",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayStatusConditions",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecEnv",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.ApiextensionsV1ServiceReference",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.ApiextensionsV1WebhookClientConfig",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.CoreV1Event",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.CoreV1EventList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.CoreV1EventSeries",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1APIResource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1APIResourceList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1AWSElasticBlockStoreVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Affinity",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1AttachedVolume",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1AzureDiskVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1AzureFileVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CSIVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Capabilities",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CephFSVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CinderVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ClientIPConfig",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ConfigMapEnvSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ConfigMapKeySelector",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ConfigMapNodeConfigSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ConfigMapProjection",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ConfigMap",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ConfigMapVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Container",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerImage",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerPort",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerState",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerStateRunning",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerStateTerminated",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerStateWaiting",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ContainerStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceColumnDefinition",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceConversion",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinition",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinitionCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinitionList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinitionNames",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinitionSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinitionStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceDefinitionVersion",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceSubresourceScale",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceSubresources",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1CustomResourceValidation",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DaemonEndpoint",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Deployment",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DeploymentCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DeploymentSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DeploymentStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DeploymentStrategy",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DownwardAPIProjection",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DownwardAPIVolumeFile",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1DownwardAPIVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EmptyDirVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EnvFromSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EnvVar",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EnvVarSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EphemeralContainer",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EphemeralVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1EventSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ExecAction",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ExternalDocumentation",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1FCVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1FlexVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1FlockerVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1GCEPersistentDiskVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1GitRepoVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1GlusterfsVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1HTTPGetAction",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1HTTPHeader",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Handler",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1HostAlias",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1HostPathVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ISCSIVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1JSONSchemaProps",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1KeyToPath",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1LabelSelector",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1LabelSelectorRequirement",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Lifecycle",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ListMeta",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1LoadBalancerIngress",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1LoadBalancerStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1LocalObjectReference",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ManagedFieldsEntry",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NFSVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Namespace",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NamespaceCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NamespaceList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NamespaceSpec",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NamespaceStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Node",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeAddress",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeAffinity",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeConfigSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeConfigStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeDaemonEndpoints",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeSelector",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeSelectorRequirement",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeSelectorTerm",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeSpec",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1NodeSystemInfo",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ObjectFieldSelector",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ObjectMeta",
+		"allDeclaredFields": true,
+		"allDeclaredMethods": true,
+		"allPublicMethods": true,
+		"allDeclaredConstructors": true
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ObjectReference",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1OwnerReference",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PersistentVolumeClaim",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PersistentVolumeClaimCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PersistentVolumeClaimSpec",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PersistentVolumeClaimStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PersistentVolumeClaimTemplate",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PersistentVolumeClaimVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PhotonPersistentDiskVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Pod",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodAffinity",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodAffinityTerm",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodAntiAffinity",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodDNSConfig",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodDNSConfigOption",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodIP",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodReadinessGate",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodSecurityContext",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PodTemplateSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PortworxVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1PreferredSchedulingTerm",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Probe",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ProjectedVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1QuobyteVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1RBDVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ResourceFieldSelector",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ResourceRequirements",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1RollingUpdateDeployment",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1RollingUpdateStatefulSetStrategy",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SELinuxOptions",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ScaleIOVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SeccompProfile",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Secret",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SecretEnvSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SecretKeySelector",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SecretList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SecretProjection",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SecretVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SecurityContext",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Service",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ServiceAccountTokenProjection",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ServiceList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ServicePort",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ServiceSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1ServiceStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1SessionAffinityConfig",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatefulSet",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatefulSetCondition",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatefulSetList",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatefulSetSpec",
+		"allDeclaredFields": true,
+		"allPublicMethods": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatefulSetStatus",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatefulSetUpdateStrategy",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Status",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatusCause",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StatusDetails",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1StorageOSVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Sysctl",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1TCPSocketAction",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Taint",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Toleration",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1TopologySpreadConstraint",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1TypedLocalObjectReference",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1Volume",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1VolumeDevice",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1VolumeMount",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1VolumeProjection",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1VsphereVirtualDiskVolumeSource",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1WebhookConversion",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1WeightedPodAffinityTerm",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1WindowsSecurityContextOptions",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1beta1Event",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.openapi.models.V1beta1EventSeries",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.custom.V1Patch$V1PatchAdapter",
+		"allDeclaredFields": true,
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.custom.Quantity$QuantityAdapter",
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.custom.Quantity",
+		"allDeclaredConstructors": true
+	},
+	{
+		"name": "io.kubernetes.client.custom.IntOrString$IntOrStringAdapter",
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.util.Watch$Response",
+		"allDeclaredConstructors": true,
+		"allDeclaredFields": true
+	},
+	{
+		"name": "io.kubernetes.client.extended.controller.Controller",
+		"methods": [
+			{
+				"name": "shutdown",
+				"parameterTypes": []
+			}
+		]
+	},
+	{
+		"name": "io.kubernetes.client.extended.controller.ControllerManager",
+		"allPublicMethods": true
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.routeconfig.ActuatorRoutesUpdater$GatewayActuatorRoutesClient$GatewayRoutes",
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		],
+		"allDeclaredFields": true
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.routeconfig.ActuatorRoutesUpdater$GatewayActuatorRoutesClient$GatewayRoutes$Route",
+		"methods": [
+			{
+				"name": "<init>",
+				"parameterTypes": []
+			}
+		],
+		"allDeclaredFields": true
+	},
+	{
+		"name": "com.vmware.tanzu.springcloudgateway.route.RouteDefinition",
+		"allDeclaredFields": true,
+		"allPublicMethods": true
+	}
+]

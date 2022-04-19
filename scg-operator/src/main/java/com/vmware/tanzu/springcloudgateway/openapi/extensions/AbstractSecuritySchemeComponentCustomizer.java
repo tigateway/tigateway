@@ -61,7 +61,7 @@ public class AbstractSecuritySchemeComponentCustomizer implements ComponentCusto
 
         Map<String, SecurityScheme> schemes = components.getSecuritySchemes();
         if (Objects.isNull(schemes)) {
-            schemes = new HashMap();
+            schemes = new HashMap<>();
             components.setSecuritySchemes((Map)schemes);
         }
 

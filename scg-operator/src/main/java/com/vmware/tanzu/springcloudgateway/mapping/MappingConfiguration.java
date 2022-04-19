@@ -33,11 +33,11 @@ class MappingConfiguration {
     @Bean
     public Controller mappingController(SharedInformerFactory sharedInformerFactory, ApiClient apiClient, OperatorProperties operatorProperties, MappingReconciler reconciler) {
         DefaultControllerBuilder var10000 = ControllerBuilder.defaultBuilder(sharedInformerFactory).watch((workQueue) -> {
-            ControllerWatchBuilder var10000 = ControllerBuilder.controllerWatchBuilder(V1SpringCloudGatewayMapping.class, workQueue);
+            ControllerWatchBuilder<V1SpringCloudGatewayMapping> v1SpringCloudGatewayMappingControllerWatchBuilder = ControllerBuilder.controllerWatchBuilder(V1SpringCloudGatewayMapping.class, workQueue);
             Objects.requireNonNull(reconciler);
-            var10000 = var10000.withOnUpdateFilter(reconciler::onUpdateFilter);
+            v1SpringCloudGatewayMappingControllerWatchBuilder = v1SpringCloudGatewayMappingControllerWatchBuilder.withOnUpdateFilter(reconciler::onUpdateFilter);
             Objects.requireNonNull(reconciler);
-            return var10000.withOnDeleteFilter(reconciler::onDeleteFilter).withResyncPeriod(Duration.ofHours(1L)).build();
+            return v1SpringCloudGatewayMappingControllerWatchBuilder.withOnDeleteFilter(reconciler::onDeleteFilter).withResyncPeriod(Duration.ofHours(1L)).build();
         }).withWorkerCount(2);
         Objects.requireNonNull(reconciler);
         Controller controller = var10000.withReadyFunc(reconciler::hasSynced).withReconciler(reconciler).withName("MappingController").build();
@@ -47,7 +47,7 @@ class MappingConfiguration {
 
     @Bean
     MappingReconciler mappingReconciler(SharedIndexInformer<V1SpringCloudGatewayMapping> indexer, PodLister podLister, ActuatorRoutesUpdater actuatorRoutesUpdater, MappingFinalizerEditor finalizerEditor, EventRecorder eventRecorder, RoutesDefinitionResolver routesDefinitionResolver) {
-        return new MappingReconciler(indexer, new Lister(indexer.getIndexer()), podLister, actuatorRoutesUpdater, finalizerEditor, eventRecorder, routesDefinitionResolver);
+        return new MappingReconciler(indexer, new Lister<>(indexer.getIndexer()), podLister, actuatorRoutesUpdater, finalizerEditor, eventRecorder, routesDefinitionResolver);
     }
 
     @Bean

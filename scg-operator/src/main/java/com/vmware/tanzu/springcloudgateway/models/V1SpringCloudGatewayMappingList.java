@@ -19,7 +19,7 @@ public class V1SpringCloudGatewayMappingList implements KubernetesListObject {
     private String apiVersion;
     public static final String SERIALIZED_NAME_ITEMS = "items";
     @SerializedName("items")
-    private List<V1SpringCloudGatewayMapping> items = new ArrayList();
+    private List<V1SpringCloudGatewayMapping> items = new ArrayList<>();
     public static final String SERIALIZED_NAME_KIND = "kind";
     @SerializedName("kind")
     private String kind;

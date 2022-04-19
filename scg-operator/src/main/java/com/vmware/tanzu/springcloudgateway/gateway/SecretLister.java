@@ -19,7 +19,7 @@ public class SecretLister {
     public V1Secret getSecret(String gatewayNamespace, String secretName) {
         try {
             V1SecretList metricsSecretList = this.coreV1Api.listNamespacedSecret(gatewayNamespace, (String)null, (Boolean)null, (String)null, String.format("metadata.name=%s", secretName), (String)null, (Integer)null, (String)null, (String)null, 10, false);
-            return (V1Secret)metricsSecretList.getItems().stream().findFirst().orElse((Object)null);
+            return (V1Secret)metricsSecretList.getItems().stream().findFirst().orElse(null);
         } catch (ApiException var4) {
             if (var4.getCode() == HttpStatus.NOT_FOUND.value()) {
                 return null;

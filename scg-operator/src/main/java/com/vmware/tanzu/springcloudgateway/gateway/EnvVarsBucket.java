@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class EnvVarsBucket {
-    private final Map<String, V1EnvVar> bucketValues = new HashMap();
+    private final Map<String, V1EnvVar> bucketValues = new HashMap<>();
 
     EnvVarsBucket() {
     }

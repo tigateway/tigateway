@@ -23,7 +23,7 @@ public class ServiceMonitorReconciler {
     public ServiceMonitorReconciler(CustomObjectsApi customObjectsApi, PrometheusServiceMonitorBuilder serviceMonitorBuilder, SharedIndexInformer<V1ServiceMonitor> serviceMonitorSharedIndexInformer, EventRecorder eventRecorder) {
         this.customObjectsApi = customObjectsApi;
         this.serviceMonitorBuilder = serviceMonitorBuilder;
-        this.serviceMonitorLister = new Lister(serviceMonitorSharedIndexInformer.getIndexer());
+        this.serviceMonitorLister = new Lister<>(serviceMonitorSharedIndexInformer.getIndexer());
         this.eventRecorder = eventRecorder;
     }
 

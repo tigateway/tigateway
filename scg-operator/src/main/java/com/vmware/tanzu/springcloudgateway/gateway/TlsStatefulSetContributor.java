@@ -1,5 +1,13 @@
 package com.vmware.tanzu.springcloudgateway.gateway;
 
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGateway;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewaySpecTls;
+import io.kubernetes.client.openapi.models.V1EnvVar;
+import io.kubernetes.client.openapi.models.V1StatefulSet;
+import java.util.ListIterator;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
 @Component
 class TlsStatefulSetContributor extends AbstractStatefulSetContributor {
     private static final String TLS_ENV_VAR_PREFIX = "SPRING_CLOUD_GATEWAY_K8S_TLS";

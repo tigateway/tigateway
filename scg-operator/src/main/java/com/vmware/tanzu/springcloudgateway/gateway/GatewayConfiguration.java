@@ -63,7 +63,7 @@ class GatewayConfiguration {
 
     @Bean
     Lister<V1ConfigMap> configMapLister(SharedIndexInformer<V1ConfigMap> indexer) {
-        return new Lister(indexer.getIndexer());
+        return new Lister<>(indexer.getIndexer());
     }
 
     @Bean
@@ -91,11 +91,11 @@ class GatewayConfiguration {
         Controller controller = ControllerBuilder.defaultBuilder(sharedInformerFactory).withReconciler(reconciler).withName("SpringCloudGatewayController").withWorkerCount(4).withReadyFunc(() -> {
             return gatewayindexInformer.hasSynced() && statefulSetIndexInformer.hasSynced() && serviceIndexInformer.hasSynced() && podIndexInformer.hasSynced() && configMapIndexInformer.hasSynced();
         }).watch((q) -> {
-            ControllerWatchBuilder var10000 = ControllerBuilder.controllerWatchBuilder(V1SpringCloudGateway.class, q);
+            ControllerWatchBuilder<V1SpringCloudGateway> v1SpringCloudGatewayControllerWatchBuilder = ControllerBuilder.controllerWatchBuilder(V1SpringCloudGateway.class, q);
             Objects.requireNonNull(reconciler);
-            var10000 = var10000.withOnUpdateFilter(reconciler::onUpdateFilter);
+            v1SpringCloudGatewayControllerWatchBuilder = v1SpringCloudGatewayControllerWatchBuilder.withOnUpdateFilter(reconciler::onUpdateFilter);
             Objects.requireNonNull(reconciler);
-            return var10000.withOnDeleteFilter(reconciler::onDeleteFilter).build();
+            return v1SpringCloudGatewayControllerWatchBuilder.withOnDeleteFilter(reconciler::onDeleteFilter).build();
         }).build();
         LeaderElector leaderElector = LeaderElection.configureLeaderElector(apiClient, operatorProperties, "gateway-reconciler");
         return new LeaderElectingController(leaderElector, controller);
@@ -108,10 +108,10 @@ class GatewayConfiguration {
 
     @Bean
     SpringCloudGatewayReconciler springCloudGatewayReconciler(SharedIndexInformer<V1SpringCloudGateway> gatewayindexInformer, SharedIndexInformer<V1StatefulSet> statefulSetIndexInformer, SharedIndexInformer<V1Service> serviceIndexInformer, SharedIndexInformer<V1Pod> podIndexInformer, StatefulSetBuilder statefulSetBuilder, StatefulSetPatchBuilder statefulSetPatchBuilder, ServiceBuilder serviceBuilder, CoreV1Api coreV1Api, AppsV1Api appsV1Api, RbacBuilder rbacBuilder, EventRecorder eventRecorder, GatewayStatusEditor gatewayStatusEditor, OperatorProperties operatorProperties, ServiceMonitorReconciler serviceMonitorReconciler) {
-        Lister<V1SpringCloudGateway> gatewayLister = new Lister(gatewayindexInformer.getIndexer());
-        Lister<V1StatefulSet> statefulSetLister = new Lister(statefulSetIndexInformer.getIndexer());
-        Lister<V1Service> serviceLister = new Lister(serviceIndexInformer.getIndexer());
-        Lister<V1Pod> podLister = new Lister(podIndexInformer.getIndexer());
+        Lister<V1SpringCloudGateway> gatewayLister = new Lister<>(gatewayindexInformer.getIndexer());
+        Lister<V1StatefulSet> statefulSetLister = new Lister<>(statefulSetIndexInformer.getIndexer());
+        Lister<V1Service> serviceLister = new Lister<>(serviceIndexInformer.getIndexer());
+        Lister<V1Pod> podLister = new Lister<>(podIndexInformer.getIndexer());
         return new SpringCloudGatewayReconciler(gatewayLister, statefulSetLister, statefulSetBuilder, statefulSetPatchBuilder, serviceBuilder, rbacBuilder, serviceLister, podLister, coreV1Api, appsV1Api, eventRecorder, gatewayStatusEditor, operatorProperties, serviceMonitorReconciler);
     }
 
@@ -133,13 +133,13 @@ class GatewayConfiguration {
     @Bean
     public Controller podController(SharedInformerFactory sharedInformerFactory, PodReconciler reconciler, ApiClient apiClient, OperatorProperties operatorProperties) {
         DefaultControllerBuilder var10000 = ControllerBuilder.defaultBuilder(sharedInformerFactory).watch((workQueue) -> {
-            ControllerWatchBuilder var10000 = ControllerBuilder.controllerWatchBuilder(V1Pod.class, workQueue).withResyncPeriod(Duration.ofHours(1L));
+            ControllerWatchBuilder<V1Pod> v1PodControllerWatchBuilder = ControllerBuilder.controllerWatchBuilder(V1Pod.class, workQueue).withResyncPeriod(Duration.ofHours(1L));
             Objects.requireNonNull(reconciler);
-            var10000 = var10000.withOnUpdateFilter(reconciler::onUpdateFilter);
+            v1PodControllerWatchBuilder = v1PodControllerWatchBuilder.withOnUpdateFilter(reconciler::onUpdateFilter);
             Objects.requireNonNull(reconciler);
-            var10000 = var10000.withOnDeleteFilter(reconciler::onDeleteFilter);
+            v1PodControllerWatchBuilder = v1PodControllerWatchBuilder.withOnDeleteFilter(reconciler::onDeleteFilter);
             Objects.requireNonNull(reconciler);
-            return var10000.withOnAddFilter(reconciler::onAddFilter).build();
+            return v1PodControllerWatchBuilder.withOnAddFilter(reconciler::onAddFilter).build();
         }).withWorkerCount(2);
         Objects.requireNonNull(reconciler);
         Controller controller = var10000.withReadyFunc(reconciler::hasSynced).withReconciler(reconciler).withName("PodController").build();
@@ -149,7 +149,7 @@ class GatewayConfiguration {
 
     @Bean
     PodReconciler podReconciler(SharedIndexInformer<V1Pod> indexer, MappingLister mapping, ActuatorRoutesUpdater actuatorRoutesUpdater, RoutesDefinitionResolver routesDefinitionResolver, PodStatusEditor podStatusEditor, EventRecorder eventRecorder) {
-        Lister<V1Pod> lister = new Lister(indexer.getIndexer());
+        Lister<V1Pod> lister = new Lister<>(indexer.getIndexer());
         return new PodReconciler(indexer, lister, mapping, actuatorRoutesUpdater, podStatusEditor, routesDefinitionResolver, eventRecorder);
     }
 
@@ -161,13 +161,13 @@ class GatewayConfiguration {
     @Bean
     Controller configMapController(SharedInformerFactory sharedInformerFactory, ConfigMapReconciler reconciler, ApiClient apiClient, OperatorProperties operatorProperties) {
         DefaultControllerBuilder var10000 = ControllerBuilder.defaultBuilder(sharedInformerFactory).watch((workQueue) -> {
-            ControllerWatchBuilder var10000 = ControllerBuilder.controllerWatchBuilder(V1ConfigMap.class, workQueue).withResyncPeriod(Duration.ofHours(1L));
+            ControllerWatchBuilder<V1ConfigMap> v1ConfigMapControllerWatchBuilder = ControllerBuilder.controllerWatchBuilder(V1ConfigMap.class, workQueue).withResyncPeriod(Duration.ofHours(1L));
             Objects.requireNonNull(reconciler);
-            var10000 = var10000.withOnUpdateFilter(reconciler::onUpdateFilter);
+            v1ConfigMapControllerWatchBuilder = v1ConfigMapControllerWatchBuilder.withOnUpdateFilter(reconciler::onUpdateFilter);
             Objects.requireNonNull(reconciler);
-            var10000 = var10000.withOnDeleteFilter(reconciler::onDeleteFilter);
+            v1ConfigMapControllerWatchBuilder = v1ConfigMapControllerWatchBuilder.withOnDeleteFilter(reconciler::onDeleteFilter);
             Objects.requireNonNull(reconciler);
-            return var10000.withOnAddFilter(reconciler::onAddFilter).build();
+            return v1ConfigMapControllerWatchBuilder.withOnAddFilter(reconciler::onAddFilter).build();
         }).withWorkerCount(2);
         Objects.requireNonNull(reconciler);
         Controller controller = var10000.withReadyFunc(reconciler::hasSynced).withReconciler(reconciler).withName("ConfigMapController").build();

@@ -49,7 +49,10 @@ import org.slf4j.LoggerFactory;
 public class StatefulSetBuilder {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatefulSetBuilder.class);
     private static final String DEFAULT_RESOURCE_LIMITS_FILE = "default-gateway-statefulset-resource-limits.json";
-    private static final Set<V1EnvVar> DEFAULT_ENV_VARS = (Set)Stream.of((new V1EnvVar()).name("management.endpoint.gateway.enabled").value("true"), (new V1EnvVar()).name("management.endpoints.web.exposure.include").value("gateway,health,info,conditions,configprops,metrics,prometheus")).collect(Collectors.toSet());
+    private static final Set<V1EnvVar> DEFAULT_ENV_VARS = (Set<V1EnvVar>)Stream.of(
+            (new V1EnvVar()).name("management.endpoint.gateway.enabled").value("true"),
+            (new V1EnvVar()).name("management.endpoints.web.exposure.include").value("gateway,health,info,conditions,configprops,metrics,prometheus")
+    ).collect(Collectors.toSet());
     private static final Gson GSON = new Gson();
     private static final int DEFAULT_PROBE_INITIAL_DELAY = 5;
     private static final int DEFAULT_PROBE_FAILURE_THRESHOLD = 10;
@@ -145,7 +148,7 @@ public class StatefulSetBuilder {
     }
 
     private Map<String, String> createAnnotations(V1SpringCloudGateway gateway) {
-        Map<String, String> annotations = new HashMap(this.metricsParameters.createMetricsAnnotations(gateway, 8090));
+        Map<String, String> annotations = new HashMap<>(this.metricsParameters.createMetricsAnnotations(gateway, 8090));
         return annotations.isEmpty() ? null : annotations;
     }
 
@@ -155,12 +158,12 @@ public class StatefulSetBuilder {
             return null;
         } else {
             V1ResourceRequirements resourceRequirements = new V1ResourceRequirements();
-            Optional var10000 = this.toMap(resources.getLimits());
+            Optional<Map<String, Quantity>> stringQuantityMap = this.toMap(resources.getLimits());
             Objects.requireNonNull(resourceRequirements);
-            var10000.ifPresent(resourceRequirements::setLimits);
-            var10000 = this.toMap(resources.getRequests());
+            stringQuantityMap.ifPresent(resourceRequirements::setLimits);
+            stringQuantityMap = this.toMap(resources.getRequests());
             Objects.requireNonNull(resourceRequirements);
-            var10000.ifPresent(resourceRequirements::setRequests);
+            stringQuantityMap.ifPresent(resourceRequirements::setRequests);
             return resourceRequirements;
         }
     }
@@ -169,7 +172,7 @@ public class StatefulSetBuilder {
         if (limits == null) {
             return Optional.empty();
         } else {
-            Map<String, Quantity> limitMap = new HashMap();
+            Map<String, Quantity> limitMap = new HashMap<>();
             if (limits.getCpu() != null) {
                 limitMap.put("cpu", new Quantity(limits.getCpu()));
             }
@@ -235,7 +238,7 @@ public class StatefulSetBuilder {
     }
 
     private Set<V1EnvVar> buildSpecEnvVars(V1SpringCloudGateway gateway) {
-        return hasEnvironmentVariablesInSpec(gateway) ? (Set)gateway.getSpec().getEnv().stream().map((specEnvVar) -> {
+        return hasEnvironmentVariablesInSpec(gateway) ? (Set<V1EnvVar>)gateway.getSpec().getEnv().stream().map((specEnvVar) -> {
             return (new V1EnvVar()).name(specEnvVar.getName()).value(specEnvVar.getValue());
         }).collect(Collectors.toSet()) : Collections.emptySet();
     }

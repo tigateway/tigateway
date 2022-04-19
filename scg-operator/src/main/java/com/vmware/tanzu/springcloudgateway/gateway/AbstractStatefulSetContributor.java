@@ -48,7 +48,7 @@ abstract class AbstractStatefulSetContributor implements StatefulSetContributor 
         }
 
         gatewayEnvironment.addAll(envVars);
-        gatewayContainer.setEnv(new ArrayList(gatewayEnvironment));
+        gatewayContainer.setEnv(new ArrayList<>(gatewayEnvironment));
     }
 
     static void addGatewayVolumeMount(V1StatefulSet statefulSet, String volumeName, String mountPath, boolean readonly) {
@@ -64,7 +64,7 @@ abstract class AbstractStatefulSetContributor implements StatefulSetContributor 
     }
 
     static void addProjectedConfigMapVolumes(V1StatefulSet statefulSet, List<String> configMapNames, String volumeName) {
-        List<V1Volume> volumes = new ArrayList();
+        List<V1Volume> volumes = new ArrayList<>();
         volumes.add((new V1Volume()).name(volumeName).projected((new V1ProjectedVolumeSource()).sources((List)configMapNames.stream().map((configMapName) -> {
             return (new V1VolumeProjection()).configMap((new V1ConfigMapProjection()).name(configMapName));
         }).collect(Collectors.toList()))));

@@ -38,8 +38,8 @@ public class ConfigMapReconciler implements Reconciler {
 
     public ConfigMapReconciler(SharedIndexInformer<V1ConfigMap> configMapIndexInformer, SharedIndexInformer<V1SpringCloudGateway> gatewaySharedIndexInformer, AppsV1Api appsV1Api, EventRecorder eventRecorder, PatchUtilsWrapper patchUtilsWrapper) {
         this.configMapIndexInformer = configMapIndexInformer;
-        this.configMapLister = new Lister(configMapIndexInformer.getIndexer());
-        this.gatewayLister = new Lister(gatewaySharedIndexInformer.getIndexer());
+        this.configMapLister = new Lister<>(configMapIndexInformer.getIndexer());
+        this.gatewayLister = new Lister<>(gatewaySharedIndexInformer.getIndexer());
         this.appsV1Api = appsV1Api;
         this.eventRecorder = eventRecorder;
         this.patchUtilsWrapper = patchUtilsWrapper;

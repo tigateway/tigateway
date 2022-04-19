@@ -48,7 +48,7 @@ class VaultStatefulSetContributor extends AbstractStatefulSetContributor {
 
     void apply(V1StatefulSet statefulSet, V1SpringCloudGateway gateway) {
         Map<String, String> annotations = this.buildVaultAnnotations(gateway);
-        HashSet<V1EnvVar> envVars = new HashSet();
+        HashSet<V1EnvVar> envVars = new HashSet<>();
         if (this.isApiKeyEnabledAndConfigured(gateway)) {
             annotations.putAll(this.buildApiKeyAnnotations(gateway));
             envVars.addAll(this.buildApiKeyEnvVars());
@@ -87,7 +87,7 @@ class VaultStatefulSetContributor extends AbstractStatefulSetContributor {
     }
 
     private boolean isApiKeyEnabledAndConfigured(V1SpringCloudGateway gateway) {
-        V1SpringCloudGatewaySpecExtensionsFiltersApiKey apiKey = (V1SpringCloudGatewaySpecExtensionsFiltersApiKey)Optional.ofNullable(gateway.getSpec()).map(V1SpringCloudGatewaySpec::getExtensions).map(V1SpringCloudGatewaySpecExtensions::getFilters).map(V1SpringCloudGatewaySpecExtensionsFilters::getApiKey).orElse((Object)null);
+        V1SpringCloudGatewaySpecExtensionsFiltersApiKey apiKey = (V1SpringCloudGatewaySpecExtensionsFiltersApiKey)Optional.ofNullable(gateway.getSpec()).map(V1SpringCloudGatewaySpec::getExtensions).map(V1SpringCloudGatewaySpecExtensions::getFilters).map(V1SpringCloudGatewaySpecExtensionsFilters::getApiKey).orElse(null);
         if (apiKey == null) {
             LOGGER.debug("No API key configuration for {}", ((V1ObjectMeta)Objects.requireNonNull(gateway.getMetadata())).getName());
             return false;
@@ -105,7 +105,7 @@ class VaultStatefulSetContributor extends AbstractStatefulSetContributor {
     }
 
     private boolean isJwtKeyEnabledAndConfigured(V1SpringCloudGateway gateway) {
-        V1SpringCloudGatewaySpecExtensionsFiltersJwtKey jwtKey = (V1SpringCloudGatewaySpecExtensionsFiltersJwtKey)Optional.ofNullable(gateway.getSpec()).map(V1SpringCloudGatewaySpec::getExtensions).map(V1SpringCloudGatewaySpecExtensions::getFilters).map(V1SpringCloudGatewaySpecExtensionsFilters::getJwtKey).orElse((Object)null);
+        V1SpringCloudGatewaySpecExtensionsFiltersJwtKey jwtKey = (V1SpringCloudGatewaySpecExtensionsFiltersJwtKey)Optional.ofNullable(gateway.getSpec()).map(V1SpringCloudGatewaySpec::getExtensions).map(V1SpringCloudGatewaySpecExtensions::getFilters).map(V1SpringCloudGatewaySpecExtensionsFilters::getJwtKey).orElse(null);
         if (jwtKey == null) {
             LOGGER.debug("No JWT key configuration for {}", ((V1ObjectMeta)Objects.requireNonNull(gateway.getMetadata())).getName());
             return false;
@@ -210,7 +210,7 @@ class VaultStatefulSetContributor extends AbstractStatefulSetContributor {
     }
 
     private List<V1SpringCloudGatewaySpecExtensionsSecretsProviders> customSecretProviders(V1SpringCloudGateway gateway) {
-        return (List)Optional.ofNullable(gateway.getSpec()).map(V1SpringCloudGatewaySpec::getExtensions).map(V1SpringCloudGatewaySpecExtensions::getSecretsProviders).stream().flatMap(Collection::stream).filter((sp) -> {
+        return (List<V1SpringCloudGatewaySpecExtensionsSecretsProviders>)Optional.ofNullable(gateway.getSpec()).map(V1SpringCloudGatewaySpec::getExtensions).map(V1SpringCloudGatewaySpecExtensions::getSecretsProviders).stream().flatMap(Collection::stream).filter((sp) -> {
             V1SpringCloudGatewaySpec spec = gateway.getSpec();
             V1SpringCloudGatewaySpecExtensions ext = (V1SpringCloudGatewaySpecExtensions)Objects.requireNonNull(spec.getExtensions());
             return !this.usedByGatewayFilters(sp, ext.getFilters());
@@ -233,7 +233,7 @@ class VaultStatefulSetContributor extends AbstractStatefulSetContributor {
     private Optional<V1SpringCloudGatewaySpecExtensionsSecretsProviders> findFirstVaultAuthPathConfig(V1SpringCloudGateway gateway) {
         V1SpringCloudGatewaySpecExtensions extensions = ((V1SpringCloudGatewaySpec)Objects.requireNonNull(gateway.getSpec())).getExtensions();
         List<V1SpringCloudGatewaySpecExtensionsSecretsProviders> secretsProviders = ((V1SpringCloudGatewaySpecExtensions)Objects.requireNonNull(extensions)).getSecretsProviders();
-        return ((List)Objects.requireNonNull(secretsProviders)).stream().filter(this::validVaultElementWithAuthPath).findFirst();
+        return ((List<V1SpringCloudGatewaySpecExtensionsSecretsProviders>)Objects.requireNonNull(secretsProviders)).stream().filter(this::validVaultElementWithAuthPath).findFirst();
     }
 
     private Optional<V1SpringCloudGatewaySpecExtensionsVault> findJwtKeySecretProviderWithPath(V1SpringCloudGateway gateway) {
@@ -246,7 +246,7 @@ class VaultStatefulSetContributor extends AbstractStatefulSetContributor {
     private V1SpringCloudGatewaySpecExtensionsSecretsProviders findFirstValidVaultConfig(V1SpringCloudGateway gateway) {
         V1SpringCloudGatewaySpec spec = (V1SpringCloudGatewaySpec)Objects.requireNonNull(gateway.getSpec());
         V1SpringCloudGatewaySpecExtensions extensions = (V1SpringCloudGatewaySpecExtensions)Objects.requireNonNull(spec.getExtensions());
-        return (V1SpringCloudGatewaySpecExtensionsSecretsProviders)((List)Objects.requireNonNull(extensions.getSecretsProviders())).stream().filter(this::validVaultElementWithRole).findFirst().orElseThrow();
+        return (V1SpringCloudGatewaySpecExtensionsSecretsProviders)((List<V1SpringCloudGatewaySpecExtensionsSecretsProviders>)Objects.requireNonNull(extensions.getSecretsProviders())).stream().filter(this::validVaultElementWithRole).findFirst().orElseThrow();
     }
 
     private boolean hasVaultPath(V1SpringCloudGatewaySpecExtensionsSecretsProviders secretsProvider) {

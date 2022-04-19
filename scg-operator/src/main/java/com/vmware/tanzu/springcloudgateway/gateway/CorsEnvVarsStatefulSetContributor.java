@@ -45,7 +45,7 @@ public class CorsEnvVarsStatefulSetContributor implements StatefulSetContributor
     public void accept(V1StatefulSet statefulSet, V1SpringCloudGateway gateway) {
         String namespace = statefulSet.getMetadata().getNamespace();
         V1Container container = (V1Container)statefulSet.getSpec().getTemplate().getSpec().getContainers().get(0);
-        ArrayList envVars = new ArrayList(container.getEnv());
+        ArrayList envVars = new ArrayList<>(container.getEnv());
         envVars.addAll(this.buildCorsEnvVars(namespace, gateway));
         container.setEnv(envVars);
     }
@@ -74,7 +74,7 @@ public class CorsEnvVarsStatefulSetContributor implements StatefulSetContributor
         if (specApiCors == null) {
             return Collections.emptySet();
         } else {
-            HashSet<V1EnvVar> envVars = new HashSet();
+            HashSet<V1EnvVar> envVars = new HashSet<>();
             if (specApiCors.getMaxAge() != null) {
                 envVars.add((new V1EnvVar()).name("spring.cloud.gateway.k8s.globalcors.max-age").value(specApiCors.getMaxAge().toString()));
             }
@@ -109,7 +109,7 @@ public class CorsEnvVarsStatefulSetContributor implements StatefulSetContributor
 
     private Set<V1EnvVar> createCorsPerRoute(V1SpringCloudGatewaySpecApiCors specCors) {
         if (specCors != null && specCors.getPerRoute() != null) {
-            HashSet<V1EnvVar> envVars = new HashSet();
+            HashSet<V1EnvVar> envVars = new HashSet<>();
             specCors.getPerRoute().forEach((route, corsConfig) -> {
                 if (corsConfig.getAllowCredentials() != null) {
                     envVars.add((new V1EnvVar()).name(this.perRouteCorsEnvVarName(route, "allow-credentials")).value(corsConfig.getAllowCredentials().toString()));

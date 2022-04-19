@@ -24,13 +24,13 @@ class ExtensionsStatefulSetContributor extends AbstractStatefulSetContributor {
     ExtensionsStatefulSetContributor(EventRecorder eventRecorder, Lister<V1ConfigMap> configMapLister, SharedIndexInformer<V1PersistentVolumeClaim> persistentVolumeClaimIndexInformer) {
         this.eventRecorder = eventRecorder;
         this.configMapLister = configMapLister;
-        this.persistentVolumeClaimLister = new Lister(persistentVolumeClaimIndexInformer.getIndexer());
+        this.persistentVolumeClaimLister = new Lister<>(persistentVolumeClaimIndexInformer.getIndexer());
     }
 
     void apply(V1StatefulSet statefulSet, V1SpringCloudGateway gateway) {
-        List<String> validConfigMapExtensions = new ArrayList();
-        List<String> validPersistentVolumeClaimExtensions = new ArrayList();
-        List<String> invalidExtensions = new ArrayList();
+        List<String> validConfigMapExtensions = new ArrayList<>();
+        List<String> validPersistentVolumeClaimExtensions = new ArrayList<>();
+        List<String> invalidExtensions = new ArrayList<>();
         gateway.getSpec().getExtensions().getCustom().forEach((extensionName) -> {
             if (this.isConfigMapValid(extensionName, gateway.getMetadata().getNamespace())) {
                 validConfigMapExtensions.add(extensionName);

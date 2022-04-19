@@ -65,7 +65,13 @@ public class SsoParameters {
     }
 
     private Set<V1EnvVar> getEnvVarsFromSecret(String ssoCredentialsSecret) {
-        return (Set)Stream.of((new V1EnvVar()).name("spring.profiles.include").value("sso"), (new V1EnvVar()).name("sso.client-id").valueFrom(this.envVarSourceFromSecret("client-id", ssoCredentialsSecret)), (new V1EnvVar()).name("sso.client-secret").valueFrom(this.envVarSourceFromSecret("client-secret", ssoCredentialsSecret)), (new V1EnvVar()).name("sso.scope").valueFrom(this.envVarSourceFromSecret("scope", ssoCredentialsSecret)), (new V1EnvVar()).name("sso.issuer-uri").valueFrom(this.envVarSourceFromSecret("issuer-uri", ssoCredentialsSecret))).collect(Collectors.toCollection(HashSet::new));
+        return (Set<V1EnvVar>)Stream.of(
+                (new V1EnvVar()).name("spring.profiles.include").value("sso"),
+                (new V1EnvVar()).name("sso.client-id").valueFrom(this.envVarSourceFromSecret("client-id", ssoCredentialsSecret)),
+                (new V1EnvVar()).name("sso.client-secret").valueFrom(this.envVarSourceFromSecret("client-secret", ssoCredentialsSecret)),
+                (new V1EnvVar()).name("sso.scope").valueFrom(this.envVarSourceFromSecret("scope", ssoCredentialsSecret)),
+                (new V1EnvVar()).name("sso.issuer-uri").valueFrom(this.envVarSourceFromSecret("issuer-uri", ssoCredentialsSecret))).collect(Collectors.toCollection(HashSet::new)
+        );
     }
 
     boolean secretExists(String gatewayNamespace, String ssoCredentialsSecret) throws ApiException {
@@ -79,11 +85,11 @@ public class SsoParameters {
 
     private V1Secret getSecret(String gatewayNamespace, String secretName) throws ApiException {
         V1SecretList ssoCredentialsSecret = this.coreV1Api.listNamespacedSecret(gatewayNamespace, (String)null, (Boolean)null, (String)null, String.format("metadata.name=%s", secretName), (String)null, (Integer)null, (String)null, (String)null, 10, false);
-        V1Secret ssoSecret = (V1Secret)ssoCredentialsSecret.getItems().stream().findFirst().orElse((Object)null);
+        V1Secret ssoSecret = (V1Secret)ssoCredentialsSecret.getItems().stream().findFirst().orElse(null);
         if (ssoSecret == null) {
             return null;
         } else {
-            Set<String> expectedSecretKeys = (Set)Stream.of("client-id", "client-secret").collect(Collectors.toSet());
+            Set<String> expectedSecretKeys = (Set<String>)Stream.of("client-id", "client-secret").collect(Collectors.toSet());
             if (ssoSecret.getData() != null && ssoSecret.getData().keySet().containsAll(expectedSecretKeys)) {
                 return ssoSecret;
             } else {

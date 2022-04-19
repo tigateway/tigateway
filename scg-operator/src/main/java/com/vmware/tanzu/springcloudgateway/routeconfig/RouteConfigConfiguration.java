@@ -43,7 +43,7 @@ class RouteConfigConfiguration {
 
     @Bean
     RouteConfigReconciler routeConfigReconciler(SharedIndexInformer<V1SpringCloudGatewayRouteConfig> lister, PodLister podLister, ActuatorRoutesUpdater actuatorRoutesUpdater, MappingLister mappingLister, EventRecorder eventRecorder, RoutesDefinitionResolver routesDefinitionResolver) {
-        return new RouteConfigReconciler(lister, new Lister(lister.getIndexer()), actuatorRoutesUpdater, podLister, mappingLister, eventRecorder, routesDefinitionResolver);
+        return new RouteConfigReconciler(lister, new Lister<>(lister.getIndexer()), actuatorRoutesUpdater, podLister, mappingLister, eventRecorder, routesDefinitionResolver);
     }
 
     @Bean

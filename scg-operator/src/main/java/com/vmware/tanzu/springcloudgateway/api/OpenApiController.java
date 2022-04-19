@@ -1,5 +1,19 @@
 package com.vmware.tanzu.springcloudgateway.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGateway;
+import com.vmware.tanzu.springcloudgateway.openapi.OpenApiGenerator;
+import com.vmware.tanzu.springcloudgateway.route.RoutesDefinition;
+import com.vmware.tanzu.springcloudgateway.route.RoutesDefinitionResolver;
+import io.kubernetes.client.openapi.ApiException;
+import io.swagger.v3.core.util.Json;
+import io.swagger.v3.oas.models.OpenAPI;
+import java.util.Collection;
+import java.util.Map;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
 @RestController
 public class OpenApiController {
     private final OpenApiGenerator openApiGenerator;

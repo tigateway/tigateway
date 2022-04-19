@@ -7,6 +7,7 @@
     <modules>
         <module>gateway</module>
         <module>scg-operator</module>
+        <module>gateway-kubernetes-extensions</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -194,6 +194,12 @@
             <artifactId>json-smart</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.mavenreposs</groupId>
+            <artifactId>gateway-kubernetes-extensions</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

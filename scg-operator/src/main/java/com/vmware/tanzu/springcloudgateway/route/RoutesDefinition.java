@@ -16,11 +16,11 @@ public class RoutesDefinition {
     public static RoutesDefinition from(V1SpringCloudGatewayRouteConfig scgRouteConfig, V1Secret basicAuthSecret) {
         if (scgRouteConfig != null && scgRouteConfig.getSpec() != null && scgRouteConfig.getSpec().getRoutes() != null) {
             RoutesDefinition routesDefinition = new RoutesDefinition();
-            Stream var10000 = scgRouteConfig.getSpec().getRoutes().stream().map((crdRoute) -> {
+            Stream<RouteDefinition> routeDefinitionStream = scgRouteConfig.getSpec().getRoutes().stream().map((crdRoute) -> {
                 return RouteDefinition.from(crdRoute, basicAuthSecret);
             });
             Objects.requireNonNull(routesDefinition);
-            var10000.forEach(routesDefinition::addRouteDefinition);
+            routeDefinitionStream.forEach(routesDefinition::addRouteDefinition);
             return routesDefinition;
         } else {
             return new RoutesDefinition();
@@ -39,7 +39,7 @@ public class RoutesDefinition {
     }
 
     public RoutesDefinition() {
-        this((List)(new ArrayList()));
+        this(new ArrayList<>());
     }
 
     public RoutesDefinition(RouteDefinition... routeDefinitions) {

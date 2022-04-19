@@ -130,19 +130,19 @@ public class RoutesDefinitionResolver {
     }
 
     private Map<V1SpringCloudGateway, RoutesDefinition> mapAllGatewaysToCorrespondingRoutesDefinition(Map<V1ObjectReference, List<RoutesDefinition>> scgRefToScgRouteConfigsMap) throws ApiException {
-        return (Map)this.scgApi.listSpringCloudGatewayForAllNamespaces((Boolean)null, (String)null, (String)null, (String)null, (Integer)null, (String)null, (String)null, (String)null, (Integer)null, (Boolean)null).getItems().stream().map((scg) -> {
-            RoutesDefinition routesDefinition = (RoutesDefinition)((List)scgRefToScgRouteConfigsMap.getOrDefault(ObjectReferenceConverter.toObjectReference(scg.getMetadata()), Collections.emptyList())).stream().reduce(new RoutesDefinition(), (routesDef1, routesDef2) -> {
+        return (Map<V1SpringCloudGateway, RoutesDefinition>)this.scgApi.listSpringCloudGatewayForAllNamespaces((Boolean)null, (String)null, (String)null, (String)null, (Integer)null, (String)null, (String)null, (String)null, (Integer)null, (Boolean)null).getItems().stream().map((scg) -> {
+            RoutesDefinition routesDefinition = (RoutesDefinition)((List<RoutesDefinition>)scgRefToScgRouteConfigsMap.getOrDefault(ObjectReferenceConverter.toObjectReference(scg.getMetadata()), Collections.emptyList())).stream().reduce(new RoutesDefinition(), (routesDef1, routesDef2) -> {
                 routesDef1.getRouteDefinitions().addAll(routesDef2.getRouteDefinitions());
                 return routesDef1;
             });
-            return new SimpleEntry(scg, routesDefinition);
+            return new SimpleEntry<V1SpringCloudGateway, RoutesDefinition>(scg, routesDefinition);
         }).filter((scgToRoutesDefinition) -> {
             return !((RoutesDefinition)scgToRoutesDefinition.getValue()).getRouteDefinitions().isEmpty();
         }).collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
     }
 
     private Map<V1ObjectReference, List<RoutesDefinition>> mapGatewayObjectRefToRouteDefinitionList(Map<V1ObjectReference, V1SpringCloudGatewayRouteConfig> scgRouteConfigsMap) throws ApiException {
-        return (Map)this.scgApi.listSpringCloudGatewayMappingForAllNamespaces((Boolean)null, (String)null, (String)null, (String)null, (Integer)null, (String)null, (String)null, (String)null, (Integer)null, (Boolean)null).getItems().stream().collect(Collectors.groupingBy((scgMapping) -> {
+        return (Map<V1ObjectReference, List<RoutesDefinition>>)this.scgApi.listSpringCloudGatewayMappingForAllNamespaces((Boolean)null, (String)null, (String)null, (String)null, (Integer)null, (String)null, (String)null, (String)null, (Integer)null, (Boolean)null).getItems().stream().collect(Collectors.groupingBy((scgMapping) -> {
             return ObjectReferenceConverter.toObjectReference(scgMapping.getMetadata().getNamespace(), scgMapping.getSpec().getGatewayRef().getNamespace(), scgMapping.getSpec().getGatewayRef().getName());
         }, Collectors.mapping((scgMapping) -> {
             return RoutesDefinition.from(generateRoutePrefix(scgMapping), (V1SpringCloudGatewayRouteConfig)scgRouteConfigsMap.get(ObjectReferenceConverter.toObjectReference(scgMapping.getMetadata().getNamespace(), scgMapping.getSpec().getRouteConfigRef().getNamespace(), scgMapping.getSpec().getRouteConfigRef().getName())), (V1Secret)null);
@@ -150,7 +150,7 @@ public class RoutesDefinitionResolver {
     }
 
     private Map<V1ObjectReference, V1SpringCloudGatewayRouteConfig> mapRouteConfigObjectRefToRouteConfig() throws ApiException {
-        Map<V1ObjectReference, V1SpringCloudGatewayRouteConfig> scgRouteConfigsMap = (Map)this.scgApi.listSpringCloudGatewayRouteConfigForAllNamespaces((Boolean)null, (String)null, (String)null, (String)null, (Integer)null, (String)null, (String)null, (String)null, (Integer)null, (Boolean)null).getItems().stream().map(this::resolveSpec).collect(Collectors.toMap((routeConfig) -> {
+        Map<V1ObjectReference, V1SpringCloudGatewayRouteConfig> scgRouteConfigsMap = (Map<V1ObjectReference, V1SpringCloudGatewayRouteConfig>)this.scgApi.listSpringCloudGatewayRouteConfigForAllNamespaces((Boolean)null, (String)null, (String)null, (String)null, (Integer)null, (String)null, (String)null, (String)null, (Integer)null, (Boolean)null).getItems().stream().map(this::resolveSpec).collect(Collectors.toMap((routeConfig) -> {
             return ObjectReferenceConverter.toObjectReference(routeConfig.getMetadata());
         }, Function.identity()));
         return scgRouteConfigsMap;

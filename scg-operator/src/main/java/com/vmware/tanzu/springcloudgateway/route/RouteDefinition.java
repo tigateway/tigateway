@@ -249,16 +249,16 @@ public class RouteDefinition {
         private String path;
         private String method;
         private boolean ssoEnabled;
-        private List<String> predicates = new ArrayList();
-        private List<String> filters = new ArrayList();
+        private List<String> predicates = new ArrayList<>();
+        private List<String> filters = new ArrayList<>();
         private String rateLimit;
-        private Map<String, Object> metadata = new HashMap();
+        private Map<String, Object> metadata = new HashMap<>();
         private String description;
         private String documentation;
         private String title;
         private boolean tokenRelay;
         private String basicAuth;
-        private Set<String> tags = new HashSet();
+        private Set<String> tags = new HashSet<>();
         private Object requestBodyObj;
         private Object responses;
 

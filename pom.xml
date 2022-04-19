@@ -15,7 +15,7 @@
     </parent>
 
     <groupId>io.github.mavenreposs</groupId>
-    <artifactId>k8s-gateway</artifactId>
+    <artifactId>spring-cloud-gateway-k8s</artifactId>
     <version>1.0.0</version>
 
     <properties>

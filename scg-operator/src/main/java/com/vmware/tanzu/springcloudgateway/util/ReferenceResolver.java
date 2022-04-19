@@ -32,13 +32,13 @@ public class ReferenceResolver {
         if (model != null) {
             Object requestBody = model.getRequestBody();
             if (requestBody != null) {
-                Object requestBody = this.resolveMap((Map)this.convertValue(requestBody), new AtomicInteger());
+                requestBody = this.resolveMap(this.convertValue(requestBody), new AtomicInteger());
                 model.setRequestBody(requestBody);
             }
 
             Object responses = model.getResponses();
             if (responses != null) {
-                Object responses = this.resolveMap((Map)this.convertValue(responses), new AtomicInteger());
+                responses = this.resolveMap(this.convertValue(responses), new AtomicInteger());
                 model.setResponses(responses);
             }
         }
@@ -47,10 +47,10 @@ public class ReferenceResolver {
     }
 
     private Map<String, Object> resolveMap(Map<String, Object> map, AtomicInteger refs) {
-        Iterator var3 = (new HashMap(map)).entrySet().iterator();
+        Iterator<Entry<String, Object>> var3 = (new HashMap<>(map)).entrySet().iterator();
 
         while(var3.hasNext()) {
-            Entry<String, Object> entry = (Entry)var3.next();
+            Entry<String, Object> entry = (Entry<String, Object>)var3.next();
             String k = (String)entry.getKey();
             Object v = entry.getValue();
             if ("$ref".equals(k)) {
@@ -59,11 +59,11 @@ public class ReferenceResolver {
                 map.putAll(value);
                 map.remove(k);
             } else if (v instanceof Map) {
-                this.resolveMap((Map)v, refs);
+                this.resolveMap((Map<String, Object>)v, refs);
             }
         }
 
-        return new ConcurrentHashMap(map);
+        return new ConcurrentHashMap<>(map);
     }
 
     Map<String, Object> resolveExpression(String ref, AtomicInteger refs) {

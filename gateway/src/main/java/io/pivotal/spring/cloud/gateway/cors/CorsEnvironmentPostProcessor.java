@@ -52,10 +52,10 @@ public class CorsEnvironmentPostProcessor implements EnvironmentPostProcessor, I
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        Stream<String> stream = GLOBAL_CORS_OPTIONS.stream();
+        Stream<String> corsOptionStream = GLOBAL_CORS_OPTIONS.stream();
         Objects.requireNonNull(environment);
 
-        stream
+        corsOptionStream = corsOptionStream
                 .filter(environment::containsProperty)
                 .filter(configOption -> {
                     return StringUtils.hasLength(environment.getProperty(configOption));
@@ -67,7 +67,7 @@ public class CorsEnvironmentPostProcessor implements EnvironmentPostProcessor, I
 
         Objects.requireNonNull(environment);
 
-        Map<String, Object> k8sCorsConfiguration = stream.collect(Collectors.toMap(stringFunction, environment::getProperty));
+        Map<String, Object> k8sCorsConfiguration = corsOptionStream.collect(Collectors.toMap(stringFunction, environment::getProperty));
         StreamSupport.stream(environment.getPropertySources().spliterator(), false)
                 .filter(ps -> {
                     return ps instanceof EnumerablePropertySource;

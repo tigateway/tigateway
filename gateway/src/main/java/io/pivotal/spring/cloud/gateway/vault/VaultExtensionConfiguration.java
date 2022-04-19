@@ -1,6 +1,6 @@
 package io.pivotal.spring.cloud.gateway.vault;
 
-//import com.vmware.tanzu.springcloudgateway.SecretsProvidersLocator;
+import com.vmware.tanzu.springcloudgateway.SecretsProvidersLocator;
 import java.nio.file.Path;
 import java.time.Clock;
 import java.util.List;
@@ -18,8 +18,8 @@ public class VaultExtensionConfiguration {
     public VaultExtensionConfiguration() {
     }
 
-//    @Bean
-//    SecretsProvidersLocator secretsProvidersLocator(@Value("${extensions.vault.paths}") List<Path> secretsPath, Clock clock) {
-//        return new SecretsProvidersLocator(secretsPath, clock);
-//    }
+    @Bean
+    SecretsProvidersLocator secretsProvidersLocator(@Value("${extensions.vault.paths}") List<Path> secretsPath, Clock clock) {
+        return new SecretsProvidersLocator(secretsPath, clock);
+    }
 }

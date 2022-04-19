@@ -14,7 +14,7 @@ public class LabelsBuilder {
     }
 
     public static Map<String, String> build(String gatewayName) {
-        Map<String, String> labels = new HashMap();
+        Map<String, String> labels = new HashMap<>();
         labels.put("gateway.name", gatewayName);
         labels.put("app.kubernetes.io/part-of", "spring-cloud-gateway");
         labels.put("app", gatewayName);
@@ -22,7 +22,7 @@ public class LabelsBuilder {
     }
 
     public static Map<String, String> buildServiceSelector(String gatewayName) {
-        Map<String, String> labels = new HashMap();
+        Map<String, String> labels = new HashMap<>();
         labels.put("app", gatewayName);
         return labels;
     }

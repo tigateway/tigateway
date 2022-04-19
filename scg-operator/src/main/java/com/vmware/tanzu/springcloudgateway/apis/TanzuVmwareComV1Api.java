@@ -1,5 +1,29 @@
 package com.vmware.tanzu.springcloudgateway.apis;
 
+import com.google.gson.reflect.TypeToken;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGateway;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayList;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayMapping;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayMappingList;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfig;
+import com.vmware.tanzu.springcloudgateway.models.V1SpringCloudGatewayRouteConfigList;
+import io.kubernetes.client.custom.V1Patch;
+import io.kubernetes.client.openapi.ApiCallback;
+import io.kubernetes.client.openapi.ApiClient;
+import io.kubernetes.client.openapi.ApiException;
+import io.kubernetes.client.openapi.ApiResponse;
+import io.kubernetes.client.openapi.Configuration;
+import io.kubernetes.client.openapi.Pair;
+import io.kubernetes.client.openapi.models.V1DeleteOptions;
+import io.kubernetes.client.openapi.models.V1Scale;
+import io.kubernetes.client.openapi.models.V1Status;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import okhttp3.Call;
+
 public class TanzuVmwareComV1Api {
     private ApiClient localVarApiClient;
 
@@ -21,8 +45,8 @@ public class TanzuVmwareComV1Api {
 
     public Call createNamespacedSpringCloudGatewayCall(String namespace, V1SpringCloudGateway body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -35,9 +59,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -84,8 +108,8 @@ public class TanzuVmwareComV1Api {
 
     public Call createNamespacedSpringCloudGatewayMappingCall(String namespace, V1SpringCloudGatewayMapping body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -98,9 +122,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -147,8 +171,8 @@ public class TanzuVmwareComV1Api {
 
     public Call createNamespacedSpringCloudGatewayRouteConfigCall(String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -161,9 +185,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -211,8 +235,8 @@ public class TanzuVmwareComV1Api {
     public Call deleteCollectionNamespacedSpringCloudGatewayCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -245,9 +269,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("timeoutSeconds", timeoutSeconds));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -293,8 +317,8 @@ public class TanzuVmwareComV1Api {
     public Call deleteCollectionNamespacedSpringCloudGatewayMappingCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -327,9 +351,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("timeoutSeconds", timeoutSeconds));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -375,8 +399,8 @@ public class TanzuVmwareComV1Api {
     public Call deleteCollectionNamespacedSpringCloudGatewayRouteConfigCall(String namespace, String pretty, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -409,9 +433,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("timeoutSeconds", timeoutSeconds));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -456,8 +480,8 @@ public class TanzuVmwareComV1Api {
 
     public Call deleteNamespacedSpringCloudGatewayCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -478,9 +502,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("propagationPolicy", propagationPolicy));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -527,8 +551,8 @@ public class TanzuVmwareComV1Api {
 
     public Call deleteNamespacedSpringCloudGatewayMappingCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -549,9 +573,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("propagationPolicy", propagationPolicy));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -598,8 +622,8 @@ public class TanzuVmwareComV1Api {
 
     public Call deleteNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, String pretty, String dryRun, Integer gracePeriodSeconds, Boolean orphanDependents, String propagationPolicy, V1DeleteOptions body, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -620,9 +644,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("propagationPolicy", propagationPolicy));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -670,8 +694,8 @@ public class TanzuVmwareComV1Api {
     public Call listNamespacedSpringCloudGatewayCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -712,9 +736,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("watch", watch));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -760,8 +784,8 @@ public class TanzuVmwareComV1Api {
     public Call listNamespacedSpringCloudGatewayMappingCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -802,9 +826,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("watch", watch));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -850,8 +874,8 @@ public class TanzuVmwareComV1Api {
     public Call listNamespacedSpringCloudGatewayRouteConfigCall(String namespace, String pretty, Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs".replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -892,9 +916,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("watch", watch));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -940,8 +964,8 @@ public class TanzuVmwareComV1Api {
     public Call listSpringCloudGatewayForAllNamespacesCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/springcloudgateways";
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (allowWatchBookmarks != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("allowWatchBookmarks", allowWatchBookmarks));
         }
@@ -982,9 +1006,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("watch", watch));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1026,8 +1050,8 @@ public class TanzuVmwareComV1Api {
     public Call listSpringCloudGatewayMappingForAllNamespacesCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/springcloudgatewaymappings";
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (allowWatchBookmarks != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("allowWatchBookmarks", allowWatchBookmarks));
         }
@@ -1068,9 +1092,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("watch", watch));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1112,8 +1136,8 @@ public class TanzuVmwareComV1Api {
     public Call listSpringCloudGatewayRouteConfigForAllNamespacesCall(Boolean allowWatchBookmarks, String _continue, String fieldSelector, String labelSelector, Integer limit, String pretty, String resourceVersion, String resourceVersionMatch, Integer timeoutSeconds, Boolean watch, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/springcloudgatewayrouteconfigs";
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (allowWatchBookmarks != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("allowWatchBookmarks", allowWatchBookmarks));
         }
@@ -1154,9 +1178,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("watch", watch));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1197,8 +1221,8 @@ public class TanzuVmwareComV1Api {
 
     public Call patchNamespacedSpringCloudGatewayCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1211,9 +1235,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1262,8 +1286,8 @@ public class TanzuVmwareComV1Api {
 
     public Call patchNamespacedSpringCloudGatewayMappingCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1276,9 +1300,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1327,8 +1351,8 @@ public class TanzuVmwareComV1Api {
 
     public Call patchNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1341,9 +1365,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1392,8 +1416,8 @@ public class TanzuVmwareComV1Api {
 
     public Call patchNamespacedSpringCloudGatewayScaleCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}/scale".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1406,9 +1430,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1457,8 +1481,8 @@ public class TanzuVmwareComV1Api {
 
     public Call patchNamespacedSpringCloudGatewayStatusCall(String name, String namespace, V1Patch body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}/status".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1471,9 +1495,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1523,8 +1547,8 @@ public class TanzuVmwareComV1Api {
     public Call readNamespacedSpringCloudGatewayCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1533,9 +1557,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1583,8 +1607,8 @@ public class TanzuVmwareComV1Api {
     public Call readNamespacedSpringCloudGatewayMappingCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1593,9 +1617,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1643,8 +1667,8 @@ public class TanzuVmwareComV1Api {
     public Call readNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1653,9 +1677,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1703,8 +1727,8 @@ public class TanzuVmwareComV1Api {
     public Call readNamespacedSpringCloudGatewayScaleCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}/scale".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1713,9 +1737,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1763,8 +1787,8 @@ public class TanzuVmwareComV1Api {
     public Call readNamespacedSpringCloudGatewayStatusCall(String name, String namespace, String pretty, String resourceVersion, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}/status".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1773,9 +1797,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("resourceVersion", resourceVersion));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1822,8 +1846,8 @@ public class TanzuVmwareComV1Api {
 
     public Call replaceNamespacedSpringCloudGatewayCall(String name, String namespace, V1SpringCloudGateway body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1836,9 +1860,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1887,8 +1911,8 @@ public class TanzuVmwareComV1Api {
 
     public Call replaceNamespacedSpringCloudGatewayMappingCall(String name, String namespace, V1SpringCloudGatewayMapping body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewaymappings/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1901,9 +1925,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1952,8 +1976,8 @@ public class TanzuVmwareComV1Api {
 
     public Call replaceNamespacedSpringCloudGatewayRouteConfigCall(String name, String namespace, V1SpringCloudGatewayRouteConfig body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgatewayrouteconfigs/{name}".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -1966,9 +1990,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2017,8 +2041,8 @@ public class TanzuVmwareComV1Api {
 
     public Call replaceNamespacedSpringCloudGatewayScaleCall(String name, String namespace, V1Scale body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}/scale".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -2031,9 +2055,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2082,8 +2106,8 @@ public class TanzuVmwareComV1Api {
 
     public Call replaceNamespacedSpringCloudGatewayStatusCall(String name, String namespace, V1SpringCloudGateway body, String pretty, String dryRun, String fieldManager, final ApiCallback _callback) throws ApiException {
         String localVarPath = "/apis/tanzu.vmware.com/v1/namespaces/{namespace}/springcloudgateways/{name}/status".replaceAll("\\{name\\}", this.localVarApiClient.escapeString(name.toString())).replaceAll("\\{namespace\\}", this.localVarApiClient.escapeString(namespace.toString()));
-        List<Pair> localVarQueryParams = new ArrayList();
-        List<Pair> localVarCollectionQueryParams = new ArrayList();
+        List<Pair> localVarQueryParams = new ArrayList<>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<>();
         if (pretty != null) {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("pretty", pretty));
         }
@@ -2096,9 +2120,9 @@ public class TanzuVmwareComV1Api {
             localVarQueryParams.addAll(this.localVarApiClient.parameterToPair("fieldManager", fieldManager));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap();
-        Map<String, String> localVarCookieParams = new HashMap();
-        Map<String, Object> localVarFormParams = new HashMap();
+        Map<String, String> localVarHeaderParams = new HashMap<>();
+        Map<String, String> localVarCookieParams = new HashMap<>();
+        Map<String, Object> localVarFormParams = new HashMap<>();
         String[] localVarAccepts = new String[]{"application/json", "application/yaml"};
         String localVarAccept = this.localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {

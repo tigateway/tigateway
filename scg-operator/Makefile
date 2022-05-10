@@ -14,12 +14,3 @@ build: ## Docker build image
 
 push: ## Docker push image
 	docker push royalwang/scg-operator:1.0.0
-
-install: ## K8s helm install
-	helm install scg-operator -n scg-k8s --create-namespace ./helm
-
-upgrade: ## K8s helm upgrade
-	helm upgrade scg-operator -n scg-k8s ./helm
-
-uninstall: ## K8s helm uninstall
-	helm uninstall scg-operator -n scg-k8s

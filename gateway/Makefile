@@ -14,12 +14,3 @@ build: ## Docker build image
 
 push: ## Docker push image
 	docker push royalwang/gateway:1.0.0
-
-install: ## K8s helm install
-	helm install gateway -n scg-k8s --create-namespace ./helm
-
-upgrade: ## K8s helm upgrade
-	helm upgrade gateway -n scg-k8s ./helm
-
-uninstall: ## K8s helm uninstall
-	helm uninstall gateway -n scg-k8s

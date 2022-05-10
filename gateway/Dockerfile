@@ -17,6 +17,6 @@ RUN mvn -Dmaven.wagon.http.ssl.insecure=true \
 FROM arm64v8/openjdk:11-jre as RUN
 VOLUME /tmp
 COPY --from=build /tmp/target/app.jar /
-EXPOSE 8080/tcp 8081/tcp
+EXPOSE 8090/tcp
 ENTRYPOINT [ "sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
 

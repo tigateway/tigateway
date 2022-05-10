@@ -13,6 +13,8 @@
     <artifactId>gateway</artifactId>
     <groupId>io.github.mavenreposs</groupId>
     <version>1.0.0</version>
+    
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -22,6 +24,10 @@
 
         <docker-maven-plugin.version>0.39.1</docker-maven-plugin.version>
     </properties>
+
+    <modules>
+        <module>../gateway-kubernetes-extensions</module>
+    </modules>
 
     <dependencies>
         <dependency>

@@ -1,0 +1,1637 @@
+{
+  "modifyAclAccess": true,
+  "hidden": false,
+  "parameters": {},
+  "name": "Spring Cloud Gateway for Kubernetes",
+  "id": "Spring-Cloud-Gateway-for-Kubernetes",
+  "tags": {
+    "customerTags": []
+  },
+  "viewsLastDay": 0,
+  "viewsLastWeek": 2,
+  "viewsLastMonth": 36,
+  "acl": {
+    "canView": [],
+    "canModify": [
+      "fdfddc50-d69a-48a3-aecb-598d45ab6bfd"
+    ]
+  },
+  "dashboardAttributes": null,
+  "customer": "vmware",
+  "url": "Spring-Cloud-Gateway-for-Kubernetes",
+  "eventFilterType": "BYCHART",
+  "sections": [
+    {
+      "name": "Tracing",
+      "rows": [
+        {
+          "charts": [
+            {
+              "base": 0,
+              "units": "Units",
+              "name": "",
+              "chartAttributes": {
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 0,
+                  "h": 2,
+                  "w": 12
+                }
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "",
+                  "querybuilderSerialization": "{\"_v\":1,\"filters\":[[],\"and\"],\"functions\":[],\"metric\":\"ts()\"}",
+                  "querybuilderEnabled": true,
+                  "secondaryAxis": false,
+                  "disabled": false
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEAN",
+              "chartSettings": {
+                "type": "markdown-widget",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": false,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "lineType": "linear",
+                "windowing": "full",
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "plainMarkdownContent": "### We detected the application **${application}** is enabled for tracing. To see the Spring Boot Trace Browser **[click here](/tracing/search#_v01(tf:!((filterType:Operation,id:0,required:!t,value:!(!(${application}.,${service}.,'*'))))))**."
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 30
+        }
+      ],
+      "sectionFilter": {
+        "query": "ts(~component.heartbeat ${filter} and (component=\"wavefront-generated*\" or component=\"jaeger*\" or component=\"zipkin*\")) >= 1",
+        "description": "This section will be visible if tracing is enabled."
+      }
+    },
+    {
+      "name": "Gateway Instance",
+      "rows": [
+        {
+          "charts": [
+            {
+              "base": 0,
+              "units": "",
+              "name": "Routes",
+              "chartAttributes": {
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "Routes count"
+                },
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 0,
+                  "h": 4,
+                  "w": 2
+                },
+                "y0ScaleDecimal": false
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "ts(spring.cloud.gateway.routes.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" )",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "LAST",
+              "chartSettings": {
+                "type": "sparkline",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": false,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "windowing": "full",
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineDecimalPrecision": 0,
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "%",
+              "name": "Success Rate",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "routeUri",
+                    "httpStatusCode"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "Success Rate"
+                },
+                "dashboardLayout": {
+                  "x": 2,
+                  "y": 0,
+                  "h": 4,
+                  "w": 3
+                },
+                "y0ScaleDecimal": false
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Success Rates",
+                  "query": "if(exists(${SUCCESS}), ${SUCCESS} / ${TOTAL} * 100, 0)",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                },
+                {
+                  "name": "TOTAL",
+                  "query": "sum(ts(spring.cloud.gateway.requests.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\"))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": true,
+                  "queryType": "WQL"
+                },
+                {
+                  "name": "SUCCESS",
+                  "query": "sum(ts(spring.cloud.gateway.requests.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND  (httpStatusCode=\"1*\" or httpStatusCode=\"2*\" or httpStatusCode=\"3*\")))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": true,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "sparkline",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": false,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "%",
+              "name": "Error Rate",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "routeUri",
+                    "httpStatusCode"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "Error Rate"
+                },
+                "dashboardLayout": {
+                  "x": 5,
+                  "y": 0,
+                  "h": 4,
+                  "w": 3
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Error Rates",
+                  "query": "if (exists(${ERROR}), ${ERROR} / ${TOTAL} * 100, 0)",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                },
+                {
+                  "name": "TOTAL",
+                  "query": "sum(ts(spring.cloud.gateway.requests.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\"))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": true,
+                  "queryType": "WQL"
+                },
+                {
+                  "name": "ERROR",
+                  "query": "sum(ts(spring.cloud.gateway.requests.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND  (httpStatusCode=\"4*\" or httpStatusCode=\"5*\")))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": true,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "sparkline",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": false,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "%",
+              "name": "Rate Limited Requests Rate",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "routeUri",
+                    "httpStatusCode"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "Rate Limited Requests Rate"
+                },
+                "dashboardLayout": {
+                  "h": 4,
+                  "w": 3,
+                  "x": 8,
+                  "y": 0
+                },
+                "y0ScaleDecimal": false
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Rate limited Rates",
+                  "query": "${RATE_LIMITED} / ${TOTAL} * 100",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                },
+                {
+                  "name": "RATE_LIMITED",
+                  "query": "sum(ts(spring.cloud.gateway.requests.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\"AND httpStatusCode=\"429\"))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": true,
+                  "queryType": "WQL"
+                },
+                {
+                  "name": "TOTAL",
+                  "query": "sum(ts(spring.cloud.gateway.requests.count, source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\"))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": true,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "sparkline",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": false,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "anomalyDetectionOn": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 80
+        },
+        {
+          "charts": [
+            {
+              "base": 0,
+              "units": "ms",
+              "name": "Average Response time",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "method",
+                    "uri",
+                    "routeUri",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 4,
+                  "h": 3,
+                  "w": 2
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Average response time",
+                  "query": "rawsum(ts(\"spring.cloud.gateway.requests.sum\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\")) / rawsum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\"))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "sparkline",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "ms",
+              "name": "Average Response time",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "path"
+                  ]
+                },
+                "lineFill": 1,
+                "dashboardLayout": {
+                  "x": 2,
+                  "y": 4,
+                  "h": 3,
+                  "w": 10
+                }
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Average response time",
+                  "query": "rawavg(join(ts(\"spring.cloud.gateway.requests.sum\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\") AS ts1 INNER JOIN ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\") as ts2 using (httpMethod, path, httpStatusCode), metric='averageResponsePerRoute', httpMethod=ts1.httpMethod, httpStatusCode=ts1.httpStatusCode, path=ts1.path, requestsSum=ts1.value, requestsCount=ts2.value, ts1 / ts2), httpMethod, path)",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 50
+        },
+        {
+          "charts": [
+            {
+              "base": 0,
+              "units": "s",
+              "name": "Max response time",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "routeUri"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "A",
+                  "sparklineDisplaySubLabel": "Max response time"
+                },
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 7,
+                  "h": 3,
+                  "w": 2
+                },
+                "y0ScaleDecimal": false
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "rawmax(ts(\"spring.cloud.gateway.requests.max\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\").gt(0))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MAX",
+              "chartSettings": {
+                "type": "sparkline",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "s",
+              "name": "Max response time",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "path"
+                  ]
+                },
+                "lineFill": 1,
+                "dashboardLayout": {
+                  "x": 2,
+                  "y": 7,
+                  "h": 3,
+                  "w": 10
+                }
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "A",
+                  "query": "rawmax(ts(\"spring.cloud.gateway.requests.max\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\").gt(0), httpMethod, path)",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MAX",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "lineType": "linear",
+                "windowing": "full",
+                "showValueColumn": true,
+                "autoColumnTags": false
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 50
+        },
+        {
+          "charts": [
+            {
+              "base": 0,
+              "units": "",
+              "name": "Total API usage",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "method",
+                    "uri",
+                    "routeUri",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 10,
+                  "h": 4,
+                  "w": 4
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "API usage",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\"))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "line",
+                "tagMode": "custom",
+                "numTags": 4,
+                "customTags": [
+                  "path",
+                  "httpMethod"
+                ],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "stackType": "zero",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "",
+              "name": "Total API usage by path",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "method",
+                    "uri",
+                    "routeUri",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 4,
+                  "y": 10,
+                  "h": 4,
+                  "w": 4
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "API usage",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\") by (path, httpMethod))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "line",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "stackType": "zero",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "",
+              "name": "Total API usage by path",
+              "chartAttributes": {
+                "decimalPrecision": 0,
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "path",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 8,
+                  "y": 10,
+                  "h": 4,
+                  "w": 4
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "API usage",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\") by(httpMethod, path))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "stackType": "zero",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 80
+        },
+        {
+          "charts": [
+            {
+              "base": 0,
+              "units": "",
+              "name": "Errors",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "method",
+                    "uri",
+                    "routeUri",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 14,
+                  "h": 4,
+                  "w": 4
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "API usage",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND (httpStatusCode=\"4*\" or httpStatusCode=\"5*\")))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "line",
+                "tagMode": "custom",
+                "numTags": 4,
+                "customTags": [
+                  "path",
+                  "httpMethod"
+                ],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "stackType": "zero",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "",
+              "name": "Errors by path",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "method",
+                    "uri",
+                    "routeUri",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 4,
+                  "y": 14,
+                  "h": 4,
+                  "w": 4
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "API usage",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND  (httpStatusCode=\"4*\" or httpStatusCode=\"5*\")) by (path, httpMethod))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "line",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "stackType": "zero",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "",
+              "name": "Errors by path",
+              "chartAttributes": {
+                "decimalPrecision": 0,
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "path",
+                    "httpMethod"
+                  ]
+                },
+                "lineFill": 1,
+                "singleStat": {
+                  "sparklineDisplayLabel": "Average response time",
+                  "sparklineDisplaySubLabel": "Average Response time"
+                },
+                "dashboardLayout": {
+                  "x": 8,
+                  "y": 14,
+                  "h": 4,
+                  "w": 4
+                },
+                "y0ScaleDecimal": true
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "API usage",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND (httpStatusCode=\"4*\" or httpStatusCode=\"5*\")) by(httpMethod, path))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "sparklineDisplayValueType": "VALUE",
+                "sparklineDisplayHorizontalPosition": "MIDDLE",
+                "sparklineDisplayFontSize": "100",
+                "sparklineSize": "BACKGROUND",
+                "lineType": "linear",
+                "stackType": "zero",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false,
+                "sparklineValueColorMapApplyTo": "TEXT",
+                "sparklineValueTextMapText": [
+                  "new highest"
+                ]
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 80
+        },
+        {
+          "charts": [
+            {
+              "base": 0,
+              "name": "Successful authentications by path",
+              "chartAttributes": {
+                "decimalPrecision": 0,
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "path"
+                  ]
+                },
+                "lineFill": 1,
+                "dashboardLayout": {
+                  "x": 0,
+                  "y": 18,
+                  "h": 4,
+                  "w": 4
+                }
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Successful authentications by path",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND hasAuthenticationFilter=\"true\" AND  (httpStatusCode=\"1*\" or httpStatusCode=\"2*\" or httpStatusCode=\"3*\")) by(httpMethod, path))",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "SUM",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "%",
+              "name": "Forbidden Error Rate by path",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "path"
+                  ]
+                },
+                "lineFill": 1,
+                "dashboardLayout": {
+                  "x": 4,
+                  "y": 18,
+                  "h": 4,
+                  "w": 4
+                }
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Forbidden Error Path by rate",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND httpStatusCode=\"403\") by (path, httpMethod)) / sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\") by (path, httpMethod)) * 100",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "sourceDescription": "",
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            },
+            {
+              "base": 0,
+              "units": "%",
+              "name": "Unsuccessful authentications by path",
+              "chartAttributes": {
+                "topK": {
+                  "kValue": 10,
+                  "labelBy": [
+                    "httpMethod",
+                    "path"
+                  ]
+                },
+                "lineFill": 1,
+                "dashboardLayout": {
+                  "x": 8,
+                  "y": 18,
+                  "h": 4,
+                  "w": 4
+                }
+              },
+              "includeObsoleteMetrics": false,
+              "sources": [
+                {
+                  "name": "Unsuccessful authentications by path",
+                  "query": "sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\" AND httpStatusCode=\"401\") by (path, httpMethod)) / sum(ts(\"spring.cloud.gateway.requests.count\", source=\"${source}\" AND application=\"${application}\" AND service=\"${service}\") by (path, httpMethod)) * 100",
+                  "querybuilderEnabled": false,
+                  "secondaryAxis": false,
+                  "disabled": false,
+                  "queryType": "WQL"
+                }
+              ],
+              "noDefaultEvents": false,
+              "summarization": "MEDIAN",
+              "chartSettings": {
+                "type": "top-k",
+                "tagMode": "all",
+                "numTags": 4,
+                "customTags": [],
+                "groupBySource": false,
+                "sortValuesDescending": true,
+                "y1Units": "",
+                "y0ScaleSIBy1024": false,
+                "y1ScaleSIBy1024": false,
+                "y0UnitAutoscaling": true,
+                "y1UnitAutoscaling": false,
+                "fixedLegendEnabled": false,
+                "fixedLegendUseRawStats": false,
+                "fixedLegendPosition": "RIGHT",
+                "fixedLegendDisplayStats": [
+                  "CURRENT"
+                ],
+                "fixedLegendFilterSort": "TOP",
+                "fixedLegendShowSourceName": true,
+                "fixedLegendShowMetricName": false,
+                "fixedLegendFilterLimit": 5,
+                "fixedLegendFilterField": "CURRENT",
+                "lineType": "linear",
+                "windowing": "full",
+                "showHosts": true,
+                "showLabels": true,
+                "showRawValues": false,
+                "showValueColumn": true,
+                "autoColumnTags": false
+              },
+              "interpolatePoints": false,
+              "filterOutNonAnomalies": false,
+              "displayConfidenceBounds": false,
+              "anomalySampleSize": "8",
+              "anomalyType": "both",
+              "anomalySeverity": "medium"
+            }
+          ],
+          "heightFactor": 80
+        }
+      ],
+      "sectionFilter": null
+    }
+  ],
+  "parameterDetails": {
+    "application": {
+      "defaultValue": "Label_82",
+      "order": 1,
+      "label": "Application",
+      "valuesToReadableStrings": {
+        "Label_82": "spring-cloud-gateway"
+      },
+      "dynamicFieldType": "TAG_KEY",
+      "queryValue": "ts(\"process.uptime\")",
+      "hideFromView": false,
+      "tagKey": "application",
+      "parameterType": "DYNAMIC",
+      "allowAll": false,
+      "tagsBlackListRegex": ""
+    },
+    "service": {
+      "defaultValue": "Label",
+      "order": 2,
+      "label": "Service",
+      "valuesToReadableStrings": {
+        "Label": "my-gateway-both-test"
+      },
+      "dynamicFieldType": "TAG_KEY",
+      "queryValue": "ts(\"process.uptime\" AND application=\"${application}\")",
+      "hideFromView": false,
+      "tagKey": "service",
+      "parameterType": "DYNAMIC",
+      "allowAll": false,
+      "tagsBlackListRegex": ""
+    },
+    "source": {
+      "defaultValue": "Label_2",
+      "order": 3,
+      "label": "Source",
+      "valuesToReadableStrings": {
+        "Label_2": "my-gateway-both-test-0"
+      },
+      "dynamicFieldType": "SOURCE",
+      "queryValue": "ts(\"process.uptime\" AND application=\"${application}\" AND service=\"${service}\")",
+      "hideFromView": false,
+      "tagKey": "",
+      "parameterType": "DYNAMIC",
+      "allowAll": true,
+      "tagsBlackListRegex": ""
+    }
+  },
+  "displayDescription": false,
+  "displaySectionTableOfContents": true,
+  "displayQueryParameters": true,
+  "creatorId": "rcallejarios+vmware@vmware.com",
+  "updaterId": "fombico+vmware@vmware.com",
+  "orphan": false,
+  "systemOwned": false,
+  "createdEpochMillis": 1626688580972,
+  "updatedEpochMillis": 1635360828707,
+  "deleted": false,
+  "numCharts": 18,
+  "numFavorites": 2,
+  "favorite": false
+}

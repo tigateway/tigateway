@@ -3,17 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
-        <relativePath/>
+        <groupId>io.github.mavenreposs</groupId>
+        <artifactId>spring-cloud-gateway-k8s</artifactId>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>gateway</artifactId>
     <groupId>io.github.mavenreposs</groupId>
     <version>1.0.0</version>
-    
+
     <packaging>pom</packaging>
 
     <properties>
@@ -25,9 +24,9 @@
         <docker-maven-plugin.version>0.39.1</docker-maven-plugin.version>
     </properties>
 
-    <modules>
-        <module>../gateway-kubernetes-extensions</module>
-    </modules>
+<!--    <modules>-->
+<!--        <module>../gateway-kubernetes-extensions</module>-->
+<!--    </modules>-->
 
     <dependencies>
         <dependency>
@@ -230,24 +229,24 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker-maven-plugin.version}</version>
-                <configuration>
-                    <images>
-                        <image>
-                            <name>
-                                royalwang/${project.name}:${project.version}
-                            </name>
-                            <build>
-                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>
-                            </build>
-                        </image>
-                    </images>
-                    <verbose>true</verbose>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>io.fabric8</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>${docker-maven-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <images>-->
+<!--                        <image>-->
+<!--                            <name>-->
+<!--                                royalwang/${project.name}:${project.version}-->
+<!--                            </name>-->
+<!--                            <build>-->
+<!--                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>-->
+<!--                            </build>-->
+<!--                        </image>-->
+<!--                    </images>-->
+<!--                    <verbose>true</verbose>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

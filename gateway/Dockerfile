@@ -24,7 +24,7 @@ ENV PROJECT=gateway
 WORKDIR /app
 VOLUME /app
 
-COPY --from=build /build/${PROJECT}/target/*.jar /build/build-info.log /app/${PROJECT}/
+COPY --from=build /build/${PROJECT}/target/*.jar /app/${PROJECT}/
 
 RUN cd /app/; \
     find . -type d -mindepth 1 -maxdepth 1|while read dname; do \

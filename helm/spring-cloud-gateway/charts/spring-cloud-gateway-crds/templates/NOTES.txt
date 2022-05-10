@@ -1,0 +1,2 @@
+This chart contains the Custom Resource Definitions for the spring-cloud-gateway chart.
+Install this chart before installing spring-cloud-gateway

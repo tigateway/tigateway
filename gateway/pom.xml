@@ -24,9 +24,6 @@
         <docker-maven-plugin.version>0.39.1</docker-maven-plugin.version>
     </properties>
 
-<!--    <modules>-->
-<!--        <module>../gateway-kubernetes-extensions</module>-->
-<!--    </modules>-->
 
     <dependencies>
         <dependency>
@@ -202,17 +199,6 @@
 
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2021.0.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <finalName>app</finalName>
@@ -228,25 +214,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>io.fabric8</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--                <version>${docker-maven-plugin.version}</version>-->
-<!--                <configuration>-->
-<!--                    <images>-->
-<!--                        <image>-->
-<!--                            <name>-->
-<!--                                royalwang/${project.name}:${project.version}-->
-<!--                            </name>-->
-<!--                            <build>-->
-<!--                                <dockerFile>${project.basedir}/Dockerfile</dockerFile>-->
-<!--                            </build>-->
-<!--                        </image>-->
-<!--                    </images>-->
-<!--                    <verbose>true</verbose>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 

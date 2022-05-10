@@ -21,16 +21,16 @@ FROM arm64v8/openjdk:11-jre as RUN
 ENV TZ=Asia/Shanghai
 ENV PROJECT=gateway
 
+COPY --from=build /build/${PROJECT}/target/*.jar /app/
+
 WORKDIR /app
+RUN cd /app/; \
+    find . -name "*.jar" -mindepth 1 -maxdepth 1|while read fname; do \
+      echo "$fname"; mv "$fname" app.jar; break 1;  \
+    done
+
 VOLUME /app
 
-COPY --from=build /build/${PROJECT}/target/*.jar /app/${PROJECT}/
-
-RUN cd /app/; \
-    find . -type d -mindepth 1 -maxdepth 1|while read dname; do \
-      find $dname -name "*.jar" -mindepth 1 -maxdepth 1|while read fname; do \
-        echo "$fname" "$dname"; mv "$fname" "$dname"/app.jar; break 1; done; done
-
-EXPOSE 8090/tcp
-ENTRYPOINT [ "sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -jar /app/${PROJECT}/app.jar" ]
+EXPOSE 8080/tcp 8090/tcp
+ENTRYPOINT [ "sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar" ]
 

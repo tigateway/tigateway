@@ -1,5 +1,5 @@
 ### STAGE 1: Build ###
-FROM royalwang/maven-openjdk:jdk-11-3.6.3 AS build
+FROM royalwang/maven-prebuild-jdk11:spring-boot-2.6.3 AS build
 
 RUN mkdir -p /root/.m2 \
     && mkdir /root/.m2/repository

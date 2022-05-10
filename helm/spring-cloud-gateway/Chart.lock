@@ -1,0 +1,6 @@
+dependencies:
+- name: spring-cloud-gateway-crds
+  repository: file://../spring-cloud-gateway-crds
+  version: 1.0.10
+digest: sha256:5f4cc19ff905c888e09f75c4c8ddd04e3e469e10b3c316c90dea0d31e834875d
+generated: "2022-03-07T21:23:24.196235859Z"

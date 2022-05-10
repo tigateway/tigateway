@@ -1,0 +1,16 @@
+{{- if .Values.rbacs.create -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: scg-operator-resources-role-binding
+  labels:
+  {{- include "spring-cloud-gateway.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: scg-operator-resources-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "spring-cloud-gateway.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+{{- end }}

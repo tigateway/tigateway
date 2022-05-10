@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 1.0.10
+dependencies:
+- name: spring-cloud-gateway-crds
+  repository: file://../spring-cloud-gateway-crds
+  version: 1.0.10
+description: A Helm chart for Kubernetes
+name: spring-cloud-gateway
+type: application
+version: 1.0.10

@@ -1,0 +1,11 @@
+gateway:
+  image: "docker.io/royalwang/gateway:1.0.10"
+scg-operator:
+  image: "docker.io/royalwang/scg-operator:1.0.10"
+resources:
+  requests:
+    memory: 
+    cpu:  
+  limits:
+    memory:  
+    cpu:  

@@ -2,7 +2,7 @@
 FROM royalwang/maven-prebuild-jdk11:spring-boot-2.6.3 AS build
 
 RUN mkdir -p /root/.m2 \
-    && mkdir /root/.m2/repository
+    && mkdir -p /root/.m2/repository
 COPY ./settings.xml /root/.m2
 
 WORKDIR /build

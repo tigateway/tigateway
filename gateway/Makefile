@@ -12,6 +12,9 @@ help: ## Show this help
 build: ## Docker build image
 	docker build -t royalwang/gateway:1.0.0 -f Dockerfile ../
 
+push: ## Docker push image
+	docker push royalwang/gateway:1.0.0
+
 install: ## K8s helm install
 	helm install gateway -n scg-k8s --create-namespace ./helm
 

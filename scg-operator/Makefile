@@ -9,6 +9,12 @@ help: ## Show this help
 	@printf "\033[33m%s:\033[0m\n" 'Available commands'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  \033[32m%-14s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
+build: ## Docker build image
+	docker build -t royalwang/scg-operator:1.0.0 -f Dockerfile ../
+
+push: ## Docker push image
+	docker push royalwang/scg-operator:1.0.0
+
 install: ## K8s helm install
 	helm install scg-operator -n scg-k8s --create-namespace ./helm
 

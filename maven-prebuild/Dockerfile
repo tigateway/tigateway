@@ -1,4 +1,4 @@
-FROM royalwang/maven-openjdk-arm64:jdk-11-3.6.3 AS builder
+FROM royalwang/maven-openjdk:jdk-11-3.6.3 AS builder
 
 COPY pom.xml /pom/
 COPY settings.xml /pom/

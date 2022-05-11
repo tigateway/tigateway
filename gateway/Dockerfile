@@ -17,7 +17,7 @@ RUN mvn -Dmaven.wagon.http.ssl.insecure=true \
 
 
 ### STAGE 2: Run ###
-FROM arm64v8/openjdk:11-jre as RUN
+FROM openjdk:11-jre as RUN
 ENV TZ=Asia/Shanghai
 ENV PROJECT=gateway
 

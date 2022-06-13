@@ -1,0 +1,7 @@
+scg-operator/target
+scg-operator.iml
+gateway-kubernetes-extensions/target
+gateway-kubernetes-extensions.iml
+gateway/target
+gateway.iml
+k8s-gateway.iml

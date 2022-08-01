@@ -8,13 +8,6 @@
         <module>gateway</module>
         <module>scg-operator</module>
         <module>gateway-kubernetes-extensions</module>
-        <module>gateway-core</module>
-        <module>gateway-util</module>
-        <module>gateway-upload</module>
-        <module>gateway-limit</module>
-        <module>gateway-storage</module>
-        <module>gateway-server</module>
-        <module>gateway-dashboard</module>
         <module>ti-gateway</module>
     </modules>
     <parent>

@@ -13,6 +13,7 @@
         <module>gateway-upload</module>
         <module>gateway-limit</module>
         <module>gateway-storage</module>
+        <module>gateway-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

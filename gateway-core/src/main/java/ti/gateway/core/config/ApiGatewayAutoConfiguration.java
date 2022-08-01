@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerProperties;
+import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.DispatcherHandler;
@@ -78,14 +79,5 @@ public class ApiGatewayAutoConfiguration {
         }
     }
 
-    @Configuration
-    @AutoConfigureAfter(GatewayLoadBalancerClientAutoConfiguration.class)
-    public static class ApiGatewayLoadBalancerClientAutoConfiguration {
-
-        @Bean
-        public LoadBalancerClientFilter loadBalancerClientFilter(LoadBalancerClient client, LoadBalancerProperties properties) {
-            return new AppLoadBalancerClientFilter(client, properties);
-        }
-    }
 
 }

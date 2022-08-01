@@ -45,6 +45,10 @@
             <artifactId>gateway-util</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-loadbalancer</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

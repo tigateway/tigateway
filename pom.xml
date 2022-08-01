@@ -14,6 +14,7 @@
         <module>gateway-limit</module>
         <module>gateway-storage</module>
         <module>gateway-server</module>
+        <module>gateway-dashboard</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

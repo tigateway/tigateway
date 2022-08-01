@@ -8,6 +8,9 @@
         <module>gateway</module>
         <module>scg-operator</module>
         <module>gateway-kubernetes-extensions</module>
+        <module>gateway-core</module>
+        <module>gateway-util</module>
+        <module>gateway-upload</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,6 +25,16 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <mysql-jdbc.verion>5.1.47</mysql-jdbc.verion>
+        <guava.version>23.0</guava.version>
+        <okhttp.version>3.11.0</okhttp.version>
+        <sentinel-core.version>1.6.0</sentinel-core.version>
+        <maven.compiler.version>3.8.0</maven.compiler.version>
+        <maven.jacoco.version>0.8.3</maven.jacoco.version>
     </properties>
 
     <dependencyManagement>
@@ -32,6 +45,13 @@
                 <version>2021.0.1</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

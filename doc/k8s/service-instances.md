@@ -439,3 +439,335 @@ spec:
 
 可以在spec.api.cors块中配置以下参数：
 
+| 范围                    | 	功能                                                                                  | 	例子                                                                            |
+|-----------------------|--------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| allowedOrigins        | 	允许来源发出跨站点请求。特殊值“*”允许所有域。这些值将与 allowedOriginPatterns 中的值组合。                          | 	allowedOrigins: https://example.com                                           |
+| allowedOriginPatterns | 	替代 allowedOrigins ，它支持更灵活的来源模式，除了端口列表外，主机名中的任何位置都带有“*”。这些值将与 allowedOrigins 中的值组合。	 | allowedOriginPatterns: <br/> - https://*.test.com:8080                         |
+| allowedMethods	       | 允许跨站点请求的 HTTP 方法。特殊值“*”允许所有方法。如果未设置，则默认允许“GET”和“HEAD”。	                              | allowedMethods: <br/> - GET <br/> - PUT <br/> - POST                           |
+| allowedHeaders	       | 跨站点请求中允许的标头。特殊值“*”允许实际请求发送任何标头。	                                                     | allowedHeaders:                                 <br/> - X-Custom-Header        |
+| maxAge                | 	客户端可以缓存飞行前请求的响应多长时间（以秒为单位）。	                                                        | maxAge: 300                                                                    |
+| allowCredentials	     | 跨站点请求是否支持用户凭据。有效值：`true`、`false`。	                                                   | allowCredentials: true                                                         |
+| exposedHeaders	       | 为跨站点请求公开的 HTTP 响应标头。	                                                                | exposedHeaders:                                        <br/> - X-Custom-Header |
+
+您还可以为每个路由配置 CORS 行为。但是，不得设置全局 CORS 配置。网关上定义的每个路由都应该在路由配置上具有匹配的路径谓词。
+
+请注意，您还可以通过Cors 过滤器定义每个路由的 cors 行为。
+
+下面的示例为/get/**和/example/**路由配置 CORS 行为：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: my-gateway
+spec:
+  api:
+    cors:
+      perRoute:
+        '[/get/**]':
+          allowedOrigins:
+            - "https://foo.example.com"
+          allowedMethods:
+            - "GET"
+            - "PUT"
+            - "POST"
+          allowedHeaders:
+            - '*'
+        '[/example/**]':
+          allowedOrigins:
+            - "https://bar.example.com"
+          allowedMethods:
+            - "GET"
+            - "POST"
+          allowedHeaders:
+            - '*'
+```
+
+每个路由都可以配置与上表相同的参数。
+
+这是一个匹配的路由配置：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: my-gateway-routes
+spec:
+  routes:
+    - uri: https://httpbin.org
+      predicates:
+        - Path=/get/**
+      filters:
+        - StripPrefix=1
+    - uri: https://httpbin.org
+      predicates:
+        - Path=/example/**
+      filters:
+        - StripPrefix=1
+```
+
+注意：为避免由于下游服务也在进行 CORS 处理而导致重复的标头（例如，接收多个“Access-Control-Allow-Origin”或多个“Access-Control-Allow-Credentials”）导致浏览器调用失败，请在这两个标头会自动删除，网关中配置的标头将始终占主导地位。
+
+## 配置 Java 环境选项
+对于 JVM 调优，可以JAVA_OPTS在 Spring Cloud Gateway for K8s 配置中定义 Java 环境选项 ()。
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: my-gateway
+spec:
+  count: 2
+  java-opts: -XX:+PrintFlagsFinal -Xmx512m
+```
+
+这将重新启动 pod 并将选项应用到底层网关实例。
+
+## 配置会话过期
+如果您需要能够在一定时间（例如 10 分钟）后丢弃非活动会话，只需添加inactive-session-expiration-in-minutes配置即可。
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: my-gateway
+spec:
+  sso:
+    secret: my-sso-credentials
+    inactive-session-expiration-in-minutes: 10
+```
+
+这不会修改任何授权服务器令牌过期（或 ttl）配置。它只影响网关内部管理的会话信息。
+
+与其他 Kubernetes 资源类似，您可以选择在spec.resources.
+
+默认情况下，每个实例都初始化为：
+
+| 资源    | 	已请求  | 	限制  |
+|-------|-------|------|
+| 记忆	   | 256米	 | 512米 |
+| 中央处理器 | 	500m | 	2   |
+
+但是您可以更改它，如下例所示。请注意，低于要求可能会导致问题，因此不推荐。
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: my-gateway
+spec:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "1"
+    limits:
+      memory: "1Gi"
+      cpu: "2"
+```
+
+## 配置探针
+与其他 Kubernetes 资源类似，您可以选择为网关配置livenessProbe、readinessProbe和startupProbe,。
+
+默认情况下，每个实例都初始化为：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: my-gateway
+spec:
+  livenessProbe:
+    initialDelaySeconds: 5
+    failureThreshold: 10
+    periodSeconds: 3
+    timeoutSeconds: 1
+    successThreshold: 1
+  readinessProbe:
+    initialDelaySeconds: 5
+    failureThreshold: 10
+    periodSeconds: 3
+    timeoutSeconds: 1
+    successThreshold: 1
+  startupProbe:
+    initialDelaySeconds: 10
+    failureThreshold: 30
+    periodSeconds: 3
+    timeoutSeconds: 1
+    successThreshold: 1
+```
+
+但是您可以更改它们以更好地满足您的要求。
+
+## 配置可观察性
+Spring Cloud Gateway for Kubernetes 可以配置公开跟踪并根据不同的监控信号生成一组指标和跟踪，以帮助理解总体行为。
+
+注意：指标和跟踪是相互独立的。
+
+### 向 Wavefront 公开指标
+要向Wavefront公开指标，我们需要Secret使用以下数据创建 awavefront.api-token和wavefront.uri，分别表示 Wavefront 的 API 令牌和 Wavefront 的 URI 端点。例如：
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: metrics-wavefront-secret
+data:
+  wavefront.api-token: "NWU3ZCFmNjYtODlkNi00N2Y5LWE0YTMtM2U3OTVmM2Y3MTZk"
+  wavefront.uri: "aHR0cHM6Ly92bAdhcmUud2F2ZWZyb250LmNvbQ=="
+```
+
+然后，在SpringCloudGateway种类中，引用在该部分下的上一步中创建的秘密metrics。例如：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: test-gateway-metrics
+spec:
+  observability:
+    metrics:
+      wavefront:
+        enabled: true
+    wavefront:
+      secret: metrics-wavefront-secret
+      source: my-source
+      application: my-shopping-application
+      service: gateway-service
+```
+
+应用配置后，Wavefront 将开始接收Spring Cloud Gateway默认提供的指标。
+
+注意：如果您还使用波前进行跟踪，请确保在两个规范中指定相同的密钥和源。
+
+使用 Spring Cloud Gateway for Kubernetes Dashboard for Wavefront
+Spring Cloud Gateway for Kubernetes 有一个预构建的仪表板，您可以在 Wavefront 中使用。
+
+如果您使用的是VMware 的 Wavefront，那么您可以克隆和自定义已经创建的Spring Cloud Gateway for Kubernetes Dashboard。
+
+或者，用于 Kubernetes 发布工件的 Spring Cloud Gateway 包含一个仪表板，可以在仪表板发布文件夹中找到该仪表板。
+
+要导入它，我们需要创建一个 API Token并执行以下命令：
+
+```shell
+curl -XPOST 'https://vmware.wavefront.com/api/v2/dashboard' --header "Authorization: Bearer ${WAVEFRONT_API_TOKEN}" --header "Content-Type: application/json" -d "@wavefront-spring-cloud-gateway-for-kubernetes.json"
+```
+
+### 向 Prometheus 公开指标
+
+为了向Prometheus公开指标，我们需要在SpringCloudGateway类型中添加一个 prometheus 部分，如果我们希望将报废注释添加到网关 pod 中，例如：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: test-gateway-metrics
+spec:
+  observability:
+    metrics:
+      prometheus:
+        enabled: true
+```
+
+应用配置后，Prometheus 执行器端点将可用。
+
+如果除此之外，我们希望将报废注释添加到所有 Spring Cloud Gateway Pod，我们应该创建我们的 Prometheus 配置，并将其annotations设置为true，例如：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: test-gateway-metrics-with-annotations
+spec:
+  observability:
+    metrics:
+      prometheus:
+        enabled: true
+        annotations:
+          enabled: true
+```
+
+这将为每个 Spring Cloud Gateway Pod 添加以下注解：
+
+```yaml
+   annotations:
+     prometheus.io/scrape: "true"
+     prometheus.io/path: "/actuator/prometheus"
+     prometheus.io/port: "8090"
+```
+
+使用 Spring Cloud Gateway for Kubernetes Dashboard for Grafana
+Spring Cloud Gateway for Kubernetes 发布工件包含一个 Grafana 仪表板，可以在仪表板发布文件夹中找到。要导入它，您可以按照如何导入指南。
+
+### 将跟踪暴露于波前
+要向Wavefront公开跟踪，我们需要Secret使用以下数据创建 awavefront.api-token和wavefront.uri，分别表示 Wavefront 的 API 令牌和 Wavefront 的 URI 端点。例如：
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tracing-wavefront-secret
+data:
+  wavefront.api-token: "NWU3ZCFmNjYtODlkNi00N2Y5LWE0YTMtM2U3OTVmM2Y3MTZk"
+  wavefront.uri: "aHR0cHM6Ly92bAdhcmUud2F2ZWZyb250LmNvbQ=="
+```
+
+然后，在SpringCloudGateway种类中，引用在该部分下的上一步中创建的秘密tracing。例如：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: test-gateway-tracing
+spec:
+  observability:
+    tracing:
+      wavefront:
+        enabled: true
+    wavefront:
+      secret: tracing-wavefront-secret
+      source: my-source
+      application: my-shopping-application
+      service: gateway-service
+```
+
+应用配置后，Wavefront 将开始接收跟踪
+
+注意：如果您还使用波前作为指标，请确保在两个规范中指定相同的密钥和源。
+
+### 将自定义标签应用到 Gateway Pod
+可以将自定义标签添加到网关配置中。这些标签将传播到网关操作员创建的 Pod 中，例如：
+
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: test-gateway-tracing
+  labels:
+    test-label: test
+spec:
+  count: 2
+```
+
+然后可以通过指定标签来列出 Pod：
+
+```shell
+ kubectl get pods -l test-label=test
+```
+
+## 自定义服务类型
+
+默认情况下，网关使用 ClusterIP 服务公开。您可以通过指定spec.service.type. 您还可以通过指定spec.service.port. 如果未指定，将自动分配端口。
+
+例如：
+```yaml
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGateway
+metadata:
+  name: my-gateway
+spec:
+  service:
+    type: NodePort
+    nodePort: 32222
+```
+
+请注意，对于本地开发，您的集群需要配置为公开您的选择nodePort，然后才能从主机向节点发送流量。

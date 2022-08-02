@@ -7,3 +7,5 @@ gateway.iml
 k8s-gateway.iml
 ti-gateway-kubernetes.iml
 ti-gateway-kubernetes/target
+ti-gateway-operator.iml
+ti-gateway-operator/target

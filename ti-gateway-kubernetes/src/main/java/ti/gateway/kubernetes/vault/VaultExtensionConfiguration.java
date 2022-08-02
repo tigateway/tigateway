@@ -1,6 +1,6 @@
 package ti.gateway.kubernetes.vault;
 
-import com.vmware.tanzu.springcloudgateway.SecretsProvidersLocator;
+import ti.gateway.operator.springcloudgateway.SecretsProvidersLocator;
 import java.nio.file.Path;
 import java.time.Clock;
 import java.util.List;

@@ -9,3 +9,5 @@ ti-gateway-kubernetes.iml
 ti-gateway-kubernetes/target
 ti-gateway-operator.iml
 ti-gateway-operator/target
+ti-gateway-kubernetes-extensions.iml
+ti-gateway-kubernetes-extensions/target

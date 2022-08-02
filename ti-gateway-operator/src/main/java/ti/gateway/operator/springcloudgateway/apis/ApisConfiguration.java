@@ -28,7 +28,7 @@ class ApisConfiguration {
     @Profile({"!test"})
     public ApiClient apiClient() throws IOException {
         ApiClient apiClient = ClientBuilder.standard(false).build();
-        apiClient.setHttpClient(apiClient.getHttpClient().newBuilder().protocols(Arrays.asList(Protocol.HTTP_2, Protocol.HTTP_1_1)).readTimeout(Duration.ZERO).pingInterval(1L, TimeUnit.MINUTES).build());
+        apiClient.setHttpClient(apiClient.getHttpClient().newBuilder().protocols(Arrays.asList(Protocol.HTTP_2, Protocol.HTTP_1_1)).readTimeout(Duration.ZERO.toMillis(), TimeUnit.MILLISECONDS).pingInterval(1L, TimeUnit.MINUTES).build());
         io.kubernetes.client.openapi.Configuration.setDefaultApiClient(apiClient);
         return apiClient;
     }

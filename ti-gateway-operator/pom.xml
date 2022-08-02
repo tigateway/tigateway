@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>scg-operator</artifactId>
+    <artifactId>ti-gateway-operator</artifactId>
     <groupId>io.github.mavenreposs</groupId>
     <version>1.0.0</version>
 

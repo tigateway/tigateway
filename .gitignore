@@ -5,3 +5,5 @@ gateway-kubernetes-extensions.iml
 gateway/target
 gateway.iml
 k8s-gateway.iml
+ti-gateway-kubernetes.iml
+ti-gateway-kubernetes/target

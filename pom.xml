@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>gateway</module>
-        <module>scg-operator</module>
-        <module>gateway-kubernetes-extensions</module>
+        <module>ti-gateway-operator</module>
+        <module>ti-gateway-kubernetes</module>
+        <module>ti-gateway-kubernetes-extensions</module>
         <module>ti-gateway</module>
     </modules>
     <parent>

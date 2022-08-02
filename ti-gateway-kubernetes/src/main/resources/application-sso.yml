@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          sso:
+            issuer-uri: ${sso.issuer-uri}
+        registration:
+          sso:
+            provider: sso
+            client-id: ${sso.client-id}
+            scope: ${sso.scope}
+            authorization-grant-type: authorization_code

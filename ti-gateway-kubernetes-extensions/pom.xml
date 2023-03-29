@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>spring-cloud-gateway-k8s</artifactId>
+        <artifactId>ti-gateway-parent</artifactId>
         <groupId>io.github.mavenreposs</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>gateway-kubernetes-extensions</artifactId>
+    <artifactId>ti-gateway-kubernetes-extensions</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

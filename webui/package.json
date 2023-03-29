@@ -1,9 +1,9 @@
 {
-  "name": "traefik-ui",
+  "name": "ti-gateway-ui",
   "version": "2.0.0",
-  "description": "Traefik UI",
-  "productName": "Traefik",
-  "cordovaId": "io.traefik.traefik",
+  "description": "TiGateway UI",
+  "productName": "TiGateway",
+  "cordovaId": "io.gateway.ti",
   "private": true,
   "scripts": {
     "transfer": "node dev/scripts/transfer.js",

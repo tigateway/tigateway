@@ -1,10 +1,10 @@
-# Traefik Web UI
+# TiGateway Web UI
 
-Access to Traefik Web UI, ex: http://localhost:8080
+Access to TiGateway Web UI, ex: http://localhost:8080
 
 ## Interface
 
-Traefik Web UI provide 2 types of information:
+TiGateway Web UI provide 2 types of information:
 
 - Providers with their backends and frontends information.
 - Health of the web server.

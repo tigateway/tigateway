@@ -19,11 +19,11 @@
               <q-btn stretch flat icon="eva-question-mark-circle-outline">
                 <q-menu anchor="bottom left" auto-close>
                   <q-item>
-                    <q-btn type="a" :href="`https://doc.traefik.io/traefik/${parsedVersion}`" target="_blank" flat color="accent" align="left" icon="eva-book-open-outline" no-caps label="Documentation" class="btn-submenu full-width"/>
+                    <q-btn type="a" :href="`https://tigateway.github.io/tigateway-docs/${parsedVersion}`" target="_blank" flat color="accent" align="left" icon="eva-book-open-outline" no-caps label="Documentation" class="btn-submenu full-width"/>
                   </q-item>
                   <q-separator />
                   <q-item>
-                    <q-btn type="a" href="https://github.com/traefik/traefik/" target="_blank" flat color="accent" align="left" icon="eva-github-outline" no-caps label="Github repository" class="btn-submenu full-width"/>
+                    <q-btn type="a" href="https://github.com/tigateway/tigateway/" target="_blank" flat color="accent" align="left" icon="eva-github-outline" no-caps label="Github repository" class="btn-submenu full-width"/>
                   </q-item>
                 </q-menu>
               </q-btn>

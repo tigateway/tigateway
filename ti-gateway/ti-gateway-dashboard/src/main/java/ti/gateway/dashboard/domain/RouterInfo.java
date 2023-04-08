@@ -15,8 +15,8 @@ public class RouterInfo {
     private String rule;
     private String service;
     private String status;
+    private TLS tls;
     private List<String> using;
 
     // Getters and setters
 }
-

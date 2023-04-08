@@ -10,9 +10,11 @@ import java.util.List;
 public class Middleware {
     private AddPrefix addPrefix;
     private BasicAuth basicAuth;
+    private String name;
+    private String provider;
     private String status;
+    private String type;
     private List<String> usedBy;
 
     // Getters and setters
 }
-

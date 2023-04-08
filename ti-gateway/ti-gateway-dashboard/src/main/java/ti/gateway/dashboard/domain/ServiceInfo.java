@@ -1,12 +1,15 @@
 package ti.gateway.dashboard.domain;
 
+import lombok.Data;
+
+import java.util.List;
+
 /**
  * @author wangzhengdong
  * @version 1.0
  * @date 2023/4/9 01:34
  */
-import java.util.List;
-
+@Data
 public class ServiceInfo {
     private LoadBalancer loadBalancer;
     private String name;

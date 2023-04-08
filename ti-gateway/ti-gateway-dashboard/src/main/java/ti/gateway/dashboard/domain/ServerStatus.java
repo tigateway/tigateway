@@ -1,12 +1,15 @@
 package ti.gateway.dashboard.domain;
 
+import lombok.Data;
+
+import java.util.Map;
+
 /**
  * @author wangzhengdong
  * @version 1.0
  * @date 2023/4/9 01:36
  */
-import java.util.Map;
-
+@Data
 public class ServerStatus {
     private Map<String, String> serverStatus;
 

@@ -1,5 +1,7 @@
 package ti.gateway.dashboard.domain;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  * @version 1.0
  * @date 2023/4/9 01:25
  */
+@Data
 public class StatusInfo {
     private Features features;
     private Http http;

@@ -1,9 +1,14 @@
 package ti.gateway.dashboard.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ti.gateway.dashboard.domain.Router;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author wangzhengdong
@@ -17,9 +22,30 @@ public class ApiController {
     // HTTP routers
 
     @GetMapping("/http/routers")
-    public String listHttpRouters() {
-        // Replace this with your actual data source
-        return "List of HTTP routers";
+    public ResponseEntity<List<Router>> listHttpRouters() {
+        Router router1 = new Router();
+        router1.setEntryPoints(Arrays.asList("web"));
+        router1.setMiddlewares(Arrays.asList("auth", "addPrefixTest@anotherprovider"));
+        router1.setName("bar@myprovider");
+        router1.setProvider("myprovider");
+        router1.setRule("Host(`foo.bar`)");
+        router1.setService("foo-service@myprovider");
+        router1.setStatus("enabled");
+        router1.setUsing(Arrays.asList("web"));
+
+        Router router2 = new Router();
+        router2.setEntryPoints(Arrays.asList("web"));
+        router2.setMiddlewares(Arrays.asList("addPrefixTest", "auth"));
+        router2.setName("test@myprovider");
+        router2.setProvider("myprovider");
+        router2.setRule("Host(`foo.bar.other`)");
+        router2.setService("foo-service@myprovider");
+        router2.setStatus("enabled");
+        router2.setUsing(Arrays.asList("web"));
+
+        List<Router> routers = Arrays.asList(router1, router2);
+
+        return ResponseEntity.ok(routers);
     }
 
     @GetMapping("/http/routers/{name}")

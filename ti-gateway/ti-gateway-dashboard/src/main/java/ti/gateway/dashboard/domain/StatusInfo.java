@@ -1,5 +1,7 @@
 package ti.gateway.dashboard.domain;
 
+import java.util.List;
+
 /**
  * @author wangzhengdong
  * @version 1.0
@@ -10,7 +12,9 @@ public class StatusInfo {
     private Http http;
     private Tcp tcp;
     private Udp udp;
+    private List<String> providers;
 
     // Getters and setters
 }
+
 

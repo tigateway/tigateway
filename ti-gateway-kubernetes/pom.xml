@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ti-gateway-kubernetes</artifactId>
-    <groupId>io.github.mavenreposs</groupId>
     <version>1.0.0</version>
 
     <properties>
@@ -191,7 +190,7 @@
 
         <dependency>
             <groupId>io.github.mavenreposs</groupId>
-            <artifactId>gateway-kubernetes-extensions</artifactId>
+            <artifactId>ti-gateway-kubernetes-extensions</artifactId>
             <version>1.0.0</version>
         </dependency>
 

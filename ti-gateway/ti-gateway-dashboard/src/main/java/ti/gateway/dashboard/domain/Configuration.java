@@ -1,5 +1,7 @@
 package ti.gateway.dashboard.domain;
 
+import java.util.Map;
+
 /**
  * @author wangzhengdong
  * @version 1.0

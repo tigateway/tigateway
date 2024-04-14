@@ -37,11 +37,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.mavenreposs</groupId>
-            <artifactId>ti-gateway-base</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>

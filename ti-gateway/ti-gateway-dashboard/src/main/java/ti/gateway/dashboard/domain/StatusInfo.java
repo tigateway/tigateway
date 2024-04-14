@@ -11,13 +11,16 @@ import java.util.List;
  */
 @Data
 public class StatusInfo {
+    // features
     private Features features;
+    // http
     private Http http;
+    // tcp
     private Tcp tcp;
+    // udp
     private Udp udp;
+    // providers
     private List<String> providers;
-
-    // Getters and setters
 }
 
 

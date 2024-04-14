@@ -9,11 +9,13 @@ import lombok.Data;
  */
 @Data
 public class Features {
+    // access log
     private boolean accessLog;
+    // metrics
     private String metrics;
+    // tracing
     private String tracing;
+    // hub
     private boolean hub;
-
-    // Getters and setters
 }
 

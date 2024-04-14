@@ -11,11 +11,13 @@ import java.util.List;
  */
 @Data
 public class TcpRouter {
+    // entryPoints
     private List<String> entryPoints;
+    // service
     private String service;
+    // rule
     private String rule;
+    // status
     private String status;
-
-    // Getters and setters
 }
 

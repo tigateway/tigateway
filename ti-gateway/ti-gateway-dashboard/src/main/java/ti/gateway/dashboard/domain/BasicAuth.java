@@ -11,8 +11,7 @@ import java.util.List;
  */
 @Data
 public class BasicAuth {
+    // Basic authentication
     private List<String> users;
-
-    // Getters and setters
 }
 

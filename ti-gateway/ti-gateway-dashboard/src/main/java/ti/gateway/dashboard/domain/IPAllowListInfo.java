@@ -11,13 +11,17 @@ import java.util.List;
  */
 @Data
 public class IPAllowListInfo {
+    // IP allow list info
     private IPAllowList ipAllowList;
+    // name
     private String name;
+    // provider
     private String provider;
+    // status
     private String status;
+    // type
     private String type;
+    // used by
     private List<String> usedBy;
-
-    // Getters and setters
 }
 

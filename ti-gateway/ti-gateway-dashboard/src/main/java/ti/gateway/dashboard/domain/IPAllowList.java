@@ -11,8 +11,7 @@ import java.util.List;
  */
 @Data
 public class IPAllowList {
+    // IP allow list
     private List<String> sourceRange;
-
-    // Getters and setters
 }
 

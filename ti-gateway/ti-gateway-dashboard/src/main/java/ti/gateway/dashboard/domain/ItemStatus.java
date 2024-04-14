@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class ItemStatus {
+    // errors
     private int errors;
+    // total
     private int total;
+    // warnings
     private int warnings;
-
-    // Getters and setters
 }
 

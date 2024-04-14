@@ -11,8 +11,7 @@ import java.util.Map;
  */
 @Data
 public class ServerStatus {
+    // Server status
     private Map<String, String> serverStatus;
-
-    // Getters and setters
 }
 

@@ -11,9 +11,9 @@ import java.util.List;
  */
 @Data
 public class LoadBalancer {
+    // servers
     private List<Server> servers;
+    // pass host header
     private boolean passHostHeader;
-
-    // Getters and setters
 }
 

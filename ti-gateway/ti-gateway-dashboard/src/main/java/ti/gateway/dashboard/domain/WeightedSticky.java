@@ -9,8 +9,7 @@ import lombok.Data;
  */
 @Data
 public class WeightedSticky {
+    // Weighted sticky
     private StickyCookie cookie;
-
-    // Getters and setters
 }
 

@@ -9,8 +9,7 @@ import lombok.Data;
  */
 @Data
 public class TLS {
+    // Passthrough
     private boolean passthrough;
-
-    // Getters and setters
 }
 

@@ -11,15 +11,22 @@ import java.util.List;
  */
 @Data
 public class RouterInfo {
+    // Entry points
     private List<String> entryPoints;
+    // Middlewares
     private List<String> middlewares;
+    // name
     private String name;
+    // provider
     private String provider;
+    // rule
     private String rule;
+    // service
     private String service;
+    // status
     private String status;
+    // TLS
     private TLS tls;
+    // using
     private List<String> using;
-
-    // Getters and setters
 }

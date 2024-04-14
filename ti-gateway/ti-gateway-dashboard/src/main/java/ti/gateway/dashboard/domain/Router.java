@@ -11,15 +11,21 @@ import java.util.List;
  */
 @Data
 public class Router {
+    // entryPoints
     private List<String> entryPoints;
+    // middlewares
     private List<String> middlewares;
+    // name
     private String name;
+    // provider
     private String provider;
+    // service
     private String service;
+    // rule
     private String rule;
+    // status
     private String status;
+    // using
     private List<String> using;
-
-    // Getters and setters
 }
 

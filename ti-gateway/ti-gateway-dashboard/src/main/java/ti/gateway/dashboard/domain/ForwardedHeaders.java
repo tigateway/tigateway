@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Data
 public class ForwardedHeaders {
+    // Forwarded headers
     private boolean insecure;
+    // trusted IPs
     private List<String> trustedIPs;
-
-    // Getters and setters
 }

@@ -9,9 +9,9 @@ import lombok.Data;
  */
 @Data
 public class Mirror {
+    // Mirror name
     private String name;
+    // Mirror percent
     private int percent;
-
-    // Getters and setters
 }
 

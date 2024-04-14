@@ -9,13 +9,17 @@ import lombok.Data;
  */
 @Data
 public class AddressConfig {
+    // Address configuration
     private String address;
+    // forward the client's http headers
     private ForwardedHeaders forwardedHeaders;
+    // http configuration
     private Http http;
+    // name of the address
     private String name;
+    // proxy protocol
     private ProxyProtocol proxyProtocol;
+    // transport configuration
     private Transport transport;
-
-    // Getters and setters
 }
 

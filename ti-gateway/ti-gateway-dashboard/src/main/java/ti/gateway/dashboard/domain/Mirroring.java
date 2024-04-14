@@ -11,9 +11,9 @@ import java.util.List;
  */
 @Data
 public class Mirroring {
+    // Mirrors
     private List<Mirror> mirrors;
+    // Service
     private String service;
-
-    // Getters and setters
 }
 

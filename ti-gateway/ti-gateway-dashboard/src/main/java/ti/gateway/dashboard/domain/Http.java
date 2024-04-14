@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class Http {
+    // Http middleware
     private ItemStatus middlewares;
+    // Http routes
     private ItemStatus routers;
+    // Http services
     private ItemStatus services;
-
-    // Getters and setters
 }
 

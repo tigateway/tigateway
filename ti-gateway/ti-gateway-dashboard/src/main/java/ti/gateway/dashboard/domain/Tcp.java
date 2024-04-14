@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class Tcp {
+    // Middlewares
     private ItemStatus middlewares;
+    // routers
     private ItemStatus routers;
+    // services
     private ItemStatus services;
-
-    // Getters and setters
 }
 

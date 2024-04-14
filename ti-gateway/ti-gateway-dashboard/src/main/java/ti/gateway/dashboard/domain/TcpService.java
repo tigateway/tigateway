@@ -11,10 +11,11 @@ import java.util.List;
  */
 @Data
 public class TcpService {
+    // Load balancer
     private LoadBalancer loadBalancer;
+    // status
     private String status;
+    // used by
     private List<String> usedBy;
-
-    // Getters and setters
 }
 

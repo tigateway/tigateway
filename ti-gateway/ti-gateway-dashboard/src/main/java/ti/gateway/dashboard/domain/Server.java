@@ -9,9 +9,9 @@ import lombok.Data;
  */
 @Data
 public class Server {
+    // url
     private String url;
+    // address
     private String address;
-
-    // Getters and setters
 }
 

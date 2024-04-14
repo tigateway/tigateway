@@ -11,10 +11,11 @@ import java.util.List;
  */
 @Data
 public class Service {
+    // load balancer
     private LoadBalancer loadBalancer;
+    // name
     private String status;
+    // used by
     private List<String> usedBy;
-
-    // Getters and setters
 }
 

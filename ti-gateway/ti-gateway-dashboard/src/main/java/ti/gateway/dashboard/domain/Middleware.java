@@ -11,13 +11,18 @@ import java.util.List;
  */
 @Data
 public class Middleware {
+    // Add prefix
     private AddPrefix addPrefix;
+    // Basic auth
     private BasicAuth basicAuth;
+    // name
     private String name;
+    // provider
     private String provider;
+    // status
     private String status;
+    // type
     private String type;
+    // used by
     private List<String> usedBy;
-
-    // Getters and setters
 }

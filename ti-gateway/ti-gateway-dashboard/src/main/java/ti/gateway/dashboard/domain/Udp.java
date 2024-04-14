@@ -9,9 +9,9 @@ import lombok.Data;
  */
 @Data
 public class Udp {
+    // routers
     private ItemStatus routers;
+    // services
     private ItemStatus services;
-
-    // Getters and setters
 }
 

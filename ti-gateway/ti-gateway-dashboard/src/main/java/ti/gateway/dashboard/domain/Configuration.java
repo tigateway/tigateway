@@ -11,12 +11,15 @@ import java.util.Map;
  */
 @Data
 public class Configuration {
+    // router configuration
     private Map<String, Router> routers;
+    // middleware configuration
     private Map<String, Middleware> middlewares;
+    // service configuration
     private Map<String, Service> services;
+    // tcp router configuration
     private Map<String, TcpRouter> tcpRouters;
+    // tcp service configuration
     private Map<String, TcpService> tcpServices;
-
-    // Getters and setters
 }
 

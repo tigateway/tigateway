@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Data
 public class ProxyProtocol {
+    // insecure
     private boolean insecure;
+    // trusted IPs
     private List<String> trustedIPs;
-
-    // Getters and setters
 }

@@ -9,9 +9,9 @@ import lombok.Data;
  */
 @Data
 public class LifeCycle {
+    // grace timeout
     private String graceTimeOut;
+    // request accept grace timeout
     private String requestAcceptGraceTimeout;
-
-    // Getters and setters
 }
 

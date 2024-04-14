@@ -11,16 +11,23 @@ import java.util.List;
  */
 @Data
 public class ServiceInfo {
+    // load balancer
     private LoadBalancer loadBalancer;
+    // name
     private String name;
+    // provider
     private String provider;
+    // server status
     private ServerStatus serverStatus;
+    // status
     private String status;
+    // type
     private String type;
+    // used by
     private List<String> usedBy;
+    // weight sticky
     private WeightedSticky weighted;
+    // mirroring
     private Mirroring mirroring;
-
-    // Getters and setters
 }
 

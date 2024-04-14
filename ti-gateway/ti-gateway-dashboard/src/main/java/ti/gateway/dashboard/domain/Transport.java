@@ -9,9 +9,9 @@ import lombok.Data;
  */
 @Data
 public class Transport {
+    // lifeCycle
     private LifeCycle lifeCycle;
+    // responding Timeouts
     private RespondingTimeouts respondingTimeouts;
-
-    // Getters and setters
 }
 

@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class StickyCookie {
+    // http only
     private boolean httpOnly;
+    // name
     private String name;
+    // secure
     private boolean secure;
-
-    // Getters and setters
 }
 

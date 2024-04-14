@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class RespondingTimeouts {
+    // idle timeout
     private String idleTimeout;
+    // read timeout
     private String readTimeout;
+    // write timeout
     private String writeTimeout;
-
-    // Getters and setters
 }
 

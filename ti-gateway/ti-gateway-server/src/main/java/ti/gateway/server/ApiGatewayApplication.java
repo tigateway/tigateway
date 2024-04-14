@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication(scanBasePackages = {"ti.gateway"})
-@MapperScan(value = "ti.gateway.storage.db.mapper")
+@MapperScan(value = "ti.gateway.admin.storage.db.mapper")
 @EnableDiscoveryClient
 public class ApiGatewayApplication {
 

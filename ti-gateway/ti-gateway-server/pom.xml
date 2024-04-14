@@ -47,16 +47,6 @@
         </dependency>
         <dependency>
             <groupId>io.github.mavenreposs</groupId>
-            <artifactId>ti-gateway-util</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.mavenreposs</groupId>
-            <artifactId>ti-gateway-storage-db</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.mavenreposs</groupId>
             <artifactId>ti-gateway-limit-sentinel</artifactId>
             <version>1.0.0</version>
         </dependency>

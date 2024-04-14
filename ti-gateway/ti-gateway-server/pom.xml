@@ -42,7 +42,7 @@
 
         <dependency>
             <groupId>io.github.mavenreposs</groupId>
-            <artifactId>ti-gateway-core</artifactId>
+            <artifactId>ti-gateway-base</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

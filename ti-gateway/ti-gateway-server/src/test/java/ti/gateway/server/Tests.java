@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.junit.jupiter.api.Test;
-import ti.gateway.util.ApiGatewaySignUtils;
+import ti.gateway.base.util.ApiGatewaySignUtils;
 
 import java.io.IOException;
 import java.util.HashMap;

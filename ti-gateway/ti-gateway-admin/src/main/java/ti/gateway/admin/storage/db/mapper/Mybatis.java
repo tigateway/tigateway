@@ -1,4 +1,4 @@
-package ti.gateway.storage.db.mapper;
+package ti.gateway.admin.storage.db.mapper;
 
 import org.springframework.stereotype.Component;
 

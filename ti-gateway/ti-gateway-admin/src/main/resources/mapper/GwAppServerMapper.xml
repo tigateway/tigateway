@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ti.gateway.storage.db.mapper.GwAppServerMapper">
+    <resultMap id="BaseResultMap" type="ti.gateway.admin.storage.db.model.GwAppServer">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="server_code" jdbcType="VARCHAR" property="serverCode"/>
+        <result column="appKey" jdbcType="VARCHAR" property="appkey"/>
+        <result column="server_ips" jdbcType="VARCHAR" property="serverIps"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="ctime" jdbcType="TIMESTAMP" property="ctime"/>
+        <result column="mtime" jdbcType="TIMESTAMP" property="mtime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, server_code, appKey, server_ips, status, ctime, mtime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gw_app_server
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectListByAppkey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gw_app_server
+        where appKey = #{appKey,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gw_app_server
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+    insert into gw_app_server (server_code, appKey, server_ips,
+      status, ctime, mtime
+      )
+    values (#{serverCode,jdbcType=VARCHAR}, #{appkey,jdbcType=VARCHAR}, #{serverIps,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+        insert into gw_app_server
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serverCode != null">
+                server_code,
+            </if>
+            <if test="appkey != null">
+                appKey,
+            </if>
+            <if test="serverIps != null">
+                server_ips,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="mtime != null">
+                mtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serverCode != null">
+                #{serverCode,jdbcType=VARCHAR},
+            </if>
+            <if test="appkey != null">
+                #{appkey,jdbcType=VARCHAR},
+            </if>
+            <if test="serverIps != null">
+                #{serverIps,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+        update gw_app_server
+        <set>
+            <if test="serverCode != null">
+                server_code = #{serverCode,jdbcType=VARCHAR},
+            </if>
+            <if test="appkey != null">
+                appKey = #{appkey,jdbcType=VARCHAR},
+            </if>
+            <if test="serverIps != null">
+                server_ips = #{serverIps,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                mtime = #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+    update gw_app_server
+    set server_code = #{serverCode,jdbcType=VARCHAR},
+      appKey = #{appkey,jdbcType=VARCHAR},
+      server_ips = #{serverIps,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

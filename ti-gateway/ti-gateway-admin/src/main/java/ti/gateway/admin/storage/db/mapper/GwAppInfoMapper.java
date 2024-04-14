@@ -1,7 +1,7 @@
-package ti.gateway.storage.db.mapper;
+package ti.gateway.admin.storage.db.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import ti.gateway.storage.db.model.GwAppInfo;
+import ti.gateway.admin.storage.db.model.GwAppInfo;
 
 import java.util.List;
 import java.util.Set;

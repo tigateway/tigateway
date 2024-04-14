@@ -1,4 +1,4 @@
-package ti.gateway.storage.db.model;
+package ti.gateway.admin.storage.db.model;
 
 import java.io.Serializable;
 import java.util.Date;

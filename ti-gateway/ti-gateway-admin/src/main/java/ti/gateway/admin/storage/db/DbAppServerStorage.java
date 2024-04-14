@@ -1,12 +1,12 @@
-package ti.gateway.storage.db;
+package ti.gateway.admin.storage.db;
 
 import org.springframework.util.CollectionUtils;
-import ti.gateway.core.cache.AppServer;
-import ti.gateway.core.cache.AppServerStorage;
-import ti.gateway.storage.db.mapper.GwAppInfoMapper;
-import ti.gateway.storage.db.mapper.GwAppServerMapper;
-import ti.gateway.storage.db.model.GwAppInfo;
-import ti.gateway.storage.db.model.GwAppServer;
+import ti.gateway.admin.core.cache.AppServer;
+import ti.gateway.admin.core.cache.AppServerStorage;
+import ti.gateway.admin.storage.db.mapper.GwAppInfoMapper;
+import ti.gateway.admin.storage.db.mapper.GwAppServerMapper;
+import ti.gateway.admin.storage.db.model.GwAppInfo;
+import ti.gateway.admin.storage.db.model.GwAppServer;
 import ti.gateway.util.BeanCopierUtils;
 
 import java.util.Objects;

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ti.gateway.storage.db.mapper.GwAppInfoMapper">
+    <resultMap id="BaseResultMap" type="ti.gateway.admin.storage.db.model.GwAppInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="desc" jdbcType="VARCHAR" property="desc"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="appKey" jdbcType="VARCHAR" property="appkey"/>
+        <result column="appSecret" jdbcType="VARCHAR" property="appsecret"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="ctime" jdbcType="TIMESTAMP" property="ctime"/>
+        <result column="mtime" jdbcType="TIMESTAMP" property="mtime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, `desc`, type, appKey, appSecret, status, ctime, mtime
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gw_app_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAllAppkeys" resultType="java.lang.String">
+    select appKey
+    from gw_app_info
+  </select>
+    <select id="selectByAppkey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gw_app_info
+        where appKey = #{appKey,jdbcType=VARCHAR}
+    </select>
+    <select id="selectCountWithBySearch"
+            resultType="java.lang.Integer">
+        select
+        count(id)
+        from gw_app_info
+        <where>
+            <if test="gwAppInfo.name != null">
+                and name = #{gwAppInfo.name,jdbcType=VARCHAR}
+            </if>
+            <if test="gwAppInfo.type != null">
+                and type = #{gwAppInfo.type,jdbcType=TINYINT}
+            </if>
+            <if test="gwAppInfo.appkey != null">
+                and appKey = #{gwAppInfo.appkey,jdbcType=VARCHAR},
+            </if>
+            <if test="gwAppInfo.status != null">
+                and status = #{gwAppInfo.status,jdbcType=BIT}
+            </if>
+        </where>
+    </select>
+    <select id="selectListWithBySearch"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from gw_app_info
+        <where>
+            <if test="gwAppInfo.name != null">
+                and name = #{gwAppInfo.name,jdbcType=VARCHAR}
+            </if>
+            <if test="gwAppInfo.type != null">
+                and type = #{gwAppInfo.type,jdbcType=TINYINT}
+            </if>
+            <if test="gwAppInfo.appkey != null">
+                and appKey = #{gwAppInfo.appkey,jdbcType=VARCHAR},
+            </if>
+            <if test="gwAppInfo.status != null">
+                and status = #{gwAppInfo.status,jdbcType=BIT}
+            </if>
+        </where>
+        ORDER BY mtime DESC
+        LIMIT #{start}, #{pageSize}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from gw_app_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+    insert into gw_app_info (name, desc, type,
+      appKey, appSecret, status, 
+      ctime, mtime)
+    values (#{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{appkey,jdbcType=VARCHAR}, #{appsecret,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+        insert into gw_app_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                name,
+            </if>
+            <if test="desc != null">
+                desc,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="appkey != null">
+                appKey,
+            </if>
+            <if test="appsecret != null">
+                appSecret,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="mtime != null">
+                mtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="desc != null">
+                #{desc,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="appkey != null">
+                #{appkey,jdbcType=VARCHAR},
+            </if>
+            <if test="appsecret != null">
+                #{appsecret,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+        update gw_app_info
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="desc != null">
+                desc = #{desc,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="appkey != null">
+                appKey = #{appkey,jdbcType=VARCHAR},
+            </if>
+            <if test="appsecret != null">
+                appSecret = #{appsecret,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                mtime = #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+    update gw_app_info
+    set name = #{name,jdbcType=VARCHAR},
+      desc = #{desc,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      appKey = #{appkey,jdbcType=VARCHAR},
+      appSecret = #{appsecret,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      mtime = #{mtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

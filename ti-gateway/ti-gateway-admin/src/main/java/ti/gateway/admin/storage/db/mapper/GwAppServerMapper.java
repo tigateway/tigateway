@@ -1,6 +1,6 @@
-package ti.gateway.storage.db.mapper;
+package ti.gateway.admin.storage.db.mapper;
 
-import ti.gateway.storage.db.model.GwAppServer;
+import ti.gateway.admin.storage.db.model.GwAppServer;
 
 import java.util.Set;
 

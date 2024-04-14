@@ -1,0 +1,4 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  ti.gateway.admin.storage.db.config.ApiGatewayStorageAutoConfiguration,\
+  ti.gateway.admin.core.config.ApiGatewayAutoConfiguration

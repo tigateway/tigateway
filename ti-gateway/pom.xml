@@ -13,13 +13,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>ti-gateway-core</module>
-        <module>ti-gateway-util</module>
-        <module>ti-gateway-upload</module>
         <module>ti-gateway-limit</module>
-        <module>ti-gateway-storage</module>
         <module>ti-gateway-server</module>
-        <module>ti-gateway-dashboard</module>
+        <module>ti-gateway-admin</module>
     </modules>
 
     <properties>

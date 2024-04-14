@@ -5,6 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>ti-gateway-dashboard</module>
         <module>ti-gateway-operator</module>
         <module>ti-gateway-kubernetes</module>
         <module>ti-gateway-kubernetes-extensions</module>

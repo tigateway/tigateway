@@ -11,3 +11,5 @@ ti-gateway-operator.iml
 ti-gateway-operator/target
 ti-gateway-kubernetes-extensions.iml
 ti-gateway-kubernetes-extensions/target
+ti-gateway/ti-gateway-base/target
+ti-gateway-dashboard/target

@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: tigateway-admin
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://${db.host}:${db.port}/${db.database}?zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF8
+    username: ${db.username}
+    password: ${db.password}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 900000
+      connection-timeout: 15000
+      connection-test-query: SELECT 1
+  thymeleaf:
+    cache: false
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  server:
+    base-path: /
+
+
+mybatis:
+  type-aliases-package: ti.gateway.storage.db.model
+  mapper-locations: classpath*:/mapper/*.xml
+

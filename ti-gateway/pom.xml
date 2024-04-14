@@ -16,6 +16,7 @@
         <module>ti-gateway-limit</module>
         <module>ti-gateway-server</module>
         <module>ti-gateway-admin</module>
+        <module>ti-gateway-base</module>
     </modules>
 
     <properties>

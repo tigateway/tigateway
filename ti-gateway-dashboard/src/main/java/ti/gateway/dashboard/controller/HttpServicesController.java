@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class HttpServicesController {
 
-    @GetMapping("/api/http/services")
+    @GetMapping("/api/http/services2")
     public List<ServiceInfo> getHttpServices() {
         // Create a list to store ServiceInfo objects
         List<ServiceInfo> services = new ArrayList<>();

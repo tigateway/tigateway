@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ti.gateway.storage.db.mapper.GwAppInfoMapper">
-    <resultMap id="BaseResultMap" type="ti.gateway.admin.storage.db.model.GwAppInfo">
+    <resultMap id="BaseResultMap" type="ti.gateway.base.db.model.GwAppInfo">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="desc" jdbcType="VARCHAR" property="desc"/>
@@ -78,7 +78,7 @@
     delete from gw_app_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+    <insert id="insert" parameterType="ti.gateway.base.db.model.GwAppInfo">
     insert into gw_app_info (name, desc, type,
       appKey, appSecret, status, 
       ctime, mtime)
@@ -86,7 +86,7 @@
       #{appkey,jdbcType=VARCHAR}, #{appsecret,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
       #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+    <insert id="insertSelective" parameterType="ti.gateway.base.db.model.GwAppInfo">
         insert into gw_app_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">
@@ -141,7 +141,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+    <update id="updateByPrimaryKeySelective" parameterType="ti.gateway.base.db.model.GwAppInfo">
         update gw_app_info
         <set>
             <if test="name != null">
@@ -171,7 +171,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="ti.gateway.admin.storage.db.model.GwAppInfo">
+    <update id="updateByPrimaryKey" parameterType="ti.gateway.base.db.model.GwAppInfo">
     update gw_app_info
     set name = #{name,jdbcType=VARCHAR},
       desc = #{desc,jdbcType=VARCHAR},

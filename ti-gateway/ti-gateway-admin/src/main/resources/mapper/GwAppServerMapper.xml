@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ti.gateway.storage.db.mapper.GwAppServerMapper">
-    <resultMap id="BaseResultMap" type="ti.gateway.admin.storage.db.model.GwAppServer">
+    <resultMap id="BaseResultMap" type="ti.gateway.base.db.model.GwAppServer">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="server_code" jdbcType="VARCHAR" property="serverCode"/>
         <result column="appKey" jdbcType="VARCHAR" property="appkey"/>
@@ -29,7 +29,7 @@
     delete from gw_app_server
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+    <insert id="insert" parameterType="ti.gateway.base.db.model.GwAppServer">
     insert into gw_app_server (server_code, appKey, server_ips,
       status, ctime, mtime
       )
@@ -37,7 +37,7 @@
       #{status,jdbcType=BIT}, #{ctime,jdbcType=TIMESTAMP}, #{mtime,jdbcType=TIMESTAMP}
       )
   </insert>
-    <insert id="insertSelective" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+    <insert id="insertSelective" parameterType="ti.gateway.base.db.model.GwAppServer">
         insert into gw_app_server
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="serverCode != null">
@@ -80,7 +80,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+    <update id="updateByPrimaryKeySelective" parameterType="ti.gateway.base.db.model.GwAppServer">
         update gw_app_server
         <set>
             <if test="serverCode != null">
@@ -104,7 +104,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="ti.gateway.admin.storage.db.model.GwAppServer">
+    <update id="updateByPrimaryKey" parameterType="ti.gateway.base.db.model.GwAppServer">
     update gw_app_server
     set server_code = #{serverCode,jdbcType=VARCHAR},
       appKey = #{appkey,jdbcType=VARCHAR},

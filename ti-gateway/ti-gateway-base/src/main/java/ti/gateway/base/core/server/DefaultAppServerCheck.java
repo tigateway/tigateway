@@ -11,8 +11,8 @@ import org.springframework.web.server.ServerWebExchange;
 import ti.gateway.base.core.cache.AppServer;
 import ti.gateway.base.core.cache.AppServerCache;
 import ti.gateway.base.core.config.ApiGatewayAppProperties;
-import ti.gateway.util.GatewayServerWebExchangeUtils;
-import ti.gateway.util.ServerHttpRequestUtils;
+import ti.gateway.base.util.GatewayServerWebExchangeUtils;
+import ti.gateway.base.util.ServerHttpRequestUtils;
 
 import java.util.List;
 import java.util.Set;

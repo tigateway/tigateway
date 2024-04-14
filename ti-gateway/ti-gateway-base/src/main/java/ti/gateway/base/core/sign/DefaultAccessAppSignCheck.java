@@ -9,9 +9,9 @@ import ti.gateway.base.core.cache.AppServer;
 import ti.gateway.base.core.cache.AppServerCache;
 import ti.gateway.base.core.config.ApiGatewayAppProperties;
 import ti.gateway.base.core.enums.AppStatus;
-import ti.gateway.util.ApiGatewaySignUtils;
-import ti.gateway.util.MapUtils;
-import ti.gateway.util.ServerHttpRequestUtils;
+import ti.gateway.base.util.ApiGatewaySignUtils;
+import ti.gateway.base.util.MapUtils;
+import ti.gateway.base.util.ServerHttpRequestUtils;
 
 import java.util.Map;
 

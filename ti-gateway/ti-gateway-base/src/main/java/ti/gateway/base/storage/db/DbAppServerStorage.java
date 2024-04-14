@@ -7,7 +7,7 @@ import ti.gateway.base.storage.db.mapper.GwAppInfoMapper;
 import ti.gateway.base.storage.db.mapper.GwAppServerMapper;
 import ti.gateway.base.storage.db.model.GwAppInfo;
 import ti.gateway.base.storage.db.model.GwAppServer;
-import ti.gateway.util.BeanCopierUtils;
+import ti.gateway.base.util.BeanCopierUtils;
 
 import java.util.Objects;
 import java.util.Set;

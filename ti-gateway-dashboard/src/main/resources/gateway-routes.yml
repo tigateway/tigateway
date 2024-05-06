@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: middle-service-user-server
+          uri: lb://middle-service-user-server
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1

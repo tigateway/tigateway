@@ -1,3 +1,6 @@
+server:
+  port: 8085
+
 spring:
   application:
     name: tigateway-dashboard
@@ -7,9 +10,21 @@ spring:
     serialization:
       write_dates_as_timestamps: false
     date-format: yyyy-MM-dd HH:mm:ss
+  cloud:
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          enabled: true
+      app:
+        skip: true
+      server:
+        skip: true
+      sentinel:
+        enabled: true
+  config:
+    import: classpath:/gateway-routes.yml
 
-server:
-  port: 8085
 
 management:
   endpoints:
@@ -19,5 +34,7 @@ management:
   endpoint:
     health:
       show-details: always
+    gateway:
+      enabled: true
   server:
     base-path: /

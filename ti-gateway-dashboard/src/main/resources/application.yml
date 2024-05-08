@@ -23,7 +23,9 @@ spring:
       sentinel:
         enabled: true
   config:
-    import: classpath:/gateway-routes.yml
+    import:
+      - classpath:/gateway-routes.yml
+      - classpath:/swagger.yml
 
 
 management:

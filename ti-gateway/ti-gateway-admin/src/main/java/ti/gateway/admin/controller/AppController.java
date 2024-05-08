@@ -1,11 +1,11 @@
 package ti.gateway.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import ti.gateway.admin.base.ErrorCode;
 import ti.gateway.admin.base.Page;
 import ti.gateway.admin.base.Result;
@@ -18,7 +18,7 @@ import ti.gateway.base.util.BeanCopierUtils;
 /**
  * 网关应用接口
  */
-@RestController
+@Controller
 @RequestMapping("/app")
 public class AppController {
 

@@ -1,11 +1,16 @@
+server:
+  port: 8085
+
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: tigateway-admin
   profiles:
     active: dev
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://${db.host}:${db.port}/${db.database}?zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF8
+    url: jdbc:mysql://${db.host}:${db.port}/${db.database}?zeroDateTimeBehavior=convertToNull&useUnicode=yes&characterEncoding=UTF8&useSSL=false
     username: ${db.username}
     password: ${db.password}
     hikari:
@@ -23,9 +28,25 @@ spring:
     serialization:
       write_dates_as_timestamps: false
     date-format: yyyy-MM-dd HH:mm:ss
-
-server:
-  port: 8085
+  cloud:
+    gateway:
+      enabled: true
+      discovery:
+        locator:
+          enabled: true
+      app:
+        skip: true
+      server:
+        skip: true
+      sentinel:
+        enabled: true
+      routes:
+        - id: middle-service-user-server
+          uri: lb://middle-service-user-server
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
 
 management:
   endpoints:

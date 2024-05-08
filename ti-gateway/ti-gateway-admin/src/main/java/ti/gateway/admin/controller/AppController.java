@@ -1,24 +1,24 @@
 package ti.gateway.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import ti.gateway.admin.base.ErrorCode;
 import ti.gateway.admin.base.Page;
 import ti.gateway.admin.base.Result;
 import ti.gateway.admin.controller.param.GwAppInfoParam;
 import ti.gateway.admin.service.IGwAppInfoService;
-import ti.gateway.admin.service.dto.GwAppInfnDto;
-import ti.gateway.admin.service.entity.GwAppInfoEt;
+import ti.gateway.admin.service.dto.GwAppInfoDto;
+import ti.gateway.admin.service.entity.GwAppInfoEntity;
 import ti.gateway.base.util.BeanCopierUtils;
 
 /**
  * 网关应用接口
  */
-@Controller
+@RestController
 @RequestMapping("/app")
 public class AppController {
 
@@ -38,9 +38,9 @@ public class AppController {
      */
     @ResponseBody
     @RequestMapping(value = "/queryGwAppInfos", method = RequestMethod.GET)
-    public Result<Page<GwAppInfoEt>> queryGwAppInfos(@Validated GwAppInfoParam gwAppInfoParam) {
-        GwAppInfnDto gwAppInfnDto = BeanCopierUtils.copierTargetBean(gwAppInfoParam, GwAppInfoParam.class, GwAppInfnDto.class);
-        Page<GwAppInfoEt> gwAppInfoEtPage = iGwAppInfoService.queryGwAppInfos(gwAppInfnDto,
+    public Result<Page<GwAppInfoEntity>> queryGwAppInfos(@Validated GwAppInfoParam gwAppInfoParam) {
+        GwAppInfoDto gwAppInfnDto = BeanCopierUtils.copierTargetBean(gwAppInfoParam, GwAppInfoParam.class, GwAppInfoDto.class);
+        Page<GwAppInfoEntity> gwAppInfoEtPage = iGwAppInfoService.queryGwAppInfos(gwAppInfnDto,
                 gwAppInfoParam.getCurrentPage(), gwAppInfoParam.getPageSize());
         return new Result<>(ErrorCode.Ok.getValue(), "Success", gwAppInfoEtPage);
     }

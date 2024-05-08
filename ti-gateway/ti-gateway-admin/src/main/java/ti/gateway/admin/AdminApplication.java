@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {"ti.gateway"})
-@MapperScan(value = "ti.gateway.admin.storage.db.mapper")
+@MapperScan(value = "ti.gateway.base.storage.db.mapper")
 public class AdminApplication {
 
     public static void main(String[] args) {

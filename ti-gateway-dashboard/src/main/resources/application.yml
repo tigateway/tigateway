@@ -25,7 +25,6 @@ spring:
   config:
     import:
       - classpath:/gateway-routes.yml
-      - classpath:/swagger.yml
 
 
 management:

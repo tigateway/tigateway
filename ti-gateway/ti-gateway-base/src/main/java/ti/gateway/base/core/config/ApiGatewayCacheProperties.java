@@ -1,11 +1,13 @@
 package ti.gateway.base.core.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * cache info
  */
 @ConfigurationProperties("spring.cloud.gateway.cache")
+@Data
 public class ApiGatewayCacheProperties {
 
     /**
@@ -30,44 +32,9 @@ public class ApiGatewayCacheProperties {
      */
     private Boolean skip = Boolean.FALSE;
 
+
     public boolean getShouldUseReadOnlyServerCache() {
         return shouldUseReadOnlyServerCache;
-    }
-
-    public void setShouldUseReadOnlyServerCache(boolean shouldUseReadOnlyServerCache) {
-        this.shouldUseReadOnlyServerCache = shouldUseReadOnlyServerCache;
-    }
-
-    public Long getServerCacheAutoExpirationInSeconds() {
-        return serverCacheAutoExpirationInSeconds;
-    }
-
-    public void setServerCacheAutoExpirationInSeconds(Long serverCacheAutoExpirationInSeconds) {
-        this.serverCacheAutoExpirationInSeconds = serverCacheAutoExpirationInSeconds;
-    }
-
-    public Integer getInitialCapacityOfServerCache() {
-        return initialCapacityOfServerCache;
-    }
-
-    public void setInitialCapacityOfServerCache(Integer initialCapacityOfServerCache) {
-        this.initialCapacityOfServerCache = initialCapacityOfServerCache;
-    }
-
-    public Long getServerCacheUpdateIntervalMs() {
-        return serverCacheUpdateIntervalMs;
-    }
-
-    public void setServerCacheUpdateIntervalMs(Long serverCacheUpdateIntervalMs) {
-        this.serverCacheUpdateIntervalMs = serverCacheUpdateIntervalMs;
-    }
-
-    public Boolean getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Boolean skip) {
-        this.skip = skip;
     }
 
 }

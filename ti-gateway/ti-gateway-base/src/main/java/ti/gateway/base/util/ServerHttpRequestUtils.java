@@ -9,9 +9,9 @@ public class ServerHttpRequestUtils {
     /**
      * get http Header
      *
-     * @param serverHttpRequest
-     * @param key
-     * @return
+     * @param serverHttpRequest ServerHttpRequest
+     * @param key              key
+     * @return value
      */
     public static String getHttpHeaderParam(ServerHttpRequest serverHttpRequest, String key) {
         HttpHeaders httpHeaders = serverHttpRequest.getHeaders();

@@ -7,8 +7,8 @@ public interface AppServerStorage {
 
     /**
      * 生成AppServer
-     * @param appId
-     * @return
+     * @param appId appId
+     * @return AppServer
      */
     AppServer generateAppServer(String appId);
 

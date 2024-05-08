@@ -20,7 +20,7 @@ public class AppkeySecretFilter implements GlobalFilter, Ordered {
 
     private static final Log log = LogFactory.getLog(AppkeySecretFilter.class);
 
-    private AccessAppSignCheck accessAppSignCheck;
+    private final AccessAppSignCheck accessAppSignCheck;
 
     public static final int APP_KEY_SECRET_FILTER_ORDER = 0;
 

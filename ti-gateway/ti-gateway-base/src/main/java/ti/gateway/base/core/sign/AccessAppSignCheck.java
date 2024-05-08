@@ -10,7 +10,7 @@ public interface AccessAppSignCheck {
     /**
      * check access
      *
-     * @param request
+     * @param request ServerHttpRequest
      */
     void validAccessAppSign(ServerHttpRequest request) throws InvalidAccessTokenException;
 

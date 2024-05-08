@@ -1,11 +1,13 @@
 package ti.gateway.base.core.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * app info
  */
 @ConfigurationProperties("spring.cloud.gateway.app")
+@Data
 public class ApiGatewayAppProperties {
 
     /**
@@ -28,45 +30,5 @@ public class ApiGatewayAppProperties {
      * skip
      */
     private Boolean skip = Boolean.FALSE;
-
-    public String getAppId() {
-        return appId;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getSign() {
-        return sign;
-    }
-
-    public Boolean getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Boolean skip) {
-        this.skip = skip;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
-    }
-
-    public Long getDurationMt() {
-        return durationMt;
-    }
-
-    public void setDurationMt(Long durationMt) {
-        this.durationMt = durationMt;
-    }
 
 }

@@ -11,8 +11,8 @@ public class MapUtils {
     /**
      * MultiValueMap to HashMap
      *
-     * @param m
-     * @return
+     * @param m MultiValueMap
+     * @return HashMap
      */
     public static Map<String, String> convertMultiToRegularMap(MultiValueMap<String, String> m) {
         Map<String, String> map = new HashMap<>(m.size());

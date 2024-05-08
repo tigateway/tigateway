@@ -1,8 +1,10 @@
 package ti.gateway.base.core.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("spring.cloud.gateway.server")
+@Data
 public class ApiGatewayServerProperties {
 
     /**
@@ -10,11 +12,4 @@ public class ApiGatewayServerProperties {
      */
     private Boolean skip = Boolean.FALSE;
 
-    public Boolean getSkip() {
-        return skip;
-    }
-
-    public void setSkip(Boolean skip) {
-        this.skip = skip;
-    }
 }

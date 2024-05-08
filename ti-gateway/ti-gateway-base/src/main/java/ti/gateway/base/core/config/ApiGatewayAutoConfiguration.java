@@ -68,8 +68,7 @@ public class ApiGatewayAutoConfiguration {
 
         @Bean
         @ConditionalOnMissingBean
-        public AppServerCheck appServerCheck(ApiGatewayAppProperties apiGatewayAppProperties
-                , AppServerCache appServerCache) {
+        public AppServerCheck appServerCheck(ApiGatewayAppProperties apiGatewayAppProperties, AppServerCache appServerCache) {
             return new DefaultAppServerCheck(apiGatewayAppProperties, appServerCache);
         }
     }

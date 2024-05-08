@@ -15,10 +15,11 @@ public class BeanCopierUtils {
      * @param sourceObj 目标Obj
      * @param source    原Class
      * @param target    目标Class
-     * @param <T>
-     * @return
+     * @param <S>      原类型
+     * @param <T>      目标类型
+     * @return 目标Obj
      */
-    public static <T> T copierTargetBean(Object sourceObj, Class source, Class<T> target) {
+    public static <S, T> T copierTargetBean(Object sourceObj, Class<S> source, Class<T> target) {
         if (Objects.nonNull(sourceObj)) {
             BeanCopier beanCopier = BeanCopier.create(source, target, false);
             T targetObj = null;
@@ -40,10 +41,11 @@ public class BeanCopierUtils {
      * @param sourceObjList 目标List
      * @param source        原Class
      * @param target        目标Class
-     * @param <T>
-     * @return
+     * @param <S>          原类型
+     * @param <T>          目标类型
+     * @return 目标List
      */
-    public static <T> List<T> copierTargetBeanList(List<?> sourceObjList, Class source, Class<T> target) {
+    public static <S, T> List<T> copierTargetBeanList(List<?> sourceObjList, Class<S> source, Class<T> target) {
         if (null != sourceObjList) {
             List<T> targetList = new ArrayList<>(sourceObjList.size());
             for (Object sourceObj : sourceObjList) {
@@ -63,10 +65,11 @@ public class BeanCopierUtils {
      * @param sourceObjList 目标Set
      * @param source        原Class
      * @param target        目标Class
-     * @param <T>
-     * @return
+     * @param <S>         原类型
+     * @param <T>         目标类型
+     * @return 目标Set
      */
-    public static <T> Set<T> copierTargetBeanSet(Set<?> sourceObjList, Class source, Class<T> target) {
+    public static <S, T> Set<T> copierTargetBeanSet(Set<?> sourceObjList, Class<S> source, Class<T> target) {
         if (null != sourceObjList) {
             Set<T> targetList = new HashSet<>(sourceObjList.size());
             for (Object sourceObj : sourceObjList) {

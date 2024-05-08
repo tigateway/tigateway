@@ -9,7 +9,8 @@ public enum AppStatus {
     ONLINE(1),
     //下线
     OFF(0);
-    int code;
+
+    private final int code;
 
     AppStatus(int code) {
         this.code = code;

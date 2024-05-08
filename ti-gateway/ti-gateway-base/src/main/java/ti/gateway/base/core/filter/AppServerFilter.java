@@ -19,7 +19,7 @@ public class AppServerFilter implements GlobalFilter, Ordered {
 
     private static final Log log = LogFactory.getLog(AppkeySecretFilter.class);
 
-    private AppServerCheck appServerCheck;
+    private final AppServerCheck appServerCheck;
 
     public static final int APP_SERVER_FILTER_ORDER = 10200;
 

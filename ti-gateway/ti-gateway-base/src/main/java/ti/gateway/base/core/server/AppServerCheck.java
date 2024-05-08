@@ -10,7 +10,7 @@ public interface AppServerCheck {
     /**
      * check server
      *
-     * @param exchange
+     * @param exchange ServerWebExchange
      */
     void validAccessServer(ServerWebExchange exchange) throws InvalidAccessServerException;
 

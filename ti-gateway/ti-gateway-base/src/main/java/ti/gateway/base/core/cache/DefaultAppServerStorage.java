@@ -18,8 +18,8 @@ public class DefaultAppServerStorage implements AppServerStorage {
     /**
      * 生成AppServer
      *
-     * @param appId
-     * @return
+     * @param appId appId
+     * @return AppServer
      */
     @Override
     public AppServer generateAppServer(String appId) {

@@ -65,7 +65,7 @@ public class DefaultAppServerCache implements AppServerCache {
     /**
      * 更新缓存
      *
-     * @return
+     * @return Runnable
      */
     private Runnable getCacheUpdateTask() {
         return () -> {
@@ -92,8 +92,8 @@ public class DefaultAppServerCache implements AppServerCache {
     /**
      * 获取应用服务信息
      *
-     * @param appId
-     * @return
+     * @param appId 应用ID
+     * @return AppServer
      */
     @Override
     public AppServer get(String appId) {

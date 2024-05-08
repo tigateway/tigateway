@@ -17,7 +17,6 @@ import org.springframework.core.Ordered;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import ti.gateway.base.core.server.DefaultAppServerCheck;
-import ti.gateway.base.util.GatewayServerWebExchangeUtils;
 
 import javax.annotation.Resource;
 import java.net.URI;

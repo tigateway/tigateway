@@ -22,9 +22,9 @@ public class DefaultAccessAppSignCheck implements AccessAppSignCheck {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAccessAppSignCheck.class);
 
-    private ApiGatewayAppProperties apiGatewayAppProperties;
+    private final ApiGatewayAppProperties apiGatewayAppProperties;
 
-    private AppServerCache appServerCache;
+    private final AppServerCache appServerCache;
 
     public DefaultAccessAppSignCheck(ApiGatewayAppProperties apiGatewayAppProperties, AppServerCache appServerCache) {
         this.apiGatewayAppProperties = apiGatewayAppProperties;
@@ -34,7 +34,7 @@ public class DefaultAccessAppSignCheck implements AccessAppSignCheck {
     /**
      * check access
      *
-     * @param request
+     * @param request ServerHttpRequest
      */
     @Override
     public void validAccessAppSign(ServerHttpRequest request) throws InvalidAccessTokenException {
@@ -70,8 +70,8 @@ public class DefaultAccessAppSignCheck implements AccessAppSignCheck {
      * @param sign
      * @param queryParams
      */
-    private void validAccessToken(String appId, String sign, String timeStamp,
-                                  MultiValueMap<String, String> queryParams) throws InvalidAccessTokenException {
+    private void validAccessToken(String appId, String sign, String timeStamp, MultiValueMap<String, String> queryParams)
+            throws InvalidAccessTokenException {
         AppServer appServer = appServerCache.get(appId);
         if (appServer == null) {
             log.warn("未识别的AppID[{}]", appId);

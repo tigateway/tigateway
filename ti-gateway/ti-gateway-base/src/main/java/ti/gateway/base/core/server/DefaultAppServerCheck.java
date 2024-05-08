@@ -25,9 +25,9 @@ public class DefaultAppServerCheck implements AppServerCheck {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultAppServerCheck.class);
 
-    private ApiGatewayAppProperties apiGatewayAppProperties;
+    private final ApiGatewayAppProperties apiGatewayAppProperties;
 
-    private AppServerCache appServerCache;
+    private final AppServerCache appServerCache;
 
     public DefaultAppServerCheck(ApiGatewayAppProperties apiGatewayAppProperties
             , AppServerCache appServerCache) {
@@ -38,7 +38,7 @@ public class DefaultAppServerCheck implements AppServerCheck {
     /**
      * check server
      *
-     * @param exchange
+     * @param exchange ServerWebExchange
      */
     @Override
     public void validAccessServer(ServerWebExchange exchange) throws InvalidAccessServerException {

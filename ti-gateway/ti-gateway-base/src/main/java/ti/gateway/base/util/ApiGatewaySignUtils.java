@@ -12,9 +12,9 @@ public class ApiGatewaySignUtils {
     /**
      * 生成签名
      *
-     * @param appsecret
-     * @param queryParams
-     * @return
+     * @param appsecret  应用密钥
+     * @param queryParams 请求参数
+     * @return 签名
      */
     public static String generateSignature(String appsecret, Map<String, String> queryParams) {
         String origin = origin(queryParams);
@@ -24,8 +24,8 @@ public class ApiGatewaySignUtils {
     /**
      * 获取原始排序值
      *
-     * @param queryParams
-     * @return
+     * @param queryParams 请求参数
+     * @return 原始排序值
      */
     private static String origin(Map<String, String> queryParams) {
         StringBuilder stringBuilder = new StringBuilder();

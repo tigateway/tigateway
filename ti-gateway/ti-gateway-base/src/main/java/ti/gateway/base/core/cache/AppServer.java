@@ -1,7 +1,10 @@
 package ti.gateway.base.core.cache;
 
+import lombok.Data;
+
 import java.util.Set;
 
+@Data
 public class AppServer {
 
     /**
@@ -41,6 +44,7 @@ public class AppServer {
     /**
      * Server
      */
+    @Data
     public static class Server {
         /**
          * 服务编码
@@ -95,60 +99,5 @@ public class AppServer {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public Byte getType() {
-        return type;
-    }
-
-    public void setType(Byte type) {
-        this.type = type;
-    }
-
-    public String getAppkey() {
-        return appkey;
-    }
-
-    public void setAppkey(String appkey) {
-        this.appkey = appkey;
-    }
-
-    public String getAppsecret() {
-        return appsecret;
-    }
-
-    public void setAppsecret(String appsecret) {
-        this.appsecret = appsecret;
-    }
-
-    public Byte getStatus() {
-        return status;
-    }
-
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
-
-    public Set<Server> getServers() {
-        return servers;
-    }
-
-    public void setServers(Set<Server> servers) {
-        this.servers = servers;
-    }
 
 }

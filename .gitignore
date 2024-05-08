@@ -13,3 +13,4 @@ ti-gateway-kubernetes-extensions.iml
 ti-gateway-kubernetes-extensions/target
 ti-gateway/ti-gateway-base/target
 ti-gateway-dashboard/target
+ti-gateway/ti-gateway-admin/target

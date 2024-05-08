@@ -39,13 +39,6 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-eureka:
-  client:
-    service-url:
-      defaultZone: ${eureka.defaultZone}
-  instance:
-    prefer-ip-address: true
-
 mybatis:
   type-aliases-package: ti.gateway.storage.db.model
   mapper-locations: classpath*:/mapper/*.xml

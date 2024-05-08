@@ -5,11 +5,6 @@ db:
   password: 3ae560c8e28f6faf
   database: risen
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://127.0.0.1:8761/eureka/
-
 logging:
   level:
     com.risen: debug

@@ -2,9 +2,6 @@ server:
   port: 8083
 
 management:
-  server:
-    servlet:
-      context-path: /
   endpoints:
     web:
       exposure:
@@ -12,5 +9,7 @@ management:
   endpoint:
     health:
       show-details: always
+  server:
+    base-path: /
 
 

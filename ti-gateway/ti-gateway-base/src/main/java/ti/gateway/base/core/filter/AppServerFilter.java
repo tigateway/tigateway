@@ -17,7 +17,7 @@ import ti.gateway.base.core.server.InvalidAccessServerException;
  */
 public class AppServerFilter implements GlobalFilter, Ordered {
 
-    private static final Log log = LogFactory.getLog(AppkeySecretFilter.class);
+    private static final Log log = LogFactory.getLog(AppKeySecretFilter.class);
 
     private final AppServerCheck appServerCheck;
 

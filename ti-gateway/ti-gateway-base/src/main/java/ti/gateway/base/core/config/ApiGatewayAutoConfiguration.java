@@ -11,7 +11,7 @@ import ti.gateway.base.core.cache.AppServerCache;
 import ti.gateway.base.core.cache.AppServerStorage;
 import ti.gateway.base.core.cache.DefaultAppServerCache;
 import ti.gateway.base.core.filter.AppServerFilter;
-import ti.gateway.base.core.filter.AppkeySecretFilter;
+import ti.gateway.base.core.filter.AppKeySecretFilter;
 import ti.gateway.base.core.cache.DefaultAppServerStorage;
 import ti.gateway.base.core.server.AppServerCheck;
 import ti.gateway.base.core.server.DefaultAppServerCheck;
@@ -42,11 +42,11 @@ public class ApiGatewayAutoConfiguration {
     @ConditionalOnProperty(name = "spring.cloud.gateway.app.skip", havingValue = "false", matchIfMissing = true)
     @Configuration
     @EnableConfigurationProperties({ApiGatewayAppProperties.class})
-    public static class ApiGatewayAppkeySecretAutoConfiguration {
+    public static class ApiGatewayAppKeySecretAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
-        public AppkeySecretFilter appkeySecretFilter(AccessAppSignCheck accessAppSignCheck) {
-            return new AppkeySecretFilter(accessAppSignCheck);
+        public AppKeySecretFilter appkeySecretFilter(AccessAppSignCheck accessAppSignCheck) {
+            return new AppKeySecretFilter(accessAppSignCheck);
         }
 
         @Bean

@@ -66,37 +66,6 @@ public class AppServer {
          */
         private Byte status;
 
-        public String getServerCode() {
-            return serverCode;
-        }
-
-        public void setServerCode(String serverCode) {
-            this.serverCode = serverCode;
-        }
-
-        public String getAppkey() {
-            return appkey;
-        }
-
-        public void setAppkey(String appkey) {
-            this.appkey = appkey;
-        }
-
-        public String getServerIps() {
-            return serverIps;
-        }
-
-        public void setServerIps(String serverIps) {
-            this.serverIps = serverIps;
-        }
-
-        public Byte getStatus() {
-            return status;
-        }
-
-        public void setStatus(Byte status) {
-            this.status = status;
-        }
     }
 
 

@@ -16,16 +16,16 @@ import ti.gateway.base.core.sign.InvalidAccessTokenException;
 /**
  * App key Secret Filter
  */
-public class AppkeySecretFilter implements GlobalFilter, Ordered {
+public class AppKeySecretFilter implements GlobalFilter, Ordered {
 
-    private static final Log log = LogFactory.getLog(AppkeySecretFilter.class);
+    private static final Log log = LogFactory.getLog(AppKeySecretFilter.class);
 
     private final AccessAppSignCheck accessAppSignCheck;
 
     public static final int APP_KEY_SECRET_FILTER_ORDER = 0;
 
 
-    public AppkeySecretFilter(AccessAppSignCheck accessAppSignCheck) {
+    public AppKeySecretFilter(AccessAppSignCheck accessAppSignCheck) {
         this.accessAppSignCheck = accessAppSignCheck;
     }
 

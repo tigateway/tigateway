@@ -124,14 +124,6 @@ public class ApiController {
         return "Entry point: " + name;
     }
 
-    // Traefik version
-
-    @GetMapping("/version")
-    public String getVersion() {
-        // Replace this with your actual data source
-        return "Traefik version";
-    }
-
     // Debug and profiling endpoints are not implemented here, as they are part of Go's standard library
 }
 

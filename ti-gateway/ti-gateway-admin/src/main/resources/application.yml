@@ -40,13 +40,16 @@ spring:
         skip: true
       sentinel:
         enabled: true
-      routes:
-        - id: middle-service-user-server
-          uri: lb://middle-service-user-server
-          predicates:
-            - Path=/user/**
-          filters:
-            - StripPrefix=1
+#      routes:
+#        - id: middle-service-user-server
+#          uri: lb://middle-service-user-server
+#          predicates:
+#            - Path=/user/**
+#          filters:
+#            - StripPrefix=1
+  config:
+    import:
+      - classpath:/gateway-routes.yml
 
 management:
   endpoints:

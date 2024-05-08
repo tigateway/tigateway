@@ -15,11 +15,7 @@ import java.util.List;
 @RestController
 public class IndexController {
 
-    @RequestMapping(value = {
-            "/",
-            "",
-            "/index"
-    }, method = {RequestMethod.GET, RequestMethod.HEAD})
+    @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.HEAD})
     public String index() {
         return "Hello, TiGateway!";
     }

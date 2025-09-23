@@ -26,15 +26,13 @@
 
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
-        <mybatis.version>1.3.2</mybatis.version>
-        <mysql-jdbc.verion>5.1.47</mysql-jdbc.verion>
         <guava.version>33.2.0-jre</guava.version>
         <okhttp.version>4.9.3</okhttp.version>
         <sentinel-core.version>1.6.0</sentinel-core.version>
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.jacoco.version>0.8.3</maven.jacoco.version>
         <kubernetes-client.version>18.0.1</kubernetes-client.version>
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -45,20 +43,6 @@
                 <version>2021.0.1</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-
-
-            <!-- Mybatis 依赖 -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.version}</version>
-            </dependency>
-            <!-- Mysql 依赖 -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql-jdbc.verion}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.csp</groupId>
@@ -117,6 +101,13 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- gateway package -->
+            <dependency>
+                <groupId>io.github.mavenreposs</groupId>
+                <artifactId>ti-gateway-base</artifactId>
+                <version>1.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

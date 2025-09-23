@@ -1,16 +1,21 @@
 package ti.gateway.admin.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ti.gateway.admin.domain.Router;
+import ti.gateway.admin.domain.ServiceInfo;
+import ti.gateway.admin.domain.Middleware;
+import ti.gateway.admin.domain.AddressConfig;
+import ti.gateway.admin.service.ApiService;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
+ * API控制器 - 提供网关管理接口
  * @author wangzhengdong
  * @version 1.0
  * @date 2023/4/9 01:50
@@ -19,111 +24,133 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
 
+    @Autowired
+    private ApiService apiService;
+
     // HTTP routers
 
     @GetMapping("/http/routers")
     public ResponseEntity<List<Router>> listHttpRouters() {
-        Router router1 = new Router();
-        router1.setEntryPoints(Arrays.asList("web"));
-        router1.setMiddlewares(Arrays.asList("auth", "addPrefixTest@anotherprovider"));
-        router1.setName("bar@myprovider");
-        router1.setProvider("myprovider");
-        router1.setRule("Host(`foo.bar`)");
-        router1.setService("foo-service@myprovider");
-        router1.setStatus("enabled");
-        router1.setUsing(Arrays.asList("web"));
-
-        Router router2 = new Router();
-        router2.setEntryPoints(Arrays.asList("web"));
-        router2.setMiddlewares(Arrays.asList("addPrefixTest", "auth"));
-        router2.setName("test@myprovider");
-        router2.setProvider("myprovider");
-        router2.setRule("Host(`foo.bar.other`)");
-        router2.setService("foo-service@myprovider");
-        router2.setStatus("enabled");
-        router2.setUsing(Arrays.asList("web"));
-
-        List<Router> routers = Arrays.asList(router1, router2);
-
+        List<Router> routers = apiService.getHttpRouters();
         return ResponseEntity.ok(routers);
     }
 
     @GetMapping("/http/routers/{name}")
-    public String getHttpRouter(@PathVariable String name) {
-        // Replace this with your actual data source
-        return "HTTP router: " + name;
+    public ResponseEntity<Router> getHttpRouter(@PathVariable String name) {
+        Router router = apiService.getHttpRouter(name);
+        return ResponseEntity.ok(router);
     }
 
     // HTTP services
 
     @GetMapping("/http/services")
-    public String listHttpServices() {
-        // Replace this with your actual data source
-        return "List of HTTP services";
+    public ResponseEntity<List<ServiceInfo>> listHttpServices() {
+        List<ServiceInfo> services = apiService.getHttpServices();
+        return ResponseEntity.ok(services);
     }
 
     @GetMapping("/http/services/{name}")
-    public String getHttpService(@PathVariable String name) {
-        // Replace this with your actual data source
-        return "HTTP service: " + name;
+    public ResponseEntity<ServiceInfo> getHttpService(@PathVariable String name) {
+        ServiceInfo service = apiService.getHttpService(name);
+        return ResponseEntity.ok(service);
     }
 
     // HTTP middlewares
 
     @GetMapping("/http/middlewares")
-    public String listHttpMiddlewares() {
-        // Replace this with your actual data source
-        return "List of HTTP middlewares";
+    public ResponseEntity<List<Middleware>> listHttpMiddlewares() {
+        List<Middleware> middlewares = apiService.getHttpMiddlewares();
+        return ResponseEntity.ok(middlewares);
     }
 
     @GetMapping("/http/middlewares/{name}")
-    public String getHttpMiddleware(@PathVariable String name) {
-        // Replace this with your actual data source
-        return "HTTP middleware: " + name;
+    public ResponseEntity<Middleware> getHttpMiddleware(@PathVariable String name) {
+        Middleware middleware = apiService.getHttpMiddleware(name);
+        return ResponseEntity.ok(middleware);
     }
 
     // TCP routers
 
     @GetMapping("/tcp/routers")
-    public String listTcpRouters() {
-        // Replace this with your actual data source
-        return "List of TCP routers";
+    public ResponseEntity<List<Router>> listTcpRouters() {
+        List<Router> routers = apiService.getTcpRouters();
+        return ResponseEntity.ok(routers);
     }
 
     @GetMapping("/tcp/routers/{name}")
-    public String getTcpRouter(@PathVariable String name) {
-        // Replace this with your actual data source
-        return "TCP router: " + name;
+    public ResponseEntity<Router> getTcpRouter(@PathVariable String name) {
+        Router router = apiService.getTcpRouter(name);
+        return ResponseEntity.ok(router);
     }
 
     // TCP services
 
     @GetMapping("/tcp/services")
-    public String listTcpServices() {
-        // Replace this with your actual data source
-        return "List of TCP services";
+    public ResponseEntity<List<ServiceInfo>> listTcpServices() {
+        List<ServiceInfo> services = apiService.getTcpServices();
+        return ResponseEntity.ok(services);
     }
 
     @GetMapping("/tcp/services/{name}")
-    public String getTcpService(@PathVariable String name) {
-        // Replace this with your actual data source
-        return "TCP service: " + name;
+    public ResponseEntity<ServiceInfo> getTcpService(@PathVariable String name) {
+        ServiceInfo service = apiService.getTcpService(name);
+        return ResponseEntity.ok(service);
+    }
+
+    // TCP middlewares
+
+    @GetMapping("/tcp/middlewares")
+    public ResponseEntity<List<Middleware>> listTcpMiddlewares() {
+        List<Middleware> middlewares = apiService.getTcpMiddlewares();
+        return ResponseEntity.ok(middlewares);
+    }
+
+    @GetMapping("/tcp/middlewares/{name}")
+    public ResponseEntity<Middleware> getTcpMiddleware(@PathVariable String name) {
+        Middleware middleware = apiService.getTcpMiddleware(name);
+        return ResponseEntity.ok(middleware);
+    }
+
+    // UDP routers
+
+    @GetMapping("/udp/routers")
+    public ResponseEntity<List<Router>> listUdpRouters() {
+        List<Router> routers = apiService.getUdpRouters();
+        return ResponseEntity.ok(routers);
+    }
+
+    @GetMapping("/udp/routers/{name}")
+    public ResponseEntity<Router> getUdpRouter(@PathVariable String name) {
+        Router router = apiService.getUdpRouter(name);
+        return ResponseEntity.ok(router);
+    }
+
+    // UDP services
+
+    @GetMapping("/udp/services")
+    public ResponseEntity<List<ServiceInfo>> listUdpServices() {
+        List<ServiceInfo> services = apiService.getUdpServices();
+        return ResponseEntity.ok(services);
+    }
+
+    @GetMapping("/udp/services/{name}")
+    public ResponseEntity<ServiceInfo> getUdpService(@PathVariable String name) {
+        ServiceInfo service = apiService.getUdpService(name);
+        return ResponseEntity.ok(service);
     }
 
     // Entry points
 
     @GetMapping("/entrypoints")
-    public String listEntryPoints() {
-        // Replace this with your actual data source
-        return "List of entry points";
+    public ResponseEntity<List<AddressConfig>> listEntryPoints() {
+        List<AddressConfig> entryPoints = apiService.getEntryPoints();
+        return ResponseEntity.ok(entryPoints);
     }
 
     @GetMapping("/entrypoints/{name}")
-    public String getEntryPoint(@PathVariable String name) {
-        // Replace this with your actual data source
-        return "Entry point: " + name;
+    public ResponseEntity<AddressConfig> getEntryPoint(@PathVariable String name) {
+        AddressConfig entryPoint = apiService.getEntryPoint(name);
+        return ResponseEntity.ok(entryPoint);
     }
-
-    // Debug and profiling endpoints are not implemented here, as they are part of Go's standard library
 }
 

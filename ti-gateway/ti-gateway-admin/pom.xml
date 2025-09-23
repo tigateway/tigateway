@@ -44,11 +44,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 暂时注释掉base依赖，等base模块修复后再启用
         <dependency>
             <groupId>io.github.mavenreposs</groupId>
             <artifactId>ti-gateway-base</artifactId>
             <version>1.0.0</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>com.google.guava</groupId>

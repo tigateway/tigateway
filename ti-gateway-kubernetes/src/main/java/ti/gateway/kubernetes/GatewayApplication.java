@@ -15,7 +15,7 @@ import java.security.Security;
             KubernetesDiscoveryClientAutoConfiguration.class,
             KubernetesInformerReactiveDiscoveryClientAutoConfiguration.class
         },
-        scanBasePackages = {"com.vmware.scg.extensions", "io.pivotal.spring.cloud.gateway", "ti.gateway.kubernetes"}
+        scanBasePackages = {"com.vmware.scg.extensions", "io.pivotal.spring.cloud.gateway", "ti.gateway.kubernetes", "ti.gateway.admin"}
 )
 public class GatewayApplication {
 

@@ -2,6 +2,7 @@ package ti.gateway.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ti.gateway.admin.domain.version.Version;
 import ti.gateway.admin.service.VersionService;
@@ -12,6 +13,7 @@ import ti.gateway.admin.service.VersionService;
  * @date 2024/5/8 15:23
  */
 @RestController
+@RequestMapping("/admin")
 public class VersionController {
 
     @Autowired

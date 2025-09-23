@@ -16,7 +16,7 @@ public class GatewayActuatorService {
     private final WebClient webClient;
 
     public GatewayActuatorService(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8080/actuator").build();
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8090/actuator").build();
     }
 
     public Mono<String> fetchGatewayRoutes() {

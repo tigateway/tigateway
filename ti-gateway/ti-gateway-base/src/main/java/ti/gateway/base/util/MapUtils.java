@@ -15,10 +15,10 @@ public class MapUtils {
      * @return HashMap
      */
     public static Map<String, String> convertMultiToRegularMap(MultiValueMap<String, String> m) {
-        Map<String, String> map = new HashMap<>(m.size());
         if (m == null) {
-            return map;
+            return new HashMap<>();
         }
+        Map<String, String> map = new HashMap<>(m.size());
         for (Map.Entry<String, List<String>> entry : m.entrySet()) {
             StringBuilder sb = new StringBuilder();
             for (String s : entry.getValue()) {

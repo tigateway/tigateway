@@ -13,13 +13,12 @@ import ti.gateway.admin.controller.param.GwAppInfoParam;
 import ti.gateway.admin.service.IGwAppInfoService;
 import ti.gateway.admin.service.dto.GwAppInfoDto;
 import ti.gateway.admin.service.entity.GwAppInfoEntity;
-// import ti.gateway.base.util.BeanCopierUtils;
 
 /**
  * 网关应用接口
  */
 @Controller
-@RequestMapping("/app")
+@RequestMapping("/admin/app")
 public class AppController {
 
     @Autowired
@@ -39,14 +38,19 @@ public class AppController {
     @ResponseBody
     @RequestMapping(value = "/queryGwAppInfos", method = RequestMethod.GET)
     public Result<Page<GwAppInfoEntity>> queryGwAppInfos(@Validated GwAppInfoParam gwAppInfoParam) {
-        // 暂时注释掉base模块相关代码
-        /*
-        GwAppInfoDto gwAppInfnDto = BeanCopierUtils.copierTargetBean(gwAppInfoParam, GwAppInfoParam.class, GwAppInfoDto.class);
-        Page<GwAppInfoEntity> gwAppInfoEtPage = iGwAppInfoService.queryGwAppInfos(gwAppInfnDto,
-                gwAppInfoParam.getCurrentPage(), gwAppInfoParam.getPageSize());
-        return new Result<>(ErrorCode.Ok.getValue(), "Success", gwAppInfoEtPage);
-        */
-        return new Result<>(ErrorCode.Ok.getValue(), "Success", new Page<>());
+        try {
+            GwAppInfoDto gwAppInfoDto = new GwAppInfoDto();
+            gwAppInfoDto.setName(gwAppInfoParam.getName());
+            gwAppInfoDto.setType(gwAppInfoParam.getType());
+            gwAppInfoDto.setAppKey(gwAppInfoParam.getAppkey());
+            gwAppInfoDto.setStatus(gwAppInfoParam.getStatus());
+            
+            Page<GwAppInfoEntity> gwAppInfoPage = iGwAppInfoService.queryGwAppInfos(gwAppInfoDto,
+                    gwAppInfoParam.getCurrentPage(), gwAppInfoParam.getPageSize());
+            return new Result<>(ErrorCode.Ok.getValue(), "Success", gwAppInfoPage);
+        } catch (Exception e) {
+            return new Result<>(ErrorCode.InternalError.getValue(), "Failed to query app info: " + e.getMessage());
+        }
     }
 
 }

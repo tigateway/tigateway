@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
+@RequestMapping("/admin")
 public class IndexController {
 
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.HEAD})

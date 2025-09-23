@@ -15,6 +15,12 @@ management:
       wavefront:
         enabled:false
 
+# Admin配置
+admin:
+  server:
+    port: 8081
+  context-path: /admin
+
 spring:
   cloud:
     loadbalancer:

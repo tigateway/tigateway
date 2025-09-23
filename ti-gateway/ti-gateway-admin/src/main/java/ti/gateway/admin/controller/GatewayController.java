@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2024/5/6 23:30
  */
 @RestController
-@RequestMapping("/api/gateway")
+@RequestMapping("/admin/api/gateway")
 public class GatewayController {
 
     private final GatewayActuatorService gatewayActuatorService;

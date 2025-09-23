@@ -2,6 +2,7 @@ package ti.gateway.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ti.gateway.admin.domain.overview.ComponentStats;
 import ti.gateway.admin.domain.overview.Features;
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2024/5/8 15:24
  */
 @RestController
+@RequestMapping("/admin")
 public class OverviewController {
 
     @Autowired

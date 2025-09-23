@@ -1,5 +1,4 @@
 # Auto Configure
-# 暂时注释掉base模块的自动配置
-# org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-#   ti.gateway.base.storage.db.config.ApiGatewayStorageAutoConfiguration,\
-#   ti.gateway.base.core.config.ApiGatewayAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  ti.gateway.base.storage.configmap.config.ConfigMapStorageAutoConfiguration,\
+  ti.gateway.base.core.config.ApiGatewayAutoConfiguration

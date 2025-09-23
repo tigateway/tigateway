@@ -21,7 +21,7 @@ import java.util.List;
  * @date 2023/4/9 01:50
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/admin/api")
 public class ApiController {
 
     @Autowired

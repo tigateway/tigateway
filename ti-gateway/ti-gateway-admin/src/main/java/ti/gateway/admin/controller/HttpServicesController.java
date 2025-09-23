@@ -1,6 +1,7 @@
 package ti.gateway.admin.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ti.gateway.admin.domain.ServiceInfo;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @date 2023/4/9 02:09
  */
 @RestController
+@RequestMapping("/admin")
 public class HttpServicesController {
 
     @GetMapping("/api/http/services2")

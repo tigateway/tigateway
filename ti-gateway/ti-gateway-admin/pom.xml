@@ -48,14 +48,22 @@
         <dependency>
             <groupId>io.github.mavenreposs</groupId>
             <artifactId>ti-gateway-base</artifactId>
-            <version>1.0.0</version>
+        </dependency>
+
+        <!-- Kubernetes Client Dependencies -->
+        <dependency>
+            <groupId>io.kubernetes</groupId>
+            <artifactId>client-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.kubernetes</groupId>
+            <artifactId>client-java-api-fluent</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.springdoc</groupId>

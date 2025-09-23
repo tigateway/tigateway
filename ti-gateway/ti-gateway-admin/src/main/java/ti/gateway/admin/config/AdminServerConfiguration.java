@@ -2,6 +2,7 @@ package ti.gateway.admin.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -41,36 +42,51 @@ public class AdminServerConfiguration {
     }
 
     @Bean
-    public DisposableServer adminHttpServer() {
-        try {
-            // 创建简单的路由
-            RouterFunction<ServerResponse> router = route()
-                    .GET("/admin/", request -> 
-                        ServerResponse.ok().bodyValue("Hello, TiGateway Admin Server!"))
-                    .GET("/admin/health", request -> 
-                        ServerResponse.ok().bodyValue("{\"status\":\"UP\",\"service\":\"tigateway-admin\"}"))
-                    .GET("/admin/info", request -> 
-                        ServerResponse.ok().bodyValue("{\"name\":\"TiGateway Admin\",\"version\":\"1.0.0\",\"port\":" + adminProperties.getServer().getPort() + "}"))
-                    .build();
+    public RouterFunction<ServerResponse> adminRouterFunction() {
+        return route()
+                .GET("/admin/", request -> 
+                    ServerResponse.ok().bodyValue("Hello, TiGateway Admin Server!"))
+                .GET("/admin/health", request -> 
+                    ServerResponse.ok().bodyValue("{\"status\":\"UP\",\"service\":\"tigateway-admin\"}"))
+                .GET("/admin/info", request -> 
+                    ServerResponse.ok().bodyValue("{\"name\":\"TiGateway Admin\",\"version\":\"1.0.0\",\"port\":" + adminProperties.getServer().getPort() + "}"))
+                .build();
+    }
 
-            // 创建HttpHandler
-            HttpHandler httpHandler = RouterFunctions.toHttpHandler(router);
+    @Bean
+    public ApplicationRunner adminServerRunner(RouterFunction<ServerResponse> adminRouterFunction) {
+        return args -> {
+            logger.info("AdminServerRunner started, checking Admin server configuration...");
+            logger.info("Admin server enabled: {}, port: {}", adminProperties.getServer().isEnabled(), adminProperties.getServer().getPort());
+            
+            if (!adminProperties.getServer().isEnabled()) {
+                logger.info("Admin server is disabled, skipping startup");
+                return;
+            }
 
-            // 创建ReactorHttpHandlerAdapter
-            ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(httpHandler);
+            try {
+                logger.info("Starting Admin server on port: {}", adminProperties.getServer().getPort());
+                
+                // 创建HttpHandler
+                HttpHandler httpHandler = RouterFunctions.toHttpHandler(adminRouterFunction);
+                logger.info("HttpHandler created successfully");
 
-            // 启动独立的HTTP服务器
-            this.adminServer = HttpServer.create()
-                    .port(adminProperties.getServer().getPort())
-                    .handle(adapter)
-                    .bindNow();
+                // 创建ReactorHttpHandlerAdapter
+                ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(httpHandler);
+                logger.info("ReactorHttpHandlerAdapter created successfully");
 
-            logger.info("Admin server started successfully on port: {}", adminProperties.getServer().getPort());
-            return this.adminServer;
-        } catch (Exception e) {
-            logger.error("Failed to start Admin server on port: {}", adminProperties.getServer().getPort(), e);
-            throw e;
-        }
+                // 启动独立的HTTP服务器
+                this.adminServer = HttpServer.create()
+                        .port(adminProperties.getServer().getPort())
+                        .handle(adapter)
+                        .bindNow();
+
+                logger.info("Admin server started successfully on port: {}", adminProperties.getServer().getPort());
+            } catch (Exception e) {
+                logger.error("Failed to start Admin server on port: {}", adminProperties.getServer().getPort(), e);
+                // 不抛出异常，允许主应用继续运行
+            }
+        };
     }
 
     @PreDestroy

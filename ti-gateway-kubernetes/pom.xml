@@ -187,10 +187,21 @@
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.github.mavenreposs</groupId>
             <artifactId>ti-gateway-kubernetes-extensions</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- TiGateway Base Module -->
+        <dependency>
+            <groupId>io.github.mavenreposs</groupId>
+            <artifactId>ti-gateway-base</artifactId>
             <version>1.0.0</version>
         </dependency>
 

@@ -75,10 +75,7 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <!-- Admin模块作为库模块，不需要spring-boot-maven-plugin -->
         </plugins>
     </build>
 

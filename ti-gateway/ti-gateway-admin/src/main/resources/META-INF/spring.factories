@@ -1,6 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ti.gateway.base.storage.configmap.config.ConfigMapStorageAutoConfiguration,\
-  ti.gateway.base.core.config.ApiGatewayAutoConfiguration,\
   ti.gateway.admin.config.AdminConfiguration,\
   ti.gateway.admin.config.AdminServerConfiguration

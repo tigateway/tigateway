@@ -1,0 +1,19 @@
+{{- if .Values.ingressClass.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: {{ .Values.ingressClass.name | default "tigateway" }}
+  {{- with .Values.ingressClass.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "tigateway-crds.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ingressclass
+spec:
+  controller: {{ .Values.ingressClass.controller | default "tigateway.cn/ingress-controller" }}
+  {{- if .Values.ingressClass.parameters }}
+  parameters:
+    {{- toYaml .Values.ingressClass.parameters | nindent 4 }}
+  {{- end }}
+{{- end }}

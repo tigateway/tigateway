@@ -33,6 +33,13 @@ spec:
     pathRewriteEnabled: true
     pathRewritePattern: "/(.*)"
     pathRewriteReplacement: "/$1"
+    ingressClass:
+      name: "tigateway"
+      enabled: true
+      controller: "tigateway.cn/ingress-controller"
+      annotations:
+        ingressclass.kubernetes.io/is-default-class: "false"
+        tigateway.cn/description: "TiGateway Ingress Controller"
   api:
     groupId: "com.example"
     title: "Example API Gateway"
@@ -159,6 +166,8 @@ spec:
     refreshInterval: 30
     cacheEnabled: true
     cacheExpiration: 300
+    ingressClass: "tigateway"
+    ingressClassSelector: "tigateway"
 ---
 # Example TiGatewayMapping
 apiVersion: tigateway.cn/v1

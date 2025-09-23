@@ -136,6 +136,13 @@ spec:
                       type: integer
                       default: 300
                       description: Cache expiration in seconds for Ingress resources
+                    ingressClass:
+                      type: string
+                      default: "tigateway"
+                      description: IngressClass name to filter Ingress resources
+                    ingressClassSelector:
+                      type: string
+                      description: IngressClass selector to filter Ingress resources
           anyOf:
             - properties:
                 spec:

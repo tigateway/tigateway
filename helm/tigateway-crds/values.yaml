@@ -46,6 +46,23 @@ tigateway:
       replacement: "/$1"
     # Default service port
     defaultServicePort: 80
+    # Default IngressClass name
+    defaultIngressClass: "tigateway"
+
+# IngressClass configuration
+ingressClass:
+  # Whether to create and manage IngressClass
+  enabled: true
+  # Name of the IngressClass
+  name: "tigateway"
+  # Controller implementation
+  controller: "tigateway.cn/ingress-controller"
+  # Parameters for the controller
+  parameters: {}
+  # Annotations for the IngressClass
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "false"
+    tigateway.cn/description: "TiGateway Ingress Controller"
 
 # Labels to add to all CRDs
 labels: {}

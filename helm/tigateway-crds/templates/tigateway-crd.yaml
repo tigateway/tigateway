@@ -381,6 +381,30 @@ spec:
                       type: string
                       default: "/$1"
                       description: Replacement string for path rewriting
+                    ingressClass:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          default: "tigateway"
+                          description: Name of the IngressClass to use
+                        enabled:
+                          type: boolean
+                          default: true
+                          description: Whether to create and manage IngressClass
+                        controller:
+                          type: string
+                          default: "tigateway.cn/ingress-controller"
+                          description: Controller implementation for the IngressClass
+                        parameters:
+                          type: object
+                          description: Parameters for the IngressClass controller
+                        annotations:
+                          type: object
+                          additionalProperties:
+                            type: string
+                          description: Annotations to add to the IngressClass
+                      description: IngressClass configuration for TiGateway
             status:
               type: object
               properties:

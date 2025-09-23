@@ -14,6 +14,7 @@ TiGateway CRDs provide a declarative way to manage API Gateway configurations in
 
 - **Kubernetes Native**: Full integration with Kubernetes APIs
 - **Ingress Integration**: Automatic discovery and management of Kubernetes Ingress resources
+- **IngressClass Support**: Native support for Kubernetes IngressClass with `tigateway` controller
 - **Declarative Configuration**: YAML-based configuration management
 - **Extensible**: Support for custom extensions and filters
 - **Observability**: Built-in metrics, tracing, and monitoring support
@@ -159,7 +160,25 @@ spec:
 
 ## Ingress Integration
 
-TiGateway automatically discovers and manages Kubernetes Ingress resources:
+TiGateway automatically discovers and manages Kubernetes Ingress resources using the `tigateway` IngressClass:
+
+### IngressClass Configuration
+
+The chart automatically creates an IngressClass named `tigateway`:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: tigateway
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "false"
+    tigateway.cn/description: "TiGateway Ingress Controller"
+spec:
+  controller: tigateway.cn/ingress-controller
+```
+
+### Using TiGateway IngressClass
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -169,13 +188,20 @@ metadata:
   namespace: default
   annotations:
     tigateway.cn/auto-discover: "true"
+    tigateway.cn/rewrite-target: /$2
+    tigateway.cn/ssl-redirect: "true"
+    tigateway.cn/proxy-body-size: "10m"
 spec:
-  ingressClassName: nginx
+  ingressClassName: tigateway
+  tls:
+    - hosts:
+        - "api.example.com"
+      secretName: "api-tls"
   rules:
     - host: api.example.com
       http:
         paths:
-          - path: /api
+          - path: /api(/|$)(.*)
             pathType: Prefix
             backend:
               service:
@@ -183,6 +209,23 @@ spec:
                 port:
                   number: 8080
 ```
+
+### TiGateway-specific Annotations
+
+TiGateway supports the following annotations for Ingress resources:
+
+| Annotation | Description | Default |
+|------------|-------------|---------|
+| `tigateway.cn/auto-discover` | Enable automatic route discovery | `false` |
+| `tigateway.cn/rewrite-target` | Path rewrite target | `/` |
+| `tigateway.cn/ssl-redirect` | Enable SSL redirect | `false` |
+| `tigateway.cn/force-ssl-redirect` | Force SSL redirect | `false` |
+| `tigateway.cn/proxy-body-size` | Maximum request body size | `1m` |
+| `tigateway.cn/proxy-connect-timeout` | Proxy connect timeout | `60s` |
+| `tigateway.cn/proxy-send-timeout` | Proxy send timeout | `60s` |
+| `tigateway.cn/proxy-read-timeout` | Proxy read timeout | `60s` |
+| `tigateway.cn/rate-limit` | Rate limit requests per window | `100` |
+| `tigateway.cn/rate-limit-window` | Rate limit time window | `1m` |
 
 ## Advanced Configuration
 

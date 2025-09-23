@@ -5,3 +5,14 @@ The following CRDs have been installed:
 - tigateways.tigateway.cn
 - tigatewaymappings.tigateway.cn  
 - tigatewayrouteconfigs.tigateway.cn
+
+{{- if .Values.ingressClass.enabled }}
+The following IngressClass has been installed:
+- {{ .Values.ingressClass.name | default "tigateway" }} (controller: {{ .Values.ingressClass.controller | default "tigateway.cn/ingress-controller" }})
+{{- end }}
+
+To use TiGateway IngressClass in your Ingress resources, specify:
+  ingressClassName: {{ .Values.ingressClass.name | default "tigateway" }}
+
+For more information, see the documentation at:
+https://docs.tigateway.cn

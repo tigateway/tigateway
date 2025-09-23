@@ -1,8 +1,55 @@
-# Example Kubernetes Ingress that will be automatically discovered by TiGateway
+# Example IngressClass for TiGateway
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: tigateway
+  labels:
+    app: tigateway
+    component: ingressclass
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "false"
+    tigateway.cn/description: "TiGateway Ingress Controller"
+    tigateway.cn/version: "1.0.0"
+spec:
+  controller: tigateway.cn/ingress-controller
+  parameters:
+    apiGroup: tigateway.cn
+    kind: IngressClassParameters
+    name: tigateway-parameters
+---
+# Example IngressClassParameters (optional)
+apiVersion: tigateway.cn/v1
+kind: IngressClassParameters
+metadata:
+  name: tigateway-parameters
+  namespace: tigateway-system
+spec:
+  # TiGateway specific parameters
+  gateway:
+    namespace: default
+    name: default-gateway
+  # Default configuration
+  defaults:
+    timeout: 30s
+    maxBodySize: 10m
+    proxyBufferSize: 8k
+    proxyBuffersNumber: 8
+  # SSL configuration
+  ssl:
+    enabled: true
+    redirect: true
+    forceRedirect: false
+  # Rate limiting
+  rateLimit:
+    enabled: true
+    requests: 100
+    window: 1m
+---
+# Example Ingress using TiGateway IngressClass
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-app-ingress
+  name: tigateway-ingress-example
   namespace: default
   labels:
     app: tigateway
@@ -15,13 +62,15 @@ metadata:
     tigateway.cn/proxy-connect-timeout: "600"
     tigateway.cn/proxy-send-timeout: "600"
     tigateway.cn/proxy-read-timeout: "600"
+    tigateway.cn/rate-limit: "100"
+    tigateway.cn/rate-limit-window: "1m"
 spec:
   ingressClassName: tigateway
   tls:
     - hosts:
         - "api.example.com"
         - "app.example.com"
-      secretName: "example-tls"
+      secretName: "tigateway-tls"
   rules:
     - host: api.example.com
       http:
@@ -38,13 +87,6 @@ spec:
             backend:
               service:
                 name: product-service
-                port:
-                  number: 8080
-          - path: /api/orders(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: order-service
                 port:
                   number: 8080
     - host: app.example.com
@@ -87,24 +129,6 @@ metadata:
 spec:
   selector:
     app: product-service
-  ports:
-    - name: http
-      protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: ClusterIP
----
-# Example Service for order-service
-apiVersion: v1
-kind: Service
-metadata:
-  name: order-service
-  namespace: default
-  labels:
-    app: order-service
-spec:
-  selector:
-    app: order-service
   ports:
     - name: http
       protocol: TCP

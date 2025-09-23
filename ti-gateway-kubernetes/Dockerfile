@@ -21,6 +21,15 @@ FROM openjdk:11-jre as RUN
 ENV TZ=Asia/Shanghai
 ENV PROJECT=gateway
 
+# 安装kubectl用于Kubernetes集成
+RUN apt-get update && apt-get install -y \
+    curl \
+    && curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && chmod +x kubectl \
+    && mv kubectl /usr/local/bin/ \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=build /build/${PROJECT}/target/*.jar /app/
 
 WORKDIR /app
@@ -29,8 +38,18 @@ RUN cd /app/; \
       echo "$fname"; mv "$fname" app.jar; break 1;  \
     done
 
+# 创建必要的目录
+RUN mkdir -p /app/config /app/logs
+
 VOLUME /app
 
 EXPOSE 8080/tcp 8090/tcp
-ENTRYPOINT [ "sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -jar /app/app.jar" ]
+
+# 设置JVM参数以支持Kubernetes环境
+ENTRYPOINT [ "sh", "-c", "java -Djava.security.egd=file:/dev/./urandom \
+    -Dspring.profiles.active=kubernetes \
+    -Dspring.cloud.kubernetes.config.enabled=true \
+    -Dspring.cloud.kubernetes.discovery.enabled=true \
+    -Xmx512m -Xms256m \
+    -jar /app/app.jar" ]
 

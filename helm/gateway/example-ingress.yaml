@@ -1,0 +1,78 @@
+# 示例Ingress资源，展示如何配置路由
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-app-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: example.local
+    http:
+      paths:
+      - path: /api(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: example-api-service
+            port:
+              number: 8080
+      - path: /web(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: example-web-service
+            port:
+              number: 80
+  - host: admin.example.local
+    http:
+      paths:
+      - path: /admin(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: example-admin-service
+            port:
+              number: 8080
+---
+# 示例服务1 - API服务
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-api-service
+  namespace: default
+spec:
+  selector:
+    app: example-api
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+# 示例服务2 - Web服务
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-web-service
+  namespace: default
+spec:
+  selector:
+    app: example-web
+  ports:
+  - port: 80
+    targetPort: 80
+---
+# 示例服务3 - Admin服务
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-admin-service
+  namespace: default
+spec:
+  selector:
+    app: example-admin
+  ports:
+  - port: 8080
+    targetPort: 8080

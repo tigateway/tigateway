@@ -9,7 +9,7 @@ import java.security.Security;
 
 @SpringBootApplication(
         exclude = {GatewayResilience4JCircuitBreakerAutoConfiguration.class},
-        scanBasePackages = {"com.vmware.scg.extensions", "io.pivotal.spring.cloud.gateway"}
+        scanBasePackages = {"com.vmware.scg.extensions", "io.pivotal.spring.cloud.gateway", "ti.gateway.kubernetes"}
 )
 public class GatewayApplication {
 

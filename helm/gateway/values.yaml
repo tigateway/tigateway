@@ -1,0 +1,95 @@
+# Default values for gateway
+# This is a YAML-formatted file.
+
+# 命名空间
+namespace: default
+
+# 副本数量
+replicaCount: 2
+
+# 镜像配置
+image:
+  repository: royalwang/gateway
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+# 服务配置
+service:
+  name: my-gateway
+  type: ClusterIP  # ClusterIP, NodePort, LoadBalancer
+  port: 80
+  managementPort: 8090
+
+# Ingress配置
+ingress:
+  enabled: true
+  host: gateway.local
+  refreshInterval: 30
+  cacheEnabled: true
+  cacheExpiration: 300
+  tls:
+    enabled: false
+    secretName: gateway-tls
+  pathRewrite:
+    enabled: true
+    pattern: "/(.*)"
+    replacement: "/$1"
+
+# 资源限制
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+# 节点选择器
+nodeSelector: {}
+
+# 容忍度
+tolerations: []
+
+# 亲和性
+affinity: {}
+
+# 日志级别
+logging:
+  level:
+    ingress: INFO
+    gateway: INFO
+    kubernetes: WARN
+
+# 自动扩缩容配置
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Pod安全上下文
+podSecurityContext:
+  fsGroup: 2000
+
+# 容器安全上下文
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# 存活性和就绪性探针配置
+probes:
+  liveness:
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readiness:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3

@@ -28,16 +28,16 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
     havingValue = "true",
     matchIfMissing = true
 )
-@EnableConfigurationProperties(AdminServerProperties.class)
+@EnableConfigurationProperties(AdminProperties.class)
 public class AdminServerConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminServerConfiguration.class);
     
     private DisposableServer adminServer;
-    private final AdminServerProperties adminServerProperties;
+    private final AdminProperties adminProperties;
 
-    public AdminServerConfiguration(AdminServerProperties adminServerProperties) {
-        this.adminServerProperties = adminServerProperties;
+    public AdminServerConfiguration(AdminProperties adminProperties) {
+        this.adminProperties = adminProperties;
     }
 
     @Bean
@@ -50,7 +50,7 @@ public class AdminServerConfiguration {
                     .GET("/admin/health", request -> 
                         ServerResponse.ok().bodyValue("{\"status\":\"UP\",\"service\":\"tigateway-admin\"}"))
                     .GET("/admin/info", request -> 
-                        ServerResponse.ok().bodyValue("{\"name\":\"TiGateway Admin\",\"version\":\"1.0.0\",\"port\":" + adminServerProperties.getPort() + "}"))
+                        ServerResponse.ok().bodyValue("{\"name\":\"TiGateway Admin\",\"version\":\"1.0.0\",\"port\":" + adminProperties.getServer().getPort() + "}"))
                     .build();
 
             // 创建HttpHandler
@@ -61,14 +61,14 @@ public class AdminServerConfiguration {
 
             // 启动独立的HTTP服务器
             this.adminServer = HttpServer.create()
-                    .port(adminServerProperties.getPort())
+                    .port(adminProperties.getServer().getPort())
                     .handle(adapter)
                     .bindNow();
 
-            logger.info("Admin server started successfully on port: {}", adminServerProperties.getPort());
+            logger.info("Admin server started successfully on port: {}", adminProperties.getServer().getPort());
             return this.adminServer;
         } catch (Exception e) {
-            logger.error("Failed to start Admin server on port: {}", adminServerProperties.getPort(), e);
+            logger.error("Failed to start Admin server on port: {}", adminProperties.getServer().getPort(), e);
             throw e;
         }
     }

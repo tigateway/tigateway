@@ -18,8 +18,10 @@ management:
 # Admin配置
 admin:
   server:
+    enabled: true
     port: 8081
-  context-path: /admin
+    context-path: /admin
+    name: tigateway-admin
 
 spring:
   main:

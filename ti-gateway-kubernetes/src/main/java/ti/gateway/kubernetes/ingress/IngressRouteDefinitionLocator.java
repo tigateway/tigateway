@@ -7,7 +7,6 @@ import io.kubernetes.client.openapi.models.V1IngressList;
 import io.kubernetes.client.openapi.models.V1IngressRule;
 import io.kubernetes.client.openapi.models.V1IngressTLS;
 import io.kubernetes.client.openapi.models.V1HTTPIngressPath;
-import io.kubernetes.client.openapi.models.V1HTTPIngressRuleValue;
 import io.kubernetes.client.openapi.models.V1IngressBackend;
 import io.kubernetes.client.openapi.models.V1IngressServiceBackend;
 import io.kubernetes.client.openapi.models.V1ServiceBackendPort;
@@ -70,7 +69,8 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
                 null, 
                 null, 
                 null, 
-                null
+                null,
+                    false
             );
 
             for (V1Ingress ingress : ingressList.getItems()) {
@@ -91,8 +91,19 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
      */
     private List<Route> convertIngressToRoutes(V1Ingress ingress) {
         List<Route> routes = new ArrayList<>();
+        
+        if (ingress.getMetadata() == null) {
+            logger.warn("Ingress metadata is null, skipping");
+            return routes;
+        }
+        
         String ingressName = ingress.getMetadata().getName();
         String ingressNamespace = ingress.getMetadata().getNamespace();
+        
+        if (ingressName == null || ingressNamespace == null) {
+            logger.warn("Ingress name or namespace is null, skipping");
+            return routes;
+        }
 
         if (ingress.getSpec() == null || ingress.getSpec().getRules() == null) {
             return routes;
@@ -121,48 +132,44 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
                            V1HTTPIngressPath path, V1Ingress ingress) {
         try {
             String routeId = generateRouteId(ingressName, ingressNamespace, host, path.getPath());
-            String pathPattern = path.getPath();
-            String pathType = path.getPathType();
+            final String pathPattern = path.getPath();
+            final String pathType = path.getPathType();
+            
+            if (pathPattern == null) {
+                logger.warn("Path pattern is null for ingress {}, skipping", ingressName);
+                return null;
+            }
             
             // 处理路径类型
+            final String finalPathPattern;
             if ("Prefix".equals(pathType)) {
-                pathPattern = pathPattern + "/**";
+                finalPathPattern = pathPattern + "/**";
             } else if ("Exact".equals(pathType)) {
-                // 精确匹配，不需要修改
+                finalPathPattern = pathPattern;
             } else {
-                // 默认使用前缀匹配
-                pathPattern = pathPattern + "/**";
+                finalPathPattern = pathPattern + "/**";
             }
 
             // 构建路由
-            Route.Builder routeBuilder = Route.builder()
-                .id(routeId)
-                .uri(buildBackendUri(path.getBackend(), ingressNamespace))
-                .predicate(exchange -> {
-                    // 检查路径匹配
-                    String requestPath = exchange.getRequest().getURI().getPath();
-                    boolean pathMatches = false;
+            RouteLocatorBuilder.Builder builder = routeLocatorBuilder.routes()
+                .route(routeId, predicate -> {
+                    // 添加路径谓词
+                    var booleanSpec = "Prefix".equals(pathType) ? 
+                        predicate.path(finalPathPattern.replace("/**", "") + "/**") :
+                        "Exact".equals(pathType) ? 
+                        predicate.path(finalPathPattern) :
+                        predicate.path(finalPathPattern + "/**");
                     
-                    if ("Prefix".equals(pathType)) {
-                        pathMatches = requestPath.startsWith(pathPattern.replace("/**", ""));
-                    } else if ("Exact".equals(pathType)) {
-                        pathMatches = requestPath.equals(pathPattern);
-                    }
-                    
-                    if (!pathMatches) {
-                        return false;
-                    }
-                    
-                    // 如果指定了host，则检查host匹配
+                    // 添加主机谓词
                     if (host != null && !host.isEmpty()) {
-                        String requestHost = exchange.getRequest().getHeaders().getFirst("Host");
-                        return host.equals(requestHost);
+                        booleanSpec = booleanSpec.and().host(host);
                     }
-                    return true;
+                    
+                    return booleanSpec.uri(buildBackendUri(path.getBackend(), ingressNamespace));
                 });
 
             // 添加TLS支持
-            if (ingress.getSpec().getTls() != null) {
+            if (ingress.getSpec() != null && ingress.getSpec().getTls() != null) {
                 for (V1IngressTLS tls : ingress.getSpec().getTls()) {
                     if (tls.getHosts() != null && tls.getHosts().contains(host)) {
                         // 可以在这里添加TLS相关的配置
@@ -171,7 +178,7 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
                 }
             }
 
-            return routeBuilder.build();
+            return builder.build().getRoutes().blockFirst();
             
         } catch (Exception e) {
             logger.error("Failed to build route for ingress {}: {}", ingressName, e.getMessage(), e);
@@ -189,6 +196,10 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
 
         if (backend.getService() != null) {
             V1IngressServiceBackend serviceBackend = backend.getService();
+            if (serviceBackend == null) {
+                return "lb://default-service";
+            }
+            
             String serviceName = serviceBackend.getName();
             V1ServiceBackendPort port = serviceBackend.getPort();
             

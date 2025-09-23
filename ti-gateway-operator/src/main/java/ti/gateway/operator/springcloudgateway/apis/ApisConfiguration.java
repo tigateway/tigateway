@@ -21,59 +21,64 @@ import org.springframework.context.annotation.Profile;
 
 @Configuration
 class ApisConfiguration {
-    ApisConfiguration() {
-    }
+  ApisConfiguration() {}
 
-    @Bean
-    @Profile({"!test"})
-    public ApiClient apiClient() throws IOException {
-        ApiClient apiClient = ClientBuilder.standard(false).build();
-        apiClient.setHttpClient(apiClient.getHttpClient().newBuilder().protocols(Arrays.asList(Protocol.HTTP_2, Protocol.HTTP_1_1)).readTimeout(Duration.ZERO.toMillis(), TimeUnit.MILLISECONDS).pingInterval(1L, TimeUnit.MINUTES).build());
-        io.kubernetes.client.openapi.Configuration.setDefaultApiClient(apiClient);
-        return apiClient;
-    }
+  @Bean
+  @Profile({"!test"})
+  public ApiClient apiClient() throws IOException {
+    ApiClient apiClient = ClientBuilder.standard(false).build();
+    apiClient.setHttpClient(
+        apiClient
+            .getHttpClient()
+            .newBuilder()
+            .protocols(Arrays.asList(Protocol.HTTP_2, Protocol.HTTP_1_1))
+            .readTimeout(Duration.ZERO.toMillis(), TimeUnit.MILLISECONDS)
+            .pingInterval(1L, TimeUnit.MINUTES)
+            .build());
+    io.kubernetes.client.openapi.Configuration.setDefaultApiClient(apiClient);
+    return apiClient;
+  }
 
-    @Bean
-    AppsV1Api appsV1Api(ApiClient client) {
-        return new AppsV1Api(client);
-    }
+  @Bean
+  AppsV1Api appsV1Api(ApiClient client) {
+    return new AppsV1Api(client);
+  }
 
-    @Bean
-    CoreV1Api coreV1Api(ApiClient client) {
-        return new CoreV1Api(client);
-    }
+  @Bean
+  CoreV1Api coreV1Api(ApiClient client) {
+    return new CoreV1Api(client);
+  }
 
-    @Bean
-    RbacAuthorizationV1Api rbacAuthorizationApi(ApiClient client) {
-        return new RbacAuthorizationV1Api(client);
-    }
+  @Bean
+  RbacAuthorizationV1Api rbacAuthorizationApi(ApiClient client) {
+    return new RbacAuthorizationV1Api(client);
+  }
 
-    @Bean
-    CustomObjectsApi customObjectsApi(ApiClient apiClient) {
-        return new CustomObjectsApi(apiClient);
-    }
+  @Bean
+  CustomObjectsApi customObjectsApi(ApiClient apiClient) {
+    return new CustomObjectsApi(apiClient);
+  }
 
-    @Bean
-    TanzuVmwareComV1Api TanzuVmwareComV1Api(ApiClient client) {
-        return new TanzuVmwareComV1Api(client);
-    }
+  @Bean
+  TanzuVmwareComV1Api TanzuVmwareComV1Api(ApiClient client) {
+    return new TanzuVmwareComV1Api(client);
+  }
 
-    @Bean
-    EventRecorder eventClient(CoreV1Api coreV1Api) {
-        return new EventRecorder(coreV1Api);
-    }
+  @Bean
+  EventRecorder eventClient(CoreV1Api coreV1Api) {
+    return new EventRecorder(coreV1Api);
+  }
 
-    @Bean(
-            destroyMethod = "shutdown"
-    )
-    ControllerManager controllerManager(SharedInformerFactory sharedInformerFactory, Controller[] controllers) {
-        return new ControllerManager(sharedInformerFactory, controllers);
-    }
+  @Bean(destroyMethod = "shutdown")
+  ControllerManager controllerManager(
+      SharedInformerFactory sharedInformerFactory, Controller[] controllers) {
+    return new ControllerManager(sharedInformerFactory, controllers);
+  }
 
-    @Bean
-    CommandLineRunner commandLineRunner(ControllerManager controllerManager) {
-        return (args) -> {
-            (new Thread(controllerManager, "controller manager")).start();
-        };
-    }
+  @Bean
+  CommandLineRunner commandLineRunner(ControllerManager controllerManager) {
+    return (args) -> {
+      (new Thread(controllerManager, "controller manager")).start();
+    };
+  }
 }

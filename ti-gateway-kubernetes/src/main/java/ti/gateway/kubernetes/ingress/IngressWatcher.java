@@ -105,7 +105,8 @@ public class IngressWatcher {
                     null, 
                     null, 
                     null, 
-                    null
+                    null,
+                        false
                 );
 
                 V1ListMeta listMeta = ingressList.getMetadata();

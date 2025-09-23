@@ -1,10 +1,12 @@
 package ti.gateway.kubernetes.ingress;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * Ingress相关配置属性
  */
+@Component
 @ConfigurationProperties(prefix = "spring.cloud.gateway.kubernetes.ingress")
 public class IngressProperties {
 

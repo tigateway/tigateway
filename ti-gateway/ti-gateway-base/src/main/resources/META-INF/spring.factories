@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+ti.gateway.base.storage.configmap.config.ConfigMapStorageAutoConfiguration

@@ -1,0 +1,56 @@
+# Default values for tigateway-crds.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Override the name of the chart
+nameOverride: ""
+fullnameOverride: ""
+
+# ServiceAccount configuration
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# CRD installation configuration
+crds:
+  # Whether to install the CRDs
+  install: true
+  # Whether to keep CRDs when uninstalling the chart
+  keep: false
+  # Whether to validate CRDs during installation
+  validate: true
+
+# TiGateway specific CRD features
+tigateway:
+  # Enable Ingress integration features
+  ingress:
+    enabled: true
+    # Default namespace for Ingress resources
+    defaultNamespace: "default"
+    # Default refresh interval for Ingress routes (seconds)
+    defaultRefreshInterval: 30
+    # Default cache settings
+    cache:
+      enabled: true
+      expiration: 300
+    # Default TLS settings
+    tls:
+      enabled: true
+    # Default path rewrite settings
+    pathRewrite:
+      enabled: true
+      pattern: "/(.*)"
+      replacement: "/$1"
+    # Default service port
+    defaultServicePort: 80
+
+# Labels to add to all CRDs
+labels: {}
+  # example: environment: production
+
+# Annotations to add to all CRDs
+annotations: {}
+  # example: contact: "team@tigateway.cn"

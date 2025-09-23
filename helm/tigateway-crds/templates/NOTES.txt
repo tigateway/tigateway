@@ -1,0 +1,7 @@
+This chart contains the Custom Resource Definitions for the tigateway chart.
+Install this chart before installing tigateway
+
+The following CRDs have been installed:
+- tigateways.tigateway.cn
+- tigatewaymappings.tigateway.cn  
+- tigatewayrouteconfigs.tigateway.cn

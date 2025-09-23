@@ -1,0 +1,179 @@
+# Example TiGateway instance
+apiVersion: tigateway.cn/v1
+kind: TiGateway
+metadata:
+  name: example-gateway
+  namespace: default
+  labels:
+    app: tigateway
+    version: v1.0.0
+spec:
+  count: 2
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+  java-opts: "-Xmx512m -Xms256m"
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: "kubernetes"
+    - name: LOG_LEVEL
+      value: "INFO"
+  ingress:
+    enabled: true
+    namespace: default
+    refreshInterval: 30
+    cacheEnabled: true
+    cacheExpiration: 300
+    tlsEnabled: true
+    defaultServicePort: 80
+    pathRewriteEnabled: true
+    pathRewritePattern: "/(.*)"
+    pathRewriteReplacement: "/$1"
+  api:
+    groupId: "com.example"
+    title: "Example API Gateway"
+    description: "API Gateway for example microservices"
+    version: "1.0.0"
+    serverUrl: "https://api.example.com"
+    cors:
+      allowedOrigins:
+        - "https://app.example.com"
+        - "https://admin.example.com"
+      allowedMethods:
+        - "GET"
+        - "POST"
+        - "PUT"
+        - "DELETE"
+        - "OPTIONS"
+      allowedHeaders:
+        - "Content-Type"
+        - "Authorization"
+        - "X-Requested-With"
+      allowCredentials: true
+      maxAge: 3600
+  sso:
+    secret: "sso-secret"
+    roles-attribute-name: "roles"
+    inactive-session-expiration-in-minutes: 30
+  observability:
+    metrics:
+      prometheus:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+          labels:
+            app: tigateway
+      wavefront:
+        enabled: false
+    tracing:
+      wavefront:
+        enabled: false
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+  tls:
+    - hosts:
+        - "api.example.com"
+        - "gateway.example.com"
+      secretName: "tigateway-tls"
+---
+# Example TiGatewayRouteConfig
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: example-routes
+  namespace: default
+  labels:
+    app: tigateway
+spec:
+  service:
+    name: example-service
+    namespace: default
+    port: 8080
+    predicates:
+      - "Path=/api/**"
+    filters:
+      - "StripPrefix=1"
+    ssoEnabled: true
+  routes:
+    - title: "User API"
+      description: "User management endpoints"
+      uri: "lb://user-service"
+      predicates:
+        - "Path=/api/users/**"
+        - "Method=GET,POST,PUT,DELETE"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,user"
+      order: 1
+      ssoEnabled: true
+      tokenRelay: true
+      tags:
+        - "user"
+        - "api"
+      ingressSource: "manual"
+      host: "api.example.com"
+      pathType: "Prefix"
+      tlsEnabled: true
+    - title: "Product API"
+      description: "Product catalog endpoints"
+      uri: "lb://product-service"
+      predicates:
+        - "Path=/api/products/**"
+        - "Method=GET,POST,PUT,DELETE"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,product"
+      order: 2
+      ssoEnabled: false
+      tokenRelay: false
+      tags:
+        - "product"
+        - "api"
+      ingressSource: "kubernetes-ingress"
+      host: "api.example.com"
+      pathType: "Prefix"
+      tlsEnabled: true
+  basicAuth:
+    secret: "basic-auth-secret"
+  openapi:
+    components:
+      securitySchemes:
+        bearerAuth:
+          type: http
+          scheme: bearer
+          bearerFormat: JWT
+        basicAuth:
+          type: http
+          scheme: basic
+  ingress:
+    autoDiscovery: true
+    namespace: default
+    labelSelector: "app=tigateway"
+    annotationSelector: "tigateway.cn/auto-discover=true"
+    refreshInterval: 30
+    cacheEnabled: true
+    cacheExpiration: 300
+---
+# Example TiGatewayMapping
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: example-mapping
+  namespace: default
+  labels:
+    app: tigateway
+spec:
+  gatewayRef:
+    name: example-gateway
+    namespace: default
+  routeConfigRef:
+    name: example-routes
+    namespace: default
+  priority: 100
+  enabled: true

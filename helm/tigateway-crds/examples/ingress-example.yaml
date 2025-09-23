@@ -1,0 +1,127 @@
+# Example Kubernetes Ingress that will be automatically discovered by TiGateway
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-app-ingress
+  namespace: default
+  labels:
+    app: tigateway
+  annotations:
+    tigateway.cn/auto-discover: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - "api.example.com"
+        - "app.example.com"
+      secretName: "example-tls"
+  rules:
+    - host: api.example.com
+      http:
+        paths:
+          - path: /api/users(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service
+                port:
+                  number: 8080
+          - path: /api/products(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: product-service
+                port:
+                  number: 8080
+          - path: /api/orders(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 8080
+    - host: app.example.com
+      http:
+        paths:
+          - path: /app(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80
+---
+# Example Service for user-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: default
+  labels:
+    app: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+# Example Service for product-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: default
+  labels:
+    app: product-service
+spec:
+  selector:
+    app: product-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+# Example Service for order-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: default
+  labels:
+    app: order-service
+spec:
+  selector:
+    app: order-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+---
+# Example Service for frontend-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: default
+  labels:
+    app: frontend-service
+spec:
+  selector:
+    app: frontend-service
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

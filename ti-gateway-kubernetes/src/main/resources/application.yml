@@ -22,6 +22,8 @@ admin:
   context-path: /admin
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   cloud:
     loadbalancer:
       cache:
@@ -45,6 +47,11 @@ spring:
           path-rewrite-enabled: true
           path-rewrite-pattern: "/(.*)"
           path-rewrite-replacement: "/$1"
+      storage:
+        configmap:
+          enabled: true
+          name: tigateway-app-config
+          namespace: default
   session:
     timeout: 30m
   kubernetes:

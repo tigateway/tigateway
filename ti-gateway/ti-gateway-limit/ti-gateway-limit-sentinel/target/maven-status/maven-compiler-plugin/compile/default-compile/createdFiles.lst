@@ -1,3 +1,0 @@
-META-INF/spring-configuration-metadata.json
-ti/gateway/limit/sentinel/config/ApiGatewaySentinelAutoConfiguration.class
-ti/gateway/limit/sentinel/config/ApiGatewaySentinelProperties.class

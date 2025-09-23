@@ -11,8 +11,7 @@
       "name": "spring.cloud.gateway.sentinel.enabled",
       "type": "java.lang.Boolean",
       "description": "是否启用",
-      "sourceType": "ti.gateway.limit.sentinel.config.ApiGatewaySentinelProperties",
-      "defaultValue": true
+      "sourceType": "ti.gateway.limit.sentinel.config.ApiGatewaySentinelProperties"
     }
   ],
   "hints": []

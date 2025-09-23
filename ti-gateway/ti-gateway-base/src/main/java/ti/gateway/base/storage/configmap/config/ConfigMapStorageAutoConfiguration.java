@@ -24,7 +24,7 @@ import java.io.IOException;
 @ConditionalOnProperty(
     name = "spring.cloud.gateway.storage.configmap.enabled",
     havingValue = "true",
-    matchIfMissing = false
+    matchIfMissing = true
 )
 @EnableConfigurationProperties(ConfigMapStorageProperties.class)
 public class ConfigMapStorageAutoConfiguration {

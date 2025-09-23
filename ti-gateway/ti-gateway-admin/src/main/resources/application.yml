@@ -8,11 +8,6 @@ spring:
     name: tigateway-admin
   profiles:
     active: dev
-
-# TiGateway版本信息
-tigateway:
-  version: 1.0.0
-  codename: tigateway
   thymeleaf:
     cache: false
   jackson:
@@ -31,6 +26,11 @@ tigateway:
         skip: true
       sentinel:
         enabled: true
+      storage:
+        configmap:
+          enabled: true
+          name: tigateway-app-config
+          namespace: default
 #      routes:
 #        - id: middle-service-user-server
 #          uri: lb://middle-service-user-server
@@ -41,6 +41,11 @@ tigateway:
   config:
     import:
       - classpath:/gateway-routes.yml
+
+# TiGateway版本信息
+tigateway:
+  version: 1.0.0
+  codename: tigateway
 
 management:
   endpoints:
@@ -54,13 +59,4 @@ management:
     base-path: /
 
 
-# ConfigMap存储配置
-spring:
-  cloud:
-    gateway:
-      storage:
-        configmap:
-          enabled: true
-          name: tigateway-app-config
-          namespace: default
 

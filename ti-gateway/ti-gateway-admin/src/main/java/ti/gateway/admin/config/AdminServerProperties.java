@@ -1,4 +1,4 @@
-package ti.gateway.kubernetes.config;
+package ti.gateway.admin.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

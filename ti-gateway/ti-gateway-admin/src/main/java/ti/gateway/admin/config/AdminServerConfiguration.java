@@ -1,4 +1,4 @@
-package ti.gateway.kubernetes.config;
+package ti.gateway.admin.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +16,11 @@ import reactor.netty.http.server.HttpServer;
 
 import javax.annotation.PreDestroy;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
+
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 /**
- * 简单的Admin服务器配置 - 提供独立端口访问
+ * Admin服务器配置 - 提供独立端口访问
  */
 @Configuration
 @ConditionalOnProperty(
@@ -29,14 +29,14 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
     matchIfMissing = true
 )
 @EnableConfigurationProperties(AdminServerProperties.class)
-public class SimpleAdminServerConfiguration {
+public class AdminServerConfiguration {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleAdminServerConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminServerConfiguration.class);
     
     private DisposableServer adminServer;
     private final AdminServerProperties adminServerProperties;
 
-    public SimpleAdminServerConfiguration(AdminServerProperties adminServerProperties) {
+    public AdminServerConfiguration(AdminServerProperties adminServerProperties) {
         this.adminServerProperties = adminServerProperties;
     }
 

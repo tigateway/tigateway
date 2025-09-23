@@ -43,8 +43,8 @@ spring:
     timeout: 30m
   kubernetes:
     discovery:
-      enabled: true
+      enabled: false
     config:
-      enabled: true
+      enabled: false
 sso:
   roles-attribute-name: roles

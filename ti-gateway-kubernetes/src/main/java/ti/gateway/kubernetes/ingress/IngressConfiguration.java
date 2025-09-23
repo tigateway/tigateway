@@ -28,11 +28,20 @@ public class IngressConfiguration {
     @Bean
     @Primary
     public ApiClient kubernetesApiClient() throws IOException {
-        ApiClient client = Config.defaultClient();
-        // 设置连接超时
-        client.setConnectTimeout(30000);
-        client.setReadTimeout(60000);
-        return client;
+        try {
+            ApiClient client = Config.defaultClient();
+            // 设置连接超时
+            client.setConnectTimeout(30000);
+            client.setReadTimeout(60000);
+            return client;
+        } catch (Exception e) {
+            // 如果无法连接到Kubernetes集群，返回一个默认的客户端
+            ApiClient client = new ApiClient();
+            client.setBasePath("http://localhost:8080");
+            client.setConnectTimeout(30000);
+            client.setReadTimeout(60000);
+            return client;
+        }
     }
 
     /**

@@ -3,6 +3,8 @@ package ti.gateway.base.storage.configmap.config;
 import io.kubernetes.client.openapi.ApiClient;
 import io.kubernetes.client.openapi.apis.CoreV1Api;
 import io.kubernetes.client.util.Config;
+import io.kubernetes.client.openapi.models.V1Pod;
+import org.springframework.cloud.kubernetes.commons.PodUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,6 +17,7 @@ import ti.gateway.base.storage.configmap.ConfigMapAppServerStorage;
 import ti.gateway.base.storage.configmap.impl.ConfigMapAppInfoRepositoryImpl;
 
 import java.io.IOException;
+import java.util.function.Supplier;
 
 /**
  * ConfigMap存储自动配置
@@ -55,6 +58,7 @@ public class ConfigMapStorageAutoConfiguration {
      * 配置Core V1 API
      */
     @Bean
+    @Primary
     public CoreV1Api coreV1Api(ApiClient apiClient) {
         return new CoreV1Api(apiClient);
     }
@@ -74,5 +78,24 @@ public class ConfigMapStorageAutoConfiguration {
     @Primary
     public AppServerStorage configMapAppServerStorage() {
         return new ConfigMapAppServerStorage();
+    }
+
+    /**
+     * 配置PodUtils Bean（用于Kubernetes健康检查）
+     */
+    @Bean
+    @Primary
+    public PodUtils<V1Pod> podUtils() {
+        return new PodUtils<V1Pod>() {
+            @Override
+            public Boolean isInsideKubernetes() {
+                return false; // 在非Kubernetes环境中运行
+            }
+            
+            @Override
+            public Supplier<V1Pod> currentPod() {
+                return () -> null; // 在非Kubernetes环境中返回null
+            }
+        };
     }
 }

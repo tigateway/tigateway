@@ -1,6 +1,7 @@
 package ti.gateway.admin.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ti.gateway.admin.service.entity.GwAppInfoEntity;
 import ti.gateway.admin.base.Page;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Primary
 public class GwAppInfoServiceImpl implements IGwAppInfoService {
 
     @Autowired

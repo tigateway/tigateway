@@ -1,5 +1,6 @@
 package ti.gateway.admin.service;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -11,6 +12,7 @@ import java.util.List;
  * @date 2024/5/6 23:30
  */
 @Service
+@Primary
 public class GatewayActuatorService {
 
     private final WebClient webClient;

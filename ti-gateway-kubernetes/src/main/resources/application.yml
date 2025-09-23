@@ -52,6 +52,17 @@ spring:
           enabled: true
           name: tigateway-app-config
           namespace: default
+      routes:
+        - id: test-route
+          uri: https://httpbin.org
+          predicates:
+            - Path=/test/**
+          filters:
+            - StripPrefix=1
+        - id: admin-route
+          uri: http://localhost:8080
+          predicates:
+            - Path=/admin/**
   session:
     timeout: 30m
   kubernetes:

@@ -26,10 +26,13 @@ public class ApiService {
     public List<Router> getHttpRouters() {
         try {
             // 从Spring Cloud Gateway获取实际路由数据
-            return gatewayActuatorService.getAllRoutes()
-                .map(this::convertToRouter)
-                .collectList()
-                .block();
+            List<ti.gateway.admin.service.Route> routes = gatewayActuatorService.getAllRoutes().block();
+            if (routes != null) {
+                return routes.stream()
+                    .map(this::convertToRouter)
+                    .collect(Collectors.toList());
+            }
+            return getMockHttpRouters();
         } catch (Exception e) {
             // 如果获取失败，返回模拟数据
             return getMockHttpRouters();
@@ -38,10 +41,15 @@ public class ApiService {
 
     public Router getHttpRouter(String name) {
         try {
-            return gatewayActuatorService.getAllRoutes()
-                .filter(route -> route.getRouteId().equals(name))
-                .map(this::convertToRouter)
-                .blockFirst();
+            List<ti.gateway.admin.service.Route> routes = gatewayActuatorService.getAllRoutes().block();
+            if (routes != null) {
+                return routes.stream()
+                    .filter(route -> route.getRouteId().equals(name))
+                    .map(this::convertToRouter)
+                    .findFirst()
+                    .orElse(getMockHttpRouter(name));
+            }
+            return getMockHttpRouter(name);
         } catch (Exception e) {
             // 返回模拟数据
             return getMockHttpRouter(name);
@@ -53,11 +61,14 @@ public class ApiService {
     public List<ServiceInfo> getHttpServices() {
         try {
             // 从Spring Cloud Gateway获取服务数据
-            return gatewayActuatorService.getAllRoutes()
-                .map(this::convertToServiceInfo)
-                .distinct()
-                .collectList()
-                .block();
+            List<ti.gateway.admin.service.Route> routes = gatewayActuatorService.getAllRoutes().block();
+            if (routes != null) {
+                return routes.stream()
+                    .map(this::convertToServiceInfo)
+                    .distinct()
+                    .collect(Collectors.toList());
+            }
+            return getMockHttpServices();
         } catch (Exception e) {
             // 返回模拟数据
             return getMockHttpServices();
@@ -66,10 +77,15 @@ public class ApiService {
 
     public ServiceInfo getHttpService(String name) {
         try {
-            return gatewayActuatorService.getAllRoutes()
-                .filter(route -> route.getUri().contains(name))
-                .map(this::convertToServiceInfo)
-                .blockFirst();
+            List<ti.gateway.admin.service.Route> routes = gatewayActuatorService.getAllRoutes().block();
+            if (routes != null) {
+                return routes.stream()
+                    .filter(route -> route.getUri().contains(name))
+                    .map(this::convertToServiceInfo)
+                    .findFirst()
+                    .orElse(getMockHttpService(name));
+            }
+            return getMockHttpService(name);
         } catch (Exception e) {
             // 返回模拟数据
             return getMockHttpService(name);
@@ -81,12 +97,15 @@ public class ApiService {
     public List<Middleware> getHttpMiddlewares() {
         try {
             // 从Spring Cloud Gateway获取过滤器数据
-            return gatewayActuatorService.getAllRoutes()
-                .flatMap(route -> route.getFilters().stream())
-                .map(this::convertToMiddleware)
-                .distinct()
-                .collectList()
-                .block();
+            List<ti.gateway.admin.service.Route> routes = gatewayActuatorService.getAllRoutes().block();
+            if (routes != null) {
+                return routes.stream()
+                    .flatMap(route -> route.getFilters().stream())
+                    .map(this::convertToMiddleware)
+                    .distinct()
+                    .collect(Collectors.toList());
+            }
+            return getMockHttpMiddlewares();
         } catch (Exception e) {
             // 返回模拟数据
             return getMockHttpMiddlewares();
@@ -95,11 +114,16 @@ public class ApiService {
 
     public Middleware getHttpMiddleware(String name) {
         try {
-            return gatewayActuatorService.getAllRoutes()
-                .flatMap(route -> route.getFilters().stream())
-                .filter(filter -> filter.contains(name))
-                .map(this::convertToMiddleware)
-                .blockFirst();
+            List<ti.gateway.admin.service.Route> routes = gatewayActuatorService.getAllRoutes().block();
+            if (routes != null) {
+                return routes.stream()
+                    .flatMap(route -> route.getFilters().stream())
+                    .filter(filter -> filter.contains(name))
+                    .map(this::convertToMiddleware)
+                    .findFirst()
+                    .orElse(getMockHttpMiddleware(name));
+            }
+            return getMockHttpMiddleware(name);
         } catch (Exception e) {
             // 返回模拟数据
             return getMockHttpMiddleware(name);

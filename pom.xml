@@ -34,6 +34,7 @@
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.jacoco.version>0.8.3</maven.jacoco.version>
         <kubernetes-client.version>18.0.1</kubernetes-client.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -110,6 +111,12 @@
                 <groupId>io.kubernetes</groupId>
                 <artifactId>client-java-extended</artifactId>
                 <version>${kubernetes-client.version}</version>
+            </dependency>
+            <!-- Lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

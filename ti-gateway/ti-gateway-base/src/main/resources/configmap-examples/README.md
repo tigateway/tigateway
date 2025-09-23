@@ -2,6 +2,8 @@
 
 TiGateway支持使用Kubernetes ConfigMap作为应用配置的存储后端，实现云原生架构。
 
+> **注意**: 从v1.0.0版本开始，TiGateway已完全迁移到ConfigMap存储方案，原有的MySQL数据库存储方案已被废弃。所有新的部署都应该使用ConfigMap存储。
+
 ## 特性
 
 - **云原生存储**: 使用Kubernetes ConfigMap存储应用配置
@@ -9,6 +11,41 @@ TiGateway支持使用Kubernetes ConfigMap作为应用配置的存储后端，实
 - **高可用**: 利用Kubernetes的高可用特性
 - **版本控制**: 支持ConfigMap的版本管理
 - **RBAC支持**: 支持Kubernetes RBAC权限控制
+- **标准化配置**: 支持YAML Schema规范验证
+- **双向转换**: 支持YAML配置与ConfigMap存储的双向转换
+
+## 迁移说明
+
+### 从MySQL存储迁移到ConfigMap存储
+
+如果您之前使用的是MySQL存储方案，请按照以下步骤进行迁移：
+
+1. **导出现有数据**: 从MySQL数据库中导出应用配置数据
+2. **转换为YAML格式**: 使用提供的转换工具将数据转换为标准YAML格式
+3. **验证配置**: 使用Schema验证器验证配置格式
+4. **部署ConfigMap**: 将配置部署到Kubernetes ConfigMap
+5. **更新应用配置**: 启用ConfigMap存储并禁用MySQL存储
+
+### 配置变更
+
+```yaml
+# 旧配置 (已废弃)
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/tigateway
+    username: root
+    password: password
+
+# 新配置 (推荐)
+spring:
+  cloud:
+    gateway:
+      storage:
+        configmap:
+          enabled: true
+          name: tigateway-app-config
+          namespace: default
+```
 
 ## 配置
 

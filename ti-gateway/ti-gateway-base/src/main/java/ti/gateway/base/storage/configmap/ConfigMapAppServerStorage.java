@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import ti.gateway.base.core.cache.AppServer;
 import ti.gateway.base.core.cache.AppServerStorage;
 import ti.gateway.base.storage.configmap.model.ConfigMapAppInfo;
-import ti.gateway.base.util.BeanCopierUtils;
 
 import java.util.Objects;
 import java.util.Set;

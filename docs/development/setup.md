@@ -304,4 +304,8 @@ kubectl cluster-info
 **相关文档**:
 - [系统架构](../architecture/system-architecture.md)
 - [模块设计](../architecture/module-design.md)
+- [Spring Cloud Gateway 集成](./spring-cloud-gateway-integration.md)
+- [自定义组件开发](./custom-components.md)
+- [过滤器工厂开发](./filter-factories.md)
+- [谓词工厂开发](./predicate-factories.md)
 - [调试指南](./debugging.md)

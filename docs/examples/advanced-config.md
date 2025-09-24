@@ -1,8 +1,8 @@
-# TiGateway 高级配置示例
+# TiGateway CRD 高级配置示例
 
 ## 概述
 
-本文档提供了 TiGateway 的高级配置示例，包括复杂路由配置、高级过滤器、性能优化、安全配置等企业级场景。
+本文档提供了基于 Kubernetes Custom Resource Definitions (CRD) 的 TiGateway 高级配置示例，包括复杂路由配置、高级过滤器、性能优化、安全配置等企业级场景。所有配置都基于 CRD 配置抽象设计，提供声明式、云原生的配置管理方式。
 
 ## 复杂路由配置
 

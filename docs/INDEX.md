@@ -40,6 +40,15 @@
 - [advanced-config.md](./examples/advanced-config.md) - 高级配置示例 *(待创建)*
 - [troubleshooting.md](./examples/troubleshooting.md) - 故障排除指南 *(待创建)*
 
+### ⚙️ 配置文档 (configuration/)
+- [crd-configuration-design.md](./configuration/crd-configuration-design.md) - 全面的CRD配置抽象设计
+- [crd-basic-config.md](./examples/crd-basic-config.md) - CRD基础配置示例
+- [crd-advanced-config.md](./examples/crd-advanced-config.md) - CRD高级配置示例
+- [crd-resource-configuration.md](./configuration/crd-resource-configuration.md) - CRD资源配置详细说明
+- [crd-predicate-configuration.md](./configuration/crd-predicate-configuration.md) - CRD谓词配置详细说明
+- [crd-filter-configuration.md](./configuration/crd-filter-configuration.md) - CRD过滤器配置详细说明
+- [crd-typed-design.md](./configuration/crd-typed-design.md) - 类型化CRD设计，从字符串规则到结构化类型系统
+
 ## 🎯 快速导航
 
 ### 👨‍💻 开发者路径
@@ -92,6 +101,7 @@
 - [x] CRD 资源配置文档
 - [x] CRD 谓词配置文档
 - [x] CRD 过滤器配置文档
+- [x] CRD 类型化设计文档
 
 ### ✅ API 文档完成
 - [x] WebSocket API 文档
@@ -130,11 +140,11 @@
 
 ## 📊 文档统计
 
-- **总文档数**: 30 个
-- **已完成**: 30 个
+- **总文档数**: 31 个
+- **已完成**: 31 个
 - **进行中**: 0 个
 - **计划中**: 3 个
-- **总字数**: 约 520,000 字
+- **总字数**: 约 580,000 字
 - **最后更新**: 2024-09-23
 
 ---

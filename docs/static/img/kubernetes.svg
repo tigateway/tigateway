@@ -1,0 +1,8 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#326CE5" fill-opacity="0.1"/>
+  <path d="M100 20L120 30V70L100 80L80 70V30L100 20Z" fill="#326CE5"/>
+  <path d="M100 80L120 90V130L100 140L80 130V90L100 80Z" fill="#326CE5"/>
+  <path d="M100 140L120 150V170L100 180L80 170V150L100 140Z" fill="#326CE5"/>
+  <circle cx="100" cy="100" r="8" fill="#326CE5"/>
+  <text x="100" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#326CE5" font-weight="bold">Kubernetes</text>
+</svg>

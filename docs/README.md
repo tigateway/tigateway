@@ -1,70 +1,71 @@
 # TiGateway 文档站点
 
-这是 TiGateway 项目的官方文档站点，基于 Jekyll 构建，托管在 GitHub Pages 上。
+这是 TiGateway 项目的官方文档站点，基于 Docusaurus 构建，托管在 GitHub Pages 上。
 
 ## 📚 文档结构
 
 ```
 docs/
-├── _config.yml          # Jekyll 配置文件
-├── _layouts/            # 页面布局模板
-├── _includes/           # 可重用组件
-├── assets/              # 静态资源
-│   ├── css/            # 样式文件
-│   └── js/             # JavaScript 文件
-├── book/               # 用户指南 (32 个章节)
-├── architecture/       # 架构设计文档
-├── development/        # 开发指南
-├── api/               # API 文档
-├── deployment/        # 部署运维文档
-├── examples/          # 示例教程
-├── configuration/     # 配置文档
-├── index.md          # 首页
-├── 404.html          # 404 错误页面
-└── Gemfile           # Ruby 依赖管理
+├── docusaurus.config.js    # Docusaurus 配置文件
+├── sidebars.js            # 侧边栏配置
+├── package.json           # 项目依赖
+├── tsconfig.json          # TypeScript 配置
+├── src/                   # 源代码
+│   ├── pages/            # 页面组件
+│   ├── components/       # 可重用组件
+│   └── css/              # 样式文件
+├── static/               # 静态资源
+│   └── img/              # 图片资源
+├── docs/                 # 文档内容
+│   ├── api/              # API 文档
+│   ├── architecture/     # 架构文档
+│   ├── development/      # 开发指南
+│   ├── deployment/       # 部署文档
+│   ├── examples/         # 示例教程
+│   └── configuration/    # 配置文档
+└── blog/                 # 博客文章
 ```
 
 ## 🚀 本地开发
 
 ### 环境要求
 
-- Ruby 3.1+
-- Bundler
-- Jekyll 4.3+
+- Node.js 18+
+- npm 或 yarn
 
 ### 安装和运行
 
-1. **安装 Ruby 依赖**
+1. **安装依赖**
    ```bash
    cd docs
-   bundle install
+   npm install
    ```
 
-2. **启动本地服务器**
+2. **启动开发服务器**
    ```bash
-   bundle exec jekyll serve
+   npm start
    ```
 
 3. **访问本地站点**
-   打开浏览器访问 `http://localhost:4000`
+   打开浏览器访问 `http://localhost:3000`
 
 ### 开发命令
 
 ```bash
-# 构建站点
-bundle exec jekyll build
+# 启动开发服务器
+npm start
 
-# 构建并启动服务器
-bundle exec jekyll serve
+# 构建生产版本
+npm run build
 
-# 构建并启动服务器（监听所有网络接口）
-bundle exec jekyll serve --host 0.0.0.0
-
-# 构建并启动服务器（生产模式）
-JEKYLL_ENV=production bundle exec jekyll serve
+# 启动生产服务器
+npm run serve
 
 # 清理构建缓存
-bundle exec jekyll clean
+npm run clear
+
+# 生成类型定义
+npm run write-heading-ids
 ```
 
 ## 📝 内容管理
@@ -80,7 +81,7 @@ bundle exec jekyll clean
 2. **添加 Front Matter**
    ```yaml
    ---
-   layout: default
+   sidebar_position: 1
    title: 新示例
    description: 这是一个新的示例文档
    ---
@@ -91,7 +92,7 @@ bundle exec jekyll clean
 
 ### 更新现有文档
 
-直接编辑相应的 `.md` 文件即可。Jekyll 会自动检测文件变化并重新构建。
+直接编辑相应的 `.md` 文件即可。Docusaurus 会自动检测文件变化并重新构建。
 
 ### 文档规范
 
@@ -104,21 +105,30 @@ bundle exec jekyll clean
 
 ### 自定义样式
 
-样式文件位于 `assets/css/` 目录：
+样式文件位于 `src/css/custom.css`：
 
-- `main.css` - 主要样式
-- `syntax.css` - 代码语法高亮
+- 全局样式覆盖
+- 主题变量自定义
+- 响应式设计
 
 ### 主题配置
 
-在 `_config.yml` 中配置主题和插件：
+在 `docusaurus.config.js` 中配置主题和插件：
 
-```yaml
-theme: minima
-plugins:
-  - jekyll-feed
-  - jekyll-sitemap
-  - jekyll-seo-tag
+```javascript
+themeConfig: {
+  navbar: {
+    title: 'TiGateway',
+    logo: {
+      alt: 'TiGateway Logo',
+      src: 'img/logo.svg',
+    },
+    items: [
+      // 导航项配置
+    ],
+  },
+  // 更多配置...
+}
 ```
 
 ## 🔧 功能特性
@@ -158,18 +168,17 @@ plugins:
 1. **构建站点**
    ```bash
    cd docs
-   bundle exec jekyll build
+   npm run build
    ```
 
 2. **部署到 GitHub Pages**
    ```bash
-   # 使用 gh-pages 分支
-   git subtree push --prefix docs/_site origin gh-pages
+   npm run deploy
    ```
 
 ### 自定义域名
 
-如果需要使用自定义域名，在 `docs/` 目录下创建 `CNAME` 文件：
+如果需要使用自定义域名，在 `static/` 目录下创建 `CNAME` 文件：
 
 ```
 docs.tigateway.cn
@@ -179,7 +188,7 @@ docs.tigateway.cn
 
 ### 构建优化
 
-- 使用 Jekyll 缓存
+- 使用 Docusaurus 缓存
 - 压缩静态资源
 - 优化图片大小
 
@@ -209,14 +218,14 @@ docs.tigateway.cn
 ### 常见问题
 
 1. **构建失败**
-   - 检查 Ruby 版本
+   - 检查 Node.js 版本
    - 更新依赖包
    - 查看错误日志
 
 2. **样式不生效**
    - 清除浏览器缓存
    - 检查 CSS 文件路径
-   - 验证 Jekyll 配置
+   - 验证 Docusaurus 配置
 
 3. **链接失效**
    - 检查文件路径
@@ -227,13 +236,13 @@ docs.tigateway.cn
 
 ```bash
 # 详细构建日志
-bundle exec jekyll build --verbose
+npm run build -- --verbose
 
-# 检查 Jekyll 配置
-bundle exec jekyll doctor
+# 检查 Docusaurus 配置
+npm run docusaurus -- --help
 
 # 验证 Markdown 语法
-bundle exec jekyll build --trace
+npm run build -- --trace
 ```
 
 ## 📞 支持

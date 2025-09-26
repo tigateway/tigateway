@@ -1,0 +1,11 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#FF6B35" fill-opacity="0.1"/>
+  <rect x="60" y="40" width="80" height="60" rx="8" fill="#FF6B35"/>
+  <rect x="70" y="50" width="60" height="40" rx="4" fill="white"/>
+  <rect x="80" y="60" width="40" height="20" rx="2" fill="#FF6B35"/>
+  <rect x="60" y="110" width="20" height="50" rx="4" fill="#FF6B35"/>
+  <rect x="120" y="110" width="20" height="50" rx="4" fill="#FF6B35"/>
+  <rect x="70" y="160" width="60" height="20" rx="4" fill="#FF6B35"/>
+  <circle cx="100" cy="100" r="8" fill="#FF6B35"/>
+  <text x="100" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#FF6B35" font-weight="bold">Enterprise</text>
+</svg>

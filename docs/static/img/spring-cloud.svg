@@ -1,0 +1,7 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="90" fill="#6DB33F" fill-opacity="0.1"/>
+  <path d="M100 30C130 30 155 55 155 85C155 115 130 140 100 140C70 140 45 115 45 85C45 55 70 30 100 30Z" fill="#6DB33F"/>
+  <path d="M100 50C120 50 135 65 135 85C135 105 120 120 100 120C80 120 65 105 65 85C65 65 80 50 100 50Z" fill="white"/>
+  <circle cx="100" cy="85" r="15" fill="#6DB33F"/>
+  <text x="100" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6DB33F" font-weight="bold">Spring Cloud</text>
+</svg>

@@ -35,14 +35,6 @@ exclude:
   - .gitattributes
   - GITHUB_PAGES_SETUP.md
 
-# 默认配置
-defaults:
-  - scope:
-      path: ""
-      type: "pages"
-    values:
-      layout: "default"
-
 # 自定义变量
 tigateway:
   version: "1.0.0"

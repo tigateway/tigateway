@@ -41,6 +41,8 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          static_site_generator: none
 
       - name: Install dependencies
         run: |

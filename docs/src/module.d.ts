@@ -1,5 +1,37 @@
 // Docusaurus 模块声明文件
 
+declare module '@theme/Layout' {
+  import { ComponentType, ReactNode } from 'react';
+  interface LayoutProps {
+    title?: string;
+    description?: string;
+    children: ReactNode;
+  }
+  const Layout: ComponentType<LayoutProps>;
+  export default Layout;
+}
+
+declare module '@docusaurus/Link' {
+  import { ComponentType, AnchorHTMLAttributes } from 'react';
+  interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    to?: string;
+    href?: string;
+  }
+  const Link: ComponentType<LinkProps>;
+  export default Link;
+}
+
+declare module '@docusaurus/useDocusaurusContext' {
+  interface DocusaurusContext {
+    siteConfig: {
+      title: string;
+      tagline: string;
+    };
+  }
+  const useDocusaurusContext: () => DocusaurusContext;
+  export default useDocusaurusContext;
+}
+
 declare module '@site/static/img/*' {
   const content: React.ComponentType<React.ComponentProps<'svg'>>;
   export default content;

@@ -98,6 +98,7 @@ const sidebars: SidebarsConfig = {
         'configuration-properties',
         'api-reference',
         'faq',
+        'changelog',
       ],
     },
     {

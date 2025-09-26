@@ -25,6 +25,7 @@ const config: any = {
     hooks: {
       onBrokenMarkdownLinks: 'warn',
     },
+    mermaid: true,
   },
 
   // Even if you don't use internationalization, you can use this field to set
@@ -187,10 +188,6 @@ const config: any = {
   themes: ['@docusaurus/theme-mermaid'],
 
   plugins: [],
-
-  markdown: {
-    mermaid: true,
-  },
 
   customFields: {
     tigateway: {

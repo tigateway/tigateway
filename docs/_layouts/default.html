@@ -17,37 +17,68 @@
     
     <!-- Font Awesome 图标 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- 代码高亮 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
 </head>
 <body>
     <!-- 导航栏 -->
     <nav class="navbar">
-        <div class="container">
-            <div class="navbar-brand">
-                <a href="{{ '/' | relative_url }}" class="navbar-item">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ '/' | relative_url }}" class="brand-link">
+                    <div class="brand-logo">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
                     <span class="brand-text">TiGateway</span>
                 </a>
             </div>
             
-            <div class="navbar-menu">
-                <div class="navbar-start">
-                    <a href="{{ '/' | relative_url }}" class="navbar-item">首页</a>
-                    <a href="{{ '/book/' | relative_url }}" class="navbar-item">用户指南</a>
-                    <a href="{{ '/architecture/' | relative_url }}" class="navbar-item">架构设计</a>
-                    <a href="{{ '/development/' | relative_url }}" class="navbar-item">开发指南</a>
-                    <a href="{{ '/api/' | relative_url }}" class="navbar-item">API 文档</a>
-                    <a href="{{ '/examples/' | relative_url }}" class="navbar-item">示例</a>
+            <div class="nav-menu" id="nav-menu">
+                <div class="nav-links">
+                    <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">首页</a>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">用户指南 <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="{{ '/book/' | relative_url }}" class="dropdown-item">完整指南</a>
+                            <a href="{{ '/book/01-introduction.md' | relative_url }}" class="dropdown-item">介绍</a>
+                            <a href="{{ '/book/02-quick-start.md' | relative_url }}" class="dropdown-item">快速开始</a>
+                            <a href="{{ '/book/03-installation.md' | relative_url }}" class="dropdown-item">安装部署</a>
+                        </div>
+                    </div>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">开发指南 <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="{{ '/development/setup.md' | relative_url }}" class="dropdown-item">环境搭建</a>
+                            <a href="{{ '/development/coding-standards.md' | relative_url }}" class="dropdown-item">代码规范</a>
+                            <a href="{{ '/development/testing.md' | relative_url }}" class="dropdown-item">测试指南</a>
+                            <a href="{{ '/development/custom-components.md' | relative_url }}" class="dropdown-item">自定义组件</a>
+                        </div>
+                    </div>
+                    <div class="nav-dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">API 文档 <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="{{ '/api/rest-api.md' | relative_url }}" class="dropdown-item">REST API</a>
+                            <a href="{{ '/api/crd-api.md' | relative_url }}" class="dropdown-item">CRD API</a>
+                            <a href="{{ '/api/websocket-api.md' | relative_url }}" class="dropdown-item">WebSocket API</a>
+                            <a href="{{ '/api/management-api.md' | relative_url }}" class="dropdown-item">管理 API</a>
+                        </div>
+                    </div>
+                    <a href="{{ '/examples/quick-start.md' | relative_url }}" class="nav-link">示例</a>
                 </div>
                 
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                        <a class="button is-primary" href="{{ site.tigateway.repository }}" target="_blank">
-                            <span class="icon">
-                                <i class="fab fa-github"></i>
-                            </span>
-                            <span>GitHub</span>
-                        </a>
-                    </div>
+                <div class="nav-actions">
+                    <a href="{{ site.tigateway.repository }}" class="btn btn-outline" target="_blank">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
                 </div>
+            </div>
+            
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -56,10 +87,7 @@
     <main class="main-content">
         <div class="container">
             <article class="content">
-                <!-- 页面内容 -->
-                <div class="page-content">
-                    {{ content }}
-                </div>
+                {{ content }}
             </article>
         </div>
     </main>
@@ -67,14 +95,71 @@
     <!-- 页脚 -->
     <footer class="footer">
         <div class="container">
-            <div class="has-text-centered">
-                <p>&copy; {{ site.time | date: "%Y" }} TiGateway Team. All rights reserved.</p>
-                <p>基于 <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> 构建，托管在 <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <div class="brand-logo">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <span class="brand-text">TiGateway</span>
+                    </div>
+                    <p class="footer-description">基于 Spring Cloud Gateway 的 Kubernetes 原生 API 网关</p>
+                    <div class="social-links">
+                        <a href="{{ site.tigateway.repository }}" class="social-link" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:{{ site.email }}" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">文档</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ '/book/' | relative_url }}">用户指南</a></li>
+                        <li><a href="{{ '/architecture/' | relative_url }}">架构设计</a></li>
+                        <li><a href="{{ '/development/' | relative_url }}">开发指南</a></li>
+                        <li><a href="{{ '/api/' | relative_url }}">API 文档</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">资源</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ '/examples/' | relative_url }}">示例教程</a></li>
+                        <li><a href="{{ '/deployment/' | relative_url }}">部署运维</a></li>
+                        <li><a href="{{ '/configuration/' | relative_url }}">配置文档</a></li>
+                        <li><a href="{{ '/examples/troubleshooting.md' | relative_url }}">故障排除</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">社区</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ site.tigateway.issues }}" target="_blank">报告问题</a></li>
+                        <li><a href="{{ site.tigateway.discussions }}" target="_blank">参与讨论</a></li>
+                        <li><a href="{{ site.tigateway.repository }}" target="_blank">GitHub</a></li>
+                        <li><a href="mailto:{{ site.email }}">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-info">
+                    <p>&copy; {{ site.time | date: "%Y" }} TiGateway Team. All rights reserved.</p>
+                    <p>基于 <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> 构建，托管在 <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+                </div>
+                <div class="footer-version">
+                    <span>版本 {{ site.tigateway.version }}</span>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>

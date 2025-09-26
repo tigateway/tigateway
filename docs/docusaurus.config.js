@@ -47,6 +47,7 @@ const config = {
         },
         blog: {
           showReadingTime: true,
+          authorsMapPath: 'authors.yml',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/tigateway/tigateway/tree/main/docs/',

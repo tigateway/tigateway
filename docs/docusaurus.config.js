@@ -1,8 +1,6 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+const {themes: prismThemes} = require('prism-react-renderer');
 
-const config: any = {
+const config = {
   title: 'TiGateway',
   tagline: '基于 Spring Cloud Gateway 的 Kubernetes 原生 API 网关',
   favicon: 'img/favicon.ico',
@@ -49,7 +47,7 @@ const config: any = {
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.ts',
+          sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/tigateway/tigateway/tree/main/docs/',
@@ -66,7 +64,7 @@ const config: any = {
         theme: {
           customCss: './src/css/custom.css',
         },
-      } satisfies Preset.Options,
+      },
     ],
   ],
 
@@ -200,4 +198,4 @@ const config: any = {
   },
 };
 
-export default config;
+module.exports = config;

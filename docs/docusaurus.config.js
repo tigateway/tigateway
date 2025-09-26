@@ -9,7 +9,8 @@ const config = {
   url: 'https://tigateway.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/tigateway/',
+  // baseUrl is automatically injected by actions/configure-pages@v4
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.

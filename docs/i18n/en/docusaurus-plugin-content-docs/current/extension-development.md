@@ -726,4 +726,48 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.web.server
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class CustomFilterTest {
+    
+    @Mock
+    private GatewayFilterChain chain;
+    
+    @Mock
+    private ServerWebExchange exchange;
+    
+    @Mock
+    private ServerHttpRequest request;
+    
+    @Test
+    void shouldProcessRequest() {
+        // Given
+        CustomFilter filter = new CustomFilter();
+        when(exchange.getRequest()).thenReturn(request);
+        when(chain.filter(any())).thenReturn(Mono.empty());
+        
+        // When
+        filter.filter(exchange, chain).block();
+        
+        // Then
+        verify(chain).filter(any());
+    }
+}
+```
+
+## Next Steps
+
+After developing your extensions:
+
+1. **[Testing Guide](./testing-guide.md)** - Test your extensions thoroughly
+2. **[Configuration Guide](./configuration.md)** - Configure your extensions
+3. **[Deployment Guide](./deployment/kubernetes.md)** - Deploy your extensions
+4. **[Monitoring Guide](./monitoring-and-metrics.md)** - Monitor your extensions
+
+---
+
+**Ready to develop custom extensions?** Check out our [Custom Components](./custom-components.md) guide for more advanced extension development patterns.

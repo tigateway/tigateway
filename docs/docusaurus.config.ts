@@ -2,7 +2,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-const config: Config = {
+const config: any = {
   title: 'TiGateway',
   tagline: '基于 Spring Cloud Gateway 的 Kubernetes 原生 API 网关',
   favicon: 'img/favicon.ico',

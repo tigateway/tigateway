@@ -1,13 +1,14 @@
 // TiGateway 文档站点工具函数
 
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import type {TiGatewayConfig} from '../types';
 
 /**
  * 获取 TiGateway 自定义配置
  */
-export function useTiGatewayConfig() {
+export function useTiGatewayConfig(): TiGatewayConfig | undefined {
   const {siteConfig} = useDocusaurusContext();
-  return siteConfig.customFields?.tigateway;
+  return siteConfig.customFields?.tigateway as TiGatewayConfig | undefined;
 }
 
 /**
@@ -72,7 +73,7 @@ export function getDiscussionsUrl(): string {
  */
 export function generateBreadcrumbs(path: string): Array<{label: string; href?: string}> {
   const segments = path.split('/').filter(Boolean);
-  const breadcrumbs = [{label: '首页', href: '/'}];
+  const breadcrumbs: Array<{label: string; href?: string}> = [{label: '首页', href: '/'}];
   
   let currentPath = '';
   segments.forEach((segment, index) => {

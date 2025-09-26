@@ -41,17 +41,11 @@ export interface DocItem {
   tags?: string[];
 }
 
-// 扩展 Docusaurus 类型
-declare module '@docusaurus/types' {
-  interface Config {
-    customFields?: {
-      tigateway?: {
-        version: string;
-        latestVersion: string;
-        repository: string;
-        issues: string;
-        discussions: string;
-      };
-    };
-  }
+// TiGateway 自定义配置类型
+export interface TiGatewayConfig {
+  version: string;
+  latestVersion: string;
+  repository: string;
+  issues: string;
+  discussions: string;
 }

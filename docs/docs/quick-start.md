@@ -322,7 +322,7 @@ kubectl port-forward svc/tigateway 8081:8081 -n tigateway
 
 现在您已经成功部署了 TiGateway，可以继续学习：
 
-- [架构概述](04-architecture.md) - 深入了解 TiGateway 的架构
-- [路由和谓词](05-routes-and-predicates.md) - 学习如何配置路由
-- [过滤器](06-filters.md) - 学习如何使用过滤器
-- [Kubernetes 原生特性](08-kubernetes-native.md) - 学习 Kubernetes 集成功能
+- [架构概述](architecture.md) - 深入了解 TiGateway 的架构
+- [路由和谓词](routes-and-predicates.md) - 学习如何配置路由
+- [过滤器](filters.md) - 学习如何使用过滤器
+- [Kubernetes 原生特性](kubernetes-native.md) - 学习 Kubernetes 集成功能

@@ -117,6 +117,6 @@ TiGateway 基于 Spring Cloud Gateway 构建，继承了其所有核心功能：
 
 现在您已经了解了 TiGateway 的基本概念和特性，可以继续阅读：
 
-- [快速开始](02-quick-start.md) - 学习如何快速部署和使用 TiGateway
-- [架构概述](04-architecture.md) - 深入了解 TiGateway 的架构设计
-- [安装和部署](03-installation.md) - 学习如何在 Kubernetes 中部署 TiGateway
+- [快速开始](quick-start.md) - 学习如何快速部署和使用 TiGateway
+- [架构概述](architecture.md) - 深入了解 TiGateway 的架构设计
+- [安装和部署](installation.md) - 学习如何在 Kubernetes 中部署 TiGateway

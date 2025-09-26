@@ -275,7 +275,7 @@ spring:
 
 ## 获取帮助
 
-- 📖 查看 [完整文档](../README.md)
+- 📖 查看 [完整文档](https://github.com/tigateway/tigateway/blob/main/README.md)
 - 🐛 提交 [Issue](https://github.com/tigateway/tigateway/issues)
 - 💬 参与 [讨论](https://github.com/tigateway/tigateway/discussions)
 

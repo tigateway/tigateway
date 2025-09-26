@@ -190,7 +190,8 @@
 }
 
 .codeBlock {
-  background: #2d3748;
+  background: var(--ifm-color-emphasis-200);
+  border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 8px;
   padding: 1.5rem;
   margin: 2rem 0;
@@ -199,7 +200,7 @@
 
 .codeBlock pre {
   margin: 0;
-  color: #e2e8f0;
+  color: var(--ifm-color-content);
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -210,6 +211,16 @@
   padding: 0;
   border: none;
   color: inherit;
+}
+
+/* Dark theme specific styles */
+[data-theme='dark'] .codeBlock {
+  background: #2d3748;
+  border-color: #4a5568;
+}
+
+[data-theme='dark'] .codeBlock pre {
+  color: #e2e8f0;
 }
 
 @media screen and (max-width: 996px) {

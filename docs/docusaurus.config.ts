@@ -17,9 +17,15 @@ const config: any = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'tigateway', // Usually your GitHub org/user name.
   projectName: 'tigateway', // Usually your repo name.
+  deploymentBranch: 'gh-pages', // Branch that GitHub Pages will deploy from.
+  trailingSlash: false, // GitHub Pages doesn't support trailing slashes.
 
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -141,7 +147,7 @@ const config: any = {
               },
               {
                 label: '更新日志',
-                to: '/changelog',
+                to: '/docs/changelog',
               },
             ],
           },

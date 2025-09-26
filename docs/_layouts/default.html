@@ -13,26 +13,14 @@
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/syntax.css' | relative_url }}">
     
-    <!-- 图标 -->
-    <link rel="icon" type="image/x-icon" href="{{ '/assets/images/favicon.ico' | relative_url }}">
-    
     <!-- 字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- 代码高亮 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
     
-    <!-- 数学公式支持 -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            }
-        };
-    </script>
+    <!-- Font Awesome 图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- 导航栏 -->
@@ -40,7 +28,6 @@
         <div class="container">
             <div class="navbar-brand">
                 <a href="{{ '/' | relative_url }}" class="navbar-item">
-                    <img src="{{ '/assets/images/logo.png' | relative_url }}" alt="TiGateway" class="logo">
                     <span class="brand-text">TiGateway</span>
                 </a>
             </div>
@@ -118,23 +105,7 @@
                             
                             <!-- 目录导航 -->
                             <nav class="sidebar-nav">
-                                {% if page.collection == 'book' %}
-                                    {% include book-nav.html %}
-                                {% elsif page.collection == 'architecture' %}
-                                    {% include architecture-nav.html %}
-                                {% elsif page.collection == 'development' %}
-                                    {% include development-nav.html %}
-                                {% elsif page.collection == 'api' %}
-                                    {% include api-nav.html %}
-                                {% elsif page.collection == 'deployment' %}
-                                    {% include deployment-nav.html %}
-                                {% elsif page.collection == 'examples' %}
-                                    {% include examples-nav.html %}
-                                {% elsif page.collection == 'configuration' %}
-                                    {% include configuration-nav.html %}
-                                {% else %}
-                                    {% include default-nav.html %}
-                                {% endif %}
+                                {% include default-nav.html %}
                             </nav>
                         </div>
                     </aside>
@@ -160,32 +131,6 @@
                         <div class="page-content">
                             {{ content }}
                         </div>
-                        
-                        <!-- 页面导航 -->
-                        <nav class="page-nav">
-                            <div class="columns">
-                                <div class="column">
-                                    {% if page.previous %}
-                                        <a href="{{ page.previous.url | relative_url }}" class="button is-outlined">
-                                            <span class="icon">
-                                                <i class="fas fa-chevron-left"></i>
-                                            </span>
-                                            <span>{{ page.previous.title }}</span>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                                <div class="column has-text-right">
-                                    {% if page.next %}
-                                        <a href="{{ page.next.url | relative_url }}" class="button is-outlined">
-                                            <span>{{ page.next.title }}</span>
-                                            <span class="icon">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </span>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </nav>
                     </article>
                 </div>
             </div>
@@ -266,14 +211,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-    
-    <!-- 搜索功能 -->
-    <script src="{{ '/assets/js/search.js' | relative_url }}"></script>
-    
-    <!-- 代码复制功能 -->
-    <script src="{{ '/assets/js/code-copy.js' | relative_url }}"></script>
-    
-    <!-- 目录生成 -->
-    <script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
 </body>
 </html>

@@ -33,34 +33,7 @@ exclude:
   - LICENSE
   - .gitignore
   - .gitattributes
-
-# 包含文件
-include:
-  - _pages
-
-# 集合配置
-collections:
-  book:
-    output: true
-    permalink: /:collection/:name/
-  architecture:
-    output: true
-    permalink: /:collection/:name/
-  development:
-    output: true
-    permalink: /:collection/:name/
-  api:
-    output: true
-    permalink: /:collection/:name/
-  deployment:
-    output: true
-    permalink: /:collection/:name/
-  examples:
-    output: true
-    permalink: /:collection/:name/
-  configuration:
-    output: true
-    permalink: /:collection/:name/
+  - GITHUB_PAGES_SETUP.md
 
 # 默认配置
 defaults:
@@ -69,83 +42,6 @@ defaults:
       type: "pages"
     values:
       layout: "default"
-  - scope:
-      path: ""
-      type: "book"
-    values:
-      layout: "book"
-  - scope:
-      path: ""
-      type: "architecture"
-    values:
-      layout: "architecture"
-  - scope:
-      path: ""
-      type: "development"
-    values:
-      layout: "development"
-  - scope:
-      path: ""
-      type: "api"
-    values:
-      layout: "api"
-  - scope:
-      path: ""
-      type: "deployment"
-    values:
-      layout: "deployment"
-  - scope:
-      path: ""
-      type: "examples"
-    values:
-      layout: "examples"
-  - scope:
-      path: ""
-      type: "configuration"
-    values:
-      layout: "configuration"
-
-# 导航配置
-navigation:
-  - title: 首页
-    url: /
-  - title: 用户指南
-    url: /book/
-  - title: 架构设计
-    url: /architecture/
-  - title: 开发指南
-    url: /development/
-  - title: API 文档
-    url: /api/
-  - title: 部署运维
-    url: /deployment/
-  - title: 示例教程
-    url: /examples/
-  - title: 配置文档
-    url: /configuration/
-
-# SEO 配置
-seo:
-  type: "WebSite"
-  name: "TiGateway 文档"
-  description: "TiGateway - 基于 Spring Cloud Gateway 的 Kubernetes 原生 API 网关"
-  url: "https://tigateway.github.io/tigateway"
-  image: "/assets/images/logo.png"
-
-# 社交链接
-social:
-  github: tigateway/tigateway
-  email: support@tigateway.cn
-
-# 搜索配置
-search: true
-
-# 评论系统（可选）
-# disqus:
-#   shortname: tigateway
-
-# Google Analytics（可选）
-# google_analytics: UA-XXXXXXXXX-X
 
 # 自定义变量
 tigateway:

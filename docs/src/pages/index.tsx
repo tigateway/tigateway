@@ -158,7 +158,7 @@ function HomepageGettingStarted() {
           <p>5 分钟部署您的第一个 TiGateway 实例</p>
           <div className={styles.codeBlock}>
             <pre>
-              <code>
+              <code className="language-bash">
 {`# 使用 Helm 安装
 helm repo add tigateway https://tigateway.github.io/helm-charts
 helm install tigateway tigateway/tigateway

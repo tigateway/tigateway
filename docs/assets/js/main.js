@@ -1,164 +1,85 @@
-// TiGateway 文档站点 - 主要 JavaScript 功能
+// TiGateway GitBook 风格 JavaScript 功能
 
 document.addEventListener('DOMContentLoaded', function() {
-    // 初始化所有功能
-    initNavigation();
-    initScrollToTop();
-    initCodeCopy();
-    initSmoothScroll();
-    initThemeToggle();
-});
-
-// 导航功能
-function initNavigation() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.getElementById('nav-menu');
+    // 移动端菜单切换
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const sidebar = document.querySelector('.book-sidebar');
     
-    if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
+    if (mobileMenuToggle && sidebar) {
+        mobileMenuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
         });
         
-        // 点击外部关闭菜单
+        // 点击侧边栏外部关闭菜单
         document.addEventListener('click', function(e) {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
+            if (!sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                sidebar.classList.remove('open');
             }
         });
     }
     
-    // 高亮当前页面
-    highlightCurrentPage();
-    
-    // 导航栏滚动效果
-    initNavbarScroll();
-}
-
-// 高亮当前页面
-function highlightCurrentPage() {
-    const currentPath = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    navLinks.forEach(link => {
-        if (link.getAttribute('href') === currentPath) {
-            link.classList.add('active');
-        }
-    });
-}
-
-// 导航栏滚动效果
-function initNavbarScroll() {
-    const navbar = document.querySelector('.navbar');
-    let lastScrollY = window.scrollY;
-    
-    window.addEventListener('scroll', function() {
-        const currentScrollY = window.scrollY;
-        
-        if (currentScrollY > 100) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-        } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'none';
-        }
-        
-        lastScrollY = currentScrollY;
-    });
-}
-
-// 返回顶部功能
-function initScrollToTop() {
-    // 创建返回顶部按钮
-    const scrollBtn = document.createElement('button');
-    scrollBtn.className = 'scroll-to-top';
-    scrollBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    scrollBtn.title = '返回顶部';
-    scrollBtn.style.cssText = `
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 48px;
-        height: 48px;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-    `;
-    
-    document.body.appendChild(scrollBtn);
-    
-    // 显示/隐藏按钮
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            scrollBtn.style.opacity = '1';
-            scrollBtn.style.visibility = 'visible';
-        } else {
-            scrollBtn.style.opacity = '0';
-            scrollBtn.style.visibility = 'hidden';
+    // 导航组展开/折叠
+    const navGroups = document.querySelectorAll('.nav-group');
+    navGroups.forEach(function(group) {
+        const title = group.querySelector('.nav-group-title');
+        if (title) {
+            title.addEventListener('click', function() {
+                group.classList.toggle('expanded');
+                
+                // 保存状态到 localStorage
+                const isExpanded = group.classList.contains('expanded');
+                const groupId = group.querySelector('.nav-group-title span').textContent;
+                localStorage.setItem('nav-group-' + groupId, isExpanded);
+            });
+            
+            // 恢复保存的状态
+            const groupId = group.querySelector('.nav-group-title span').textContent;
+            const savedState = localStorage.getItem('nav-group-' + groupId);
+            if (savedState === 'true') {
+                group.classList.add('expanded');
+            }
         }
     });
     
-    // 点击返回顶部
-    scrollBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
     });
     
-    // 悬停效果
-    scrollBtn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-2px)';
-        this.style.boxShadow = '0 6px 16px rgba(37, 99, 235, 0.4)';
-    });
-    
-    scrollBtn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
-    });
-}
-
-// 代码复制功能
-function initCodeCopy() {
-    const codeBlocks = document.querySelectorAll('pre code');
-    
-    codeBlocks.forEach(block => {
-        const pre = block.parentElement;
+    // 代码块复制功能
+    document.querySelectorAll('pre').forEach(function(pre) {
         const button = document.createElement('button');
         button.className = 'copy-button';
-        button.innerHTML = '<i class="fas fa-copy"></i>';
-        button.title = '复制代码';
+        button.innerHTML = '<i class="fas fa-copy"></i> 复制';
         button.style.cssText = `
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: #e5e7eb;
+            background: var(--primary-color);
+            color: white;
             border: none;
-            border-radius: 0.25rem;
-            padding: 0.5rem;
+            border-radius: var(--radius-sm);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
             cursor: pointer;
-            font-size: 0.875rem;
-            transition: all 0.2s ease;
             opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
         `;
         
         pre.style.position = 'relative';
         pre.appendChild(button);
         
-        // 悬停显示按钮
+        // 显示/隐藏复制按钮
         pre.addEventListener('mouseenter', function() {
             button.style.opacity = '1';
         });
@@ -168,81 +89,194 @@ function initCodeCopy() {
         });
         
         // 复制功能
-        button.addEventListener('click', function() {
-            const text = block.textContent;
-            navigator.clipboard.writeText(text).then(function() {
-                button.innerHTML = '<i class="fas fa-check"></i>';
-                button.style.background = 'rgba(16, 185, 129, 0.8)';
+        button.addEventListener('click', async function() {
+            const code = pre.querySelector('code').textContent;
+            try {
+                await navigator.clipboard.writeText(code);
+                button.innerHTML = '<i class="fas fa-check"></i> 已复制';
+                button.style.background = 'var(--accent-color)';
                 
                 setTimeout(function() {
-                    button.innerHTML = '<i class="fas fa-copy"></i>';
-                    button.style.background = 'rgba(255, 255, 255, 0.1)';
+                    button.innerHTML = '<i class="fas fa-copy"></i> 复制';
+                    button.style.background = 'var(--primary-color)';
                 }, 2000);
-            });
-        });
-    });
-}
-
-// 平滑滚动
-function initSmoothScroll() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
-            
-            if (targetElement) {
-                e.preventDefault();
-                const offsetTop = targetElement.offsetTop - 80; // 考虑导航栏高度
+            } catch (err) {
+                console.error('复制失败:', err);
+                button.innerHTML = '<i class="fas fa-times"></i> 失败';
+                button.style.background = '#ef4444';
                 
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+                setTimeout(function() {
+                    button.innerHTML = '<i class="fas fa-copy"></i> 复制';
+                    button.style.background = 'var(--primary-color)';
+                }, 2000);
             }
         });
     });
-}
-
-// 主题切换功能（预留）
-function initThemeToggle() {
-    // 这里可以添加深色模式切换功能
-    // 目前保持浅色主题
-}
-
-// 搜索功能（预留）
-function initSearch() {
-    // 这里可以添加搜索功能
-    // 可以集成 Algolia 或其他搜索服务
-}
-
-// 页面加载动画
-function initPageAnimations() {
-    // 添加页面加载时的淡入动画
-    const content = document.querySelector('.content');
-    if (content) {
-        content.style.opacity = '0';
-        content.style.transform = 'translateY(20px)';
+    
+    // 表格响应式处理
+    const tables = document.querySelectorAll('table');
+    tables.forEach(function(table) {
+        const wrapper = document.createElement('div');
+        wrapper.style.cssText = `
+            overflow-x: auto;
+            margin-bottom: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        `;
         
-        setTimeout(function() {
-            content.style.transition = 'all 0.6s ease';
-            content.style.opacity = '1';
-            content.style.transform = 'translateY(0)';
-        }, 100);
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+    });
+    
+    // 搜索功能（简单实现）
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = '搜索文档...';
+    searchInput.style.cssText = `
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-md);
+    `;
+    
+    const nav = document.querySelector('.book-nav');
+    if (nav) {
+        nav.insertBefore(searchInput, nav.firstChild);
+        
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(function(link) {
+                const text = link.textContent.toLowerCase();
+                if (text.includes(query) || query === '') {
+                    link.style.display = 'flex';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+        });
     }
-}
-
-// 初始化页面动画
-document.addEventListener('DOMContentLoaded', function() {
-    initPageAnimations();
+    
+    // 返回顶部按钮
+    const scrollTopBtn = document.createElement('button');
+    scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollTopBtn.style.cssText = `
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 3rem;
+        height: 3rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: var(--shadow-lg);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    `;
+    
+    document.body.appendChild(scrollTopBtn);
+    
+    // 显示/隐藏返回顶部按钮
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            scrollTopBtn.style.opacity = '1';
+            scrollTopBtn.style.visibility = 'visible';
+        } else {
+            scrollTopBtn.style.opacity = '0';
+            scrollTopBtn.style.visibility = 'hidden';
+        }
+    });
+    
+    // 返回顶部功能
+    scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // 键盘快捷键
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + K 打开搜索
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }
+        
+        // ESC 关闭移动端菜单
+        if (e.key === 'Escape') {
+            if (sidebar) {
+                sidebar.classList.remove('open');
+            }
+        }
+    });
+    
+    // 主题切换（预留功能）
+    const themeToggle = document.createElement('button');
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    themeToggle.title = '切换主题';
+    themeToggle.style.cssText = `
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+        z-index: 1000;
+    `;
+    
+    // 暂时隐藏主题切换按钮，等待后续实现
+    // document.body.appendChild(themeToggle);
+    
+    // 页面加载动画
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.3s ease';
+    
+    setTimeout(function() {
+        document.body.style.opacity = '1';
+    }, 100);
+    
+    // 图片懒加载
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(function(img) {
+        imageObserver.observe(img);
+    });
+    
+    // 链接外部链接处理
+    document.querySelectorAll('a[href^="http"]').forEach(function(link) {
+        if (!link.hostname.includes(window.location.hostname)) {
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+        }
+    });
+    
+    console.log('TiGateway 文档站点已加载完成');
 });
-
-// 导出函数供其他脚本使用
-window.TiGatewayDocs = {
-    initNavigation,
-    initScrollToTop,
-    initCodeCopy,
-    initSmoothScroll,
-    initThemeToggle
-};

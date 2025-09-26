@@ -1,9 +1,0 @@
-# TiGateway 文档站点 Gemfile
-
-source "https://rubygems.org"
-
-# GitHub Pages 兼容版本
-gem "github-pages", group: :jekyll_plugins
-
-# 本地开发
-gem "webrick", "~> 1.7"

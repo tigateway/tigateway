@@ -20,7 +20,7 @@ const FeatureList: FeatureItem[] = [
     description: (
       <>
         基于 Spring Cloud Gateway 构建，继承了其强大的路由、过滤和负载均衡能力，
-        同时针对 Kubernetes 环境进行了深度优化。
+        同时针对 Kubernetes 环境进行了深度优化。 
       </>
     ),
   },

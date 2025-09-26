@@ -4,32 +4,249 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
+  padding: 6rem 0;
   position: relative;
   overflow: hidden;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroContent {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroText {
+  flex: 1;
+  text-align: left;
+}
+
+.heroDescription {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  line-height: 1.6;
 }
 
 .buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
 }
 
-.features {
+.heroStats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+.heroVisual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.architectureDiagram {
   display: flex;
   align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
 
-.featureImage {
-  height: 200px;
-  width: 200px;
+.diagramNode {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.diagramArrow {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.capabilities {
+  padding: 6rem 0;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.capabilityCard {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.capabilityCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.capabilityIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.capabilityCard h3 {
+  margin-bottom: 1rem;
+  color: var(--ifm-color-primary);
+}
+
+.capabilityCard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.capabilityCard li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.capabilityCard li:last-child {
+  border-bottom: none;
+}
+
+.capabilityCard li::before {
+  content: "✓";
+  color: var(--ifm-color-primary);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.useCases {
+  padding: 6rem 0;
+}
+
+.useCaseCard {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  border-left: 4px solid var(--ifm-color-primary);
+}
+
+.useCaseCard h3 {
+  margin-bottom: 1rem;
+  color: var(--ifm-color-primary);
+}
+
+.useCaseCard p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.useCaseCard ul {
+  list-style: none;
+  padding: 0;
+}
+
+.useCaseCard li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.useCaseCard li:last-child {
+  border-bottom: none;
+}
+
+.useCaseCard li::before {
+  content: "→";
+  color: var(--ifm-color-primary);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.gettingStarted {
+  padding: 6rem 0;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.codeBlock {
+  background: #2d3748;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
+.codeBlock pre {
+  margin: 0;
+  color: #e2e8f0;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.codeBlock code {
+  background: none;
+  padding: 0;
+  border: none;
+  color: inherit;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 4rem 0;
+  }
+  
+  .heroContent {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .heroText {
+    text-align: center;
+  }
+  
+  .heroStats {
+    justify-content: center;
+  }
+  
+  .architectureDiagram {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .diagramArrow {
+    transform: rotate(90deg);
+  }
+  
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .capabilityCard,
+  .useCaseCard {
+    margin-bottom: 2rem;
+  }
 }

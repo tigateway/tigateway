@@ -14,6 +14,9 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.netty.DisposableServer;
 import reactor.netty.http.server.HttpServer;
+import ti.gateway.admin.controller.AdminHandlerFunction;
+import ti.gateway.admin.controller.AdminHealthHandlerFunction;
+import ti.gateway.admin.controller.AdminInfoHandlerFunction;
 
 import javax.annotation.PreDestroy;
 
@@ -37,19 +40,23 @@ public class AdminServerConfiguration {
     private DisposableServer adminServer;
     private final AdminProperties adminProperties;
 
-    public AdminServerConfiguration(AdminProperties adminProperties) {
+    private final AdminHandlerFunction adminHandlerFunction;
+    private final AdminHealthHandlerFunction adminHealthHandlerFunction;
+    private final AdminInfoHandlerFunction adminInfoHandlerFunction;
+
+    public AdminServerConfiguration(AdminProperties adminProperties, AdminHandlerFunction adminHandlerFunction, AdminHealthHandlerFunction adminHealthHandlerFunction, AdminInfoHandlerFunction adminInfoHandlerFunction) {
         this.adminProperties = adminProperties;
+        this.adminHandlerFunction = adminHandlerFunction;
+        this.adminHealthHandlerFunction = adminHealthHandlerFunction;
+        this.adminInfoHandlerFunction = adminInfoHandlerFunction;
     }
 
     @Bean
     public RouterFunction<ServerResponse> adminRouterFunction() {
         return route()
-                .GET("/admin/", request -> 
-                    ServerResponse.ok().bodyValue("Hello, TiGateway Admin Server!"))
-                .GET("/admin/health", request -> 
-                    ServerResponse.ok().bodyValue("{\"status\":\"UP\",\"service\":\"tigateway-admin\"}"))
-                .GET("/admin/info", request -> 
-                    ServerResponse.ok().bodyValue("{\"name\":\"TiGateway Admin\",\"version\":\"1.0.0\",\"port\":" + adminProperties.getServer().getPort() + "}"))
+                .GET("/admin/", this.adminHandlerFunction)
+                .GET("/admin/health", this.adminHealthHandlerFunction)
+                .GET("/admin/info", this.adminInfoHandlerFunction)
                 .build();
     }
 

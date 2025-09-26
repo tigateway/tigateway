@@ -20,7 +20,7 @@ public class AdminConfiguration {
     }
 
     @Bean
-    @ConfigurationProperties("admin")
+//    @ConfigurationProperties("admin")
     public AdminProperties adminProperties() {
         logger.info("Creating AdminProperties bean");
         return new AdminProperties();

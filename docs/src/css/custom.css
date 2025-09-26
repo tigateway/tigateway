@@ -31,15 +31,32 @@
 
 /* Custom styles for TiGateway */
 .hero__title {
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-weight: 700;
+}
+
+/* Dark theme specific styles */
+[data-theme='dark'] .hero__title {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: none;
 }
 
 .hero__subtitle {
   font-size: 1.2rem;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  opacity: 0.95;
+}
+
+/* Dark theme specific styles */
+[data-theme='dark'] .hero__subtitle {
   color: var(--ifm-color-emphasis-700);
+  text-shadow: none;
+  opacity: 1;
 }
 
 /* Code block styling */

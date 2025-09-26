@@ -1,0 +1,66 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.第一部分：入门指南": {
+    "message": "第一部分：入门指南",
+    "description": "The label for category 第一部分：入门指南 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第二部分：核心概念": {
+    "message": "第二部分：核心概念",
+    "description": "The label for category 第二部分：核心概念 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第三部分：Kubernetes 集成": {
+    "message": "第三部分：Kubernetes 集成",
+    "description": "The label for category 第三部分：Kubernetes 集成 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第四部分：配置管理": {
+    "message": "第四部分：配置管理",
+    "description": "The label for category 第四部分：配置管理 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第五部分：高级功能": {
+    "message": "第五部分：高级功能",
+    "description": "The label for category 第五部分：高级功能 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第六部分：管理界面": {
+    "message": "第六部分：管理界面",
+    "description": "The label for category 第六部分：管理界面 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第七部分：运维指南": {
+    "message": "第七部分：运维指南",
+    "description": "The label for category 第七部分：运维指南 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第八部分：开发指南": {
+    "message": "第八部分：开发指南",
+    "description": "The label for category 第八部分：开发指南 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.第九部分：参考文档": {
+    "message": "第九部分：参考文档",
+    "description": "The label for category 第九部分：参考文档 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.API 文档": {
+    "message": "API 文档",
+    "description": "The label for category API 文档 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.架构设计": {
+    "message": "架构设计",
+    "description": "The label for category 架构设计 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.开发指南": {
+    "message": "开发指南",
+    "description": "The label for category 开发指南 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.部署运维": {
+    "message": "部署运维",
+    "description": "The label for category 部署运维 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.示例教程": {
+    "message": "示例教程",
+    "description": "The label for category 示例教程 in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.配置文档": {
+    "message": "配置文档",
+    "description": "The label for category 配置文档 in sidebar tutorialSidebar"
+  }
+}

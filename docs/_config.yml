@@ -7,7 +7,7 @@ description: TiGateway - 基于 Spring Cloud Gateway 的 Kubernetes 原生 API �
 author: TiGateway Team
 email: support@tigateway.cn
 url: https://tigateway.github.io
-baseurl: /tigateway
+baseurl: ""
 
 # 构建配置
 markdown: kramdown

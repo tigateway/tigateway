@@ -194,8 +194,10 @@
   border: 1px solid #e9ecef;
   border-radius: 8px;
   padding: 1.5rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
   overflow-x: auto;
+  max-width: 600px;
+  text-align: left;
 }
 
 .codeBlock pre {

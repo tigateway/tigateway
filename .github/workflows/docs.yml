@@ -1,0 +1,76 @@
+name: 构建和部署文档
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/docs.yml'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: 设置 Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.1'
+        bundler-cache: true
+        working-directory: docs
+    
+    - name: 安装 Jekyll 依赖
+      run: |
+        cd docs
+        bundle install
+    
+    - name: 构建 Jekyll 站点
+      run: |
+        cd docs
+        bundle exec jekyll build --verbose
+    
+    - name: 检查构建结果
+      run: |
+        cd docs
+        if [ ! -d "_site" ]; then
+          echo "构建失败：_site 目录不存在"
+          exit 1
+        fi
+        
+        if [ ! -f "_site/index.html" ]; then
+          echo "构建失败：index.html 不存在"
+          exit 1
+        fi
+        
+        echo "构建成功！"
+        ls -la _site/
+    
+    - name: 部署到 GitHub Pages
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_site
+        cname: docs.tigateway.cn  # 如果有自定义域名
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        commit_message: 'docs: 自动更新文档 - ${{ github.sha }}'
+    
+    - name: 验证部署
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        echo "文档已部署到 GitHub Pages"
+        echo "访问地址: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+        if [ -n "${{ secrets.CNAME }}" ]; then
+          echo "自定义域名: https://${{ secrets.CNAME }}"
+        fi

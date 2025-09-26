@@ -1,0 +1,366 @@
+/* 代码语法高亮样式 */
+
+/* 基础代码块样式 */
+pre {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+    position: relative;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+}
+
+/* 行号样式 */
+pre[class*="language-"] {
+    position: relative;
+}
+
+pre[class*="language-"]::before {
+    content: attr(class);
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 0.75rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 代码复制按钮 */
+.code-copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+pre:hover .code-copy-btn {
+    opacity: 1;
+}
+
+.code-copy-btn:hover {
+    background-color: #495057;
+}
+
+/* Prism.js 主题样式 */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #6a9955;
+    font-style: italic;
+}
+
+.token.punctuation {
+    color: #d4d4d4;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #b5cea8;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #ce9178;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #d4d4d4;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #569cd6;
+}
+
+.token.function,
+.token.class-name {
+    color: #dcdcaa;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #d16969;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+/* YAML 语法高亮 */
+.language-yaml .token.key {
+    color: #9cdcfe;
+}
+
+.language-yaml .token.string {
+    color: #ce9178;
+}
+
+.language-yaml .token.number {
+    color: #b5cea8;
+}
+
+.language-yaml .token.boolean {
+    color: #569cd6;
+}
+
+.language-yaml .token.comment {
+    color: #6a9955;
+}
+
+/* JSON 语法高亮 */
+.language-json .token.property {
+    color: #9cdcfe;
+}
+
+.language-json .token.string {
+    color: #ce9178;
+}
+
+.language-json .token.number {
+    color: #b5cea8;
+}
+
+.language-json .token.boolean {
+    color: #569cd6;
+}
+
+.language-json .token.null {
+    color: #569cd6;
+}
+
+/* Java 语法高亮 */
+.language-java .token.keyword {
+    color: #569cd6;
+}
+
+.language-java .token.class-name {
+    color: #4ec9b0;
+}
+
+.language-java .token.string {
+    color: #ce9178;
+}
+
+.language-java .token.annotation {
+    color: #569cd6;
+}
+
+/* JavaScript 语法高亮 */
+.language-javascript .token.keyword {
+    color: #569cd6;
+}
+
+.language-javascript .token.function {
+    color: #dcdcaa;
+}
+
+.language-javascript .token.string {
+    color: #ce9178;
+}
+
+.language-javascript .token.number {
+    color: #b5cea8;
+}
+
+/* Bash 语法高亮 */
+.language-bash .token.function {
+    color: #dcdcaa;
+}
+
+.language-bash .token.string {
+    color: #ce9178;
+}
+
+.language-bash .token.operator {
+    color: #d4d4d4;
+}
+
+/* 行内代码样式 */
+p code,
+li code,
+td code {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 3px;
+    padding: 0.125rem 0.25rem;
+    font-size: 0.875rem;
+    color: #e83e8c;
+}
+
+/* 代码块标题 */
+.code-title {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #495057;
+    margin: 1rem 0 0 0;
+}
+
+.code-title + pre {
+    border-radius: 0 0 6px 6px;
+    margin-top: 0;
+}
+
+/* 深色模式代码样式 */
+@media (prefers-color-scheme: dark) {
+    pre {
+        background-color: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .code-copy-btn {
+        background-color: #4a5568;
+    }
+    
+    .code-copy-btn:hover {
+        background-color: #2d3748;
+    }
+    
+    p code,
+    li code,
+    td code {
+        background-color: #2d3748;
+        border-color: #4a5568;
+        color: #f687b3;
+    }
+    
+    .code-title {
+        background-color: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    /* 深色模式 Prism.js 主题 */
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #6a9955;
+    }
+    
+    .token.punctuation {
+        color: #d4d4d4;
+    }
+    
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #b5cea8;
+    }
+    
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #ce9178;
+    }
+    
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        color: #d4d4d4;
+    }
+    
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #569cd6;
+    }
+    
+    .token.function,
+    .token.class-name {
+        color: #dcdcaa;
+    }
+    
+    .token.regex,
+    .token.important,
+    .token.variable {
+        color: #d16969;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    pre {
+        background-color: #f8f9fa !important;
+        border: 1px solid #e9ecef !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+    }
+    
+    .code-copy-btn {
+        display: none;
+    }
+    
+    .token.comment {
+        color: #6a9955 !important;
+    }
+    
+    .token.keyword {
+        color: #0000ff !important;
+    }
+    
+    .token.string {
+        color: #008000 !important;
+    }
+    
+    .token.number {
+        color: #0000ff !important;
+    }
+}

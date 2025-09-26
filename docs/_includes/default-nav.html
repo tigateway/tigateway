@@ -1,0 +1,30 @@
+<!-- 默认导航 -->
+<div class="menu">
+    <p class="menu-label">文档导航</p>
+    <ul class="menu-list">
+        <li><a href="{{ '/' | relative_url }}">首页</a></li>
+        <li><a href="{{ '/book/' | relative_url }}">用户指南</a></li>
+        <li><a href="{{ '/architecture/' | relative_url }}">架构设计</a></li>
+        <li><a href="{{ '/development/' | relative_url }}">开发指南</a></li>
+        <li><a href="{{ '/api/' | relative_url }}">API 文档</a></li>
+        <li><a href="{{ '/deployment/' | relative_url }}">部署运维</a></li>
+        <li><a href="{{ '/examples/' | relative_url }}">示例教程</a></li>
+        <li><a href="{{ '/configuration/' | relative_url }}">配置文档</a></li>
+    </ul>
+    
+    <p class="menu-label">快速链接</p>
+    <ul class="menu-list">
+        <li><a href="{{ '/examples/quick-start.md' | relative_url }}">快速开始</a></li>
+        <li><a href="{{ '/development/setup.md' | relative_url }}">环境搭建</a></li>
+        <li><a href="{{ '/deployment/kubernetes.md' | relative_url }}">K8s 部署</a></li>
+        <li><a href="{{ '/examples/troubleshooting.md' | relative_url }}">故障排除</a></li>
+    </ul>
+    
+    <p class="menu-label">社区</p>
+    <ul class="menu-list">
+        <li><a href="{{ site.tigateway.repository }}" target="_blank">GitHub</a></li>
+        <li><a href="{{ site.tigateway.issues }}" target="_blank">报告问题</a></li>
+        <li><a href="{{ site.tigateway.discussions }}" target="_blank">参与讨论</a></li>
+        <li><a href="mailto:{{ site.email }}">联系我们</a></li>
+    </ul>
+</div>

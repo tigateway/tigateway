@@ -1,180 +1,242 @@
-# Admin Interface
+# Admin Interface Overview
 
-This guide covers TiGateway's administrative interface, including the web UI, REST API, and command-line tools for managing routes, monitoring performance, and configuring the gateway.
+TiGateway provides a complete web management interface that allows you to manage gateway configurations, monitor system status, and view operational metrics through an intuitive graphical interface.
 
-## Overview
+## Admin Interface Architecture
 
-TiGateway provides comprehensive administrative capabilities:
+### Component Structure
 
-- **Web UI**: User-friendly web interface for gateway management
-- **REST API**: Programmatic access to gateway configuration
-- **Command Line Tools**: CLI for automation and scripting
-- **Real-time Monitoring**: Live metrics and performance data
-- **Configuration Management**: Dynamic configuration updates
-- **User Management**: Role-based access control for administrators
-
-## Web UI
-
-### Accessing the Admin Interface
-
-The admin interface is available at:
-```
-http://localhost:8080/admin
-```
-
-### Authentication
-
-The admin interface supports multiple authentication methods:
-
-```yaml
-admin:
-  security:
-    enabled: true
-    authentication:
-      type: jwt  # jwt, basic, oauth2
-      jwt:
-        secret: ${ADMIN_JWT_SECRET}
-        expiration: 3600
-      basic:
-        username: admin
-        password: ${ADMIN_PASSWORD}
-      oauth2:
-        client-id: ${OAUTH2_CLIENT_ID}
-        client-secret: ${OAUTH2_CLIENT_SECRET}
-        authorization-url: ${OAUTH2_AUTHORIZATION_URL}
-        token-url: ${OAUTH2_TOKEN_URL}
+```mermaid
+graph TB
+    subgraph "Admin Interface Architecture"
+        subgraph "Frontend Layer"
+            WebUI[Web UI<br/>Thymeleaf + Bootstrap]
+            RESTAPI[REST API<br/>Spring WebFlux]
+        end
+        
+        subgraph "Business Layer"
+            RouteService[Route Management Service]
+            ConfigService[Configuration Management Service]
+            MonitorService[Monitoring Service]
+            UserService[User Management Service]
+        end
+        
+        subgraph "Data Layer"
+            ConfigMap[ConfigMap Storage]
+            K8SAPI[Kubernetes API]
+            Metrics[Metrics Data]
+        end
+    end
+    
+    WebUI --> RESTAPI
+    RESTAPI --> RouteService
+    RESTAPI --> ConfigService
+    RESTAPI --> MonitorService
+    RESTAPI --> UserService
+    
+    RouteService --> ConfigMap
+    ConfigService --> ConfigMap
+    MonitorService --> K8SAPI
+    MonitorService --> Metrics
+    UserService --> K8SAPI
 ```
 
-### Dashboard
+### Port Configuration
 
-The main dashboard provides:
+The admin interface runs on a separate port, isolated from the main gateway service:
 
-- **System Overview**: Gateway status, request metrics, error rates
-- **Route Management**: View, create, edit, and delete routes
-- **Service Discovery**: Monitor discovered services and their health
-- **Performance Metrics**: Real-time performance data and charts
-- **Logs**: System logs and audit trails
-- **Configuration**: Gateway configuration management
+- **Admin Interface Port**: 8081
+- **Main Gateway Port**: 8080
+- **Monitoring Endpoint Port**: 8090
 
-### Route Management
+## Main Functional Modules
 
-#### Viewing Routes
+### 1. Dashboard
 
-The route management interface displays:
-- Route ID and configuration
-- Predicates and filters
-- Target service information
-- Route status and metrics
-- Last modified timestamp
+The dashboard provides system overview and key metrics:
 
-#### Creating Routes
+```mermaid
+graph TB
+    subgraph "Dashboard Functions"
+        SystemOverview[System Overview]
+        RequestMetrics[Request Metrics]
+        RouteStatus[Route Status]
+        ServiceHealth[Service Health]
+        RecentActivity[Recent Activity]
+    end
+    
+    SystemOverview --> RequestMetrics
+    SystemOverview --> RouteStatus
+    SystemOverview --> ServiceHealth
+    SystemOverview --> RecentActivity
+```
 
-```yaml
-# Route creation form
-route:
-  id: new-route
+**Key Metrics**:
+- Total request count
+- Request success rate
+- Average response time
+- Active route count
+- Service health status
+
+### 2. Route Management
+
+The route management module provides complete route configuration functionality:
+
+#### Route List
+
+Displays all configured routes with management actions:
+
+```html
+<!-- Route list page -->
+<div class="route-list">
+    <div class="route-item" th:each="route : ${routes}">
+        <div class="route-id" th:text="${route.id}"></div>
+        <div class="route-uri" th:text="${route.uri}"></div>
+        <div class="route-predicates">
+            <span th:each="predicate : ${route.predicates}" 
+                  th:text="${predicate.name}"></span>
+        </div>
+        <div class="route-actions">
+            <button class="btn-edit" th:onclick="'editRoute(\'' + ${route.id} + '\')'">Edit</button>
+            <button class="btn-delete" th:onclick="'deleteRoute(\'' + ${route.id} + '\')'">Delete</button>
+            <button class="btn-test" th:onclick="'testRoute(\'' + ${route.id} + '\')'">Test</button>
+        </div>
+    </div>
+</div>
+```
+
+#### Route Creation
+
+Interactive route creation form with validation:
+
+```html
+<!-- Route creation form -->
+<form id="route-form" th:action="@{/admin/routes}" method="post">
+    <div class="form-group">
+        <label for="routeId">Route ID</label>
+        <input type="text" id="routeId" name="id" class="form-control" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="routeUri">Target URI</label>
+        <input type="text" id="routeUri" name="uri" class="form-control" 
+               placeholder="lb://service-name" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="routePath">Path Pattern</label>
+        <input type="text" id="routePath" name="path" class="form-control" 
+               placeholder="/api/**" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="routeFilters">Filters</label>
+        <select id="routeFilters" name="filters" class="form-control" multiple>
+            <option value="StripPrefix">Strip Prefix</option>
+            <option value="AddRequestHeader">Add Request Header</option>
+            <option value="AddResponseHeader">Add Response Header</option>
+            <option value="CircuitBreaker">Circuit Breaker</option>
+        </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Create Route</button>
+</form>
+```
+
+### 3. Configuration Management
+
+#### Configuration Editor
+
+Visual configuration editor with syntax highlighting and validation:
+
+```html
+<!-- Configuration editor -->
+<div class="config-editor">
+    <div class="editor-toolbar">
+        <button class="btn btn-sm btn-primary" onclick="saveConfig()">Save</button>
+        <button class="btn btn-sm btn-secondary" onclick="validateConfig()">Validate</button>
+        <button class="btn btn-sm btn-info" onclick="formatConfig()">Format</button>
+        <button class="btn btn-sm btn-warning" onclick="resetConfig()">Reset</button>
+    </div>
+    
+    <div class="editor-container">
+        <textarea id="config-editor" class="form-control" rows="20">
+# TiGateway Configuration
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
   uri: lb://user-service
   predicates:
     - Path=/api/users/**
   filters:
     - StripPrefix=2
-    - AddRequestHeader=X-Service,user-service
-  order: 0
+        </textarea>
+    </div>
+</div>
 ```
 
-#### Editing Routes
+### 4. Monitoring and Metrics
 
-Routes can be edited in real-time:
-- Modify predicates and filters
-- Update target services
-- Change route order
-- Enable/disable routes
+#### Real-time Metrics Dashboard
 
-#### Deleting Routes
-
-Routes can be deleted with confirmation:
-- Soft delete (disable) for temporary removal
-- Hard delete for permanent removal
-- Bulk operations for multiple routes
-
-### Service Discovery
-
-#### Service Overview
-
-The service discovery interface shows:
-- Discovered services and instances
-- Service health status
-- Load balancing configuration
-- Service metrics and performance
-
-#### Service Management
-
-- **Add Services**: Manually add service instances
-- **Remove Services**: Remove unhealthy or deprecated services
-- **Health Checks**: Configure and monitor health checks
-- **Load Balancing**: Configure load balancing strategies
-
-### Performance Monitoring
-
-#### Real-time Metrics
-
-- **Request Rate**: Requests per second
-- **Response Time**: Average, P95, P99 response times
-- **Error Rate**: Error percentage and types
-- **Throughput**: Data transfer rates
-- **Connection Count**: Active connections
-
-#### Historical Data
-
-- **Time Series Charts**: Performance trends over time
-- **Alert History**: Past alerts and notifications
-- **Capacity Planning**: Resource usage trends
-- **Performance Analysis**: Detailed performance reports
-
-### Configuration Management
-
-#### Gateway Configuration
-
-- **Global Settings**: Gateway-wide configuration
-- **Route Configuration**: Individual route settings
-- **Filter Configuration**: Custom filter settings
-- **Security Configuration**: Authentication and authorization
-
-#### Configuration Validation
-
-- **Syntax Validation**: YAML/JSON syntax checking
-- **Semantic Validation**: Configuration logic validation
-- **Dependency Checking**: Service and filter dependencies
-- **Impact Analysis**: Configuration change impact
-
-## REST API
-
-### Authentication
-
-All admin API endpoints require authentication:
-
-```bash
-# JWT Authentication
-curl -H "Authorization: Bearer <token>" http://localhost:8080/admin/api/routes
-
-# Basic Authentication
-curl -u admin:password http://localhost:8080/admin/api/routes
+```html
+<!-- Metrics dashboard -->
+<div class="metrics-dashboard">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="metric-card">
+                <h5>Total Requests</h5>
+                <div class="metric-value" id="total-requests">0</div>
+                <div class="metric-trend" id="requests-trend">+0%</div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="metric-card">
+                <h5>Success Rate</h5>
+                <div class="metric-value" id="success-rate">0%</div>
+                <div class="metric-trend" id="success-trend">+0%</div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="metric-card">
+                <h5>Avg Response Time</h5>
+                <div class="metric-value" id="avg-response-time">0ms</div>
+                <div class="metric-trend" id="response-trend">+0%</div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="metric-card">
+                <h5>Active Routes</h5>
+                <div class="metric-value" id="active-routes">0</div>
+                <div class="metric-trend" id="routes-trend">+0%</div>
+            </div>
+        </div>
+    </div>
+</div>
 ```
+
+## API Endpoints
 
 ### Route Management API
 
-#### List Routes
-
-```bash
+```http
+# Get all routes
 GET /admin/api/routes
-```
 
-**Response:**
-```json
+# Get specific route
+GET /admin/api/routes/{id}
+
+# Create route
+POST /admin/api/routes
+Content-Type: application/json
+
 {
-  "routes": [
-    {
-      "id": "user-service-route",
+  "id": "user-service",
       "uri": "lb://user-service",
       "predicates": [
         {
@@ -190,573 +252,180 @@ GET /admin/api/routes
           "args": {
             "parts": 2
           }
-        }
-      ],
-      "order": 0,
-      "status": "ACTIVE"
     }
   ]
 }
-```
-
-#### Create Route
-
-```bash
-POST /admin/api/routes
-Content-Type: application/json
-
-{
-  "id": "new-route",
-  "uri": "lb://new-service",
-  "predicates": [
-    {
-      "name": "Path",
-      "args": {
-        "pattern": "/api/new/**"
-      }
-    }
-  ],
-  "filters": [
-    {
-      "name": "StripPrefix",
-      "args": {
-        "parts": 2
-      }
-    }
-  ],
-  "order": 0
-}
-```
-
-#### Update Route
-
-```bash
-PUT /admin/api/routes/{routeId}
-Content-Type: application/json
-
-{
-  "uri": "lb://updated-service",
-  "predicates": [
-    {
-      "name": "Path",
-      "args": {
-        "pattern": "/api/updated/**"
-      }
-    }
-  ],
-  "filters": [
-    {
-      "name": "StripPrefix",
-      "args": {
-        "parts": 2
-      }
-    }
-  ]
-}
-```
-
-#### Delete Route
-
-```bash
-DELETE /admin/api/routes/{routeId}
-```
-
-### Service Discovery API
-
-#### List Services
-
-```bash
-GET /admin/api/services
-```
-
-**Response:**
-```json
-{
-  "services": [
-    {
-      "name": "user-service",
-      "instances": [
-        {
-          "id": "user-service-1",
-          "host": "user-service-1",
-          "port": 8080,
-          "health": "UP",
-          "metadata": {
-            "version": "1.0.0",
-            "zone": "us-east-1"
-          }
-        }
-      ],
-      "loadBalancer": {
-        "strategy": "ROUND_ROBIN",
-        "healthCheck": {
-          "enabled": true,
-          "path": "/actuator/health",
-          "interval": "10s"
-        }
-      }
-    }
-  ]
-}
-```
-
-#### Add Service Instance
-
-```bash
-POST /admin/api/services/{serviceName}/instances
-Content-Type: application/json
-
-{
-  "id": "new-instance",
-  "host": "new-instance",
-  "port": 8080,
-  "metadata": {
-    "version": "1.0.0",
-    "zone": "us-west-1"
-  }
-}
-```
-
-#### Remove Service Instance
-
-```bash
-DELETE /admin/api/services/{serviceName}/instances/{instanceId}
-```
-
-### Metrics API
-
-#### System Metrics
-
-```bash
-GET /admin/api/metrics/system
-```
-
-**Response:**
-```json
-{
-  "metrics": {
-    "requests": {
-      "total": 10000,
-      "rate": 100.5,
-      "errors": 50,
-      "errorRate": 0.005
-    },
-    "responseTime": {
-      "average": 150.5,
-      "p95": 300.0,
-      "p99": 500.0
-    },
-    "connections": {
-      "active": 100,
-      "total": 1000
-    }
-  }
-}
-```
-
-#### Route Metrics
-
-```bash
-GET /admin/api/metrics/routes/{routeId}
-```
-
-**Response:**
-```json
-{
-  "routeId": "user-service-route",
-  "metrics": {
-    "requests": {
-      "total": 5000,
-      "rate": 50.2,
-      "errors": 25,
-      "errorRate": 0.005
-    },
-    "responseTime": {
-      "average": 120.0,
-      "p95": 250.0,
-      "p99": 400.0
-    }
-  }
-}
-```
-
-### Configuration API
-
-#### Get Configuration
-
-```bash
-GET /admin/api/configuration
-```
-
-**Response:**
-```json
-{
-  "configuration": {
-    "gateway": {
-      "httpClient": {
-        "connectTimeout": 1000,
-        "responseTimeout": 5000
-      },
-      "loadBalancer": {
-        "defaultStrategy": "ROUND_ROBIN"
-      }
-    },
-    "security": {
-      "authentication": {
-        "enabled": true,
-        "type": "jwt"
-      }
-    }
-  }
-}
-```
-
-#### Update Configuration
-
-```bash
-PUT /admin/api/configuration
-Content-Type: application/json
-
-{
-  "gateway": {
-    "httpClient": {
-      "connectTimeout": 2000,
-      "responseTimeout": 10000
-    }
-  }
-}
-```
-
-## Command Line Tools
-
-### Gateway CLI
-
-The gateway CLI provides command-line access to admin functions:
-
-```bash
-# Install CLI
-npm install -g @tigateway/cli
-
-# Configure CLI
-tigateway config set endpoint http://localhost:8080
-tigateway config set token <jwt-token>
-```
-
-### Route Management
-
-```bash
-# List routes
-tigateway routes list
-
-# Create route
-tigateway routes create --id new-route --uri lb://new-service --path "/api/new/**"
 
 # Update route
-tigateway routes update new-route --uri lb://updated-service
+PUT /admin/api/routes/{id}
 
 # Delete route
-tigateway routes delete new-route
+DELETE /admin/api/routes/{id}
 
-# Enable/disable route
-tigateway routes enable new-route
-tigateway routes disable new-route
+# Test route
+POST /admin/api/routes/{id}/test
+Content-Type: application/json
+
+{
+  "url": "/api/users/123",
+  "method": "GET"
+}
 ```
 
-### Service Management
+### Configuration Management API
 
-```bash
-# List services
-tigateway services list
-
-# Add service instance
-tigateway services add user-service --host user-service-1 --port 8080
-
-# Remove service instance
-tigateway services remove user-service --instance user-service-1
-
-# Check service health
-tigateway services health user-service
-```
-
-### Configuration Management
-
-```bash
-# Get configuration
-tigateway config get
+```http
+# Get current configuration
+GET /admin/api/config
 
 # Update configuration
-tigateway config set gateway.httpClient.connectTimeout 2000
+PUT /admin/api/config
+Content-Type: application/yaml
 
 # Validate configuration
-tigateway config validate
+POST /admin/api/config/validate
+Content-Type: application/yaml
 
 # Backup configuration
-tigateway config backup --file backup.yaml
+POST /admin/api/config/backup
 
 # Restore configuration
-tigateway config restore --file backup.yaml
+POST /admin/api/config/restore
+Content-Type: application/json
+
+{
+  "backupId": "backup-2024-09-23-10-00-00"
+}
 ```
 
-### Monitoring
+### Monitoring API
 
-```bash
-# Get system metrics
-tigateway metrics system
+```http
+# Get current metrics
+GET /admin/api/metrics/current
+
+# Get metrics history
+GET /admin/api/metrics/history?from=2024-09-23T00:00:00Z&to=2024-09-23T23:59:59Z
 
 # Get route metrics
-tigateway metrics route user-service-route
+GET /admin/api/metrics/routes/{routeId}
 
-# Get service metrics
-tigateway metrics service user-service
+# Get system health
+GET /admin/api/health
 
-# Watch metrics (real-time)
-tigateway metrics watch --interval 5s
+# Get service status
+GET /admin/api/services/status
 ```
 
-## User Management
+## Security Configuration
 
-### User Roles
-
-TiGateway supports role-based access control:
-
-- **Admin**: Full access to all admin functions
-- **Operator**: Read-only access to monitoring and configuration
-- **Developer**: Limited access to route management
-- **Viewer**: Read-only access to monitoring data
-
-### User Management API
-
-#### List Users
-
-```bash
-GET /admin/api/users
-```
-
-**Response:**
-```json
-{
-  "users": [
-    {
-      "id": "admin",
-      "username": "admin",
-      "email": "admin@example.com",
-      "roles": ["ADMIN"],
-      "status": "ACTIVE",
-      "lastLogin": "2024-01-01T00:00:00Z"
-    }
-  ]
-}
-```
-
-#### Create User
-
-```bash
-POST /admin/api/users
-Content-Type: application/json
-
-{
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "password123",
-  "roles": ["OPERATOR"]
-}
-```
-
-#### Update User
-
-```bash
-PUT /admin/api/users/{userId}
-Content-Type: application/json
-
-{
-  "email": "updated@example.com",
-  "roles": ["ADMIN", "OPERATOR"]
-}
-```
-
-#### Delete User
-
-```bash
-DELETE /admin/api/users/{userId}
-```
-
-### Role Management
-
-#### List Roles
-
-```bash
-GET /admin/api/roles
-```
-
-**Response:**
-```json
-{
-  "roles": [
-    {
-      "id": "ADMIN",
-      "name": "Administrator",
-      "description": "Full access to all admin functions",
-      "permissions": [
-        "routes:read",
-        "routes:write",
-        "routes:delete",
-        "services:read",
-        "services:write",
-        "services:delete",
-        "config:read",
-        "config:write",
-        "users:read",
-        "users:write",
-        "users:delete"
-      ]
-    }
-  ]
-}
-```
-
-## Security
-
-### Access Control
-
-The admin interface implements comprehensive security:
-
-- **Authentication**: JWT, Basic Auth, OAuth2 support
-- **Authorization**: Role-based access control
-- **Audit Logging**: All admin operations are logged
-- **Rate Limiting**: API rate limiting to prevent abuse
-- **CSRF Protection**: Cross-site request forgery protection
-
-### Security Configuration
+### Authentication Setup
 
 ```yaml
-admin:
+# Admin interface security configuration
+spring:
   security:
+    oauth2:
+      client:
+        provider:
+          admin:
+            issuer-uri: ${ADMIN_OAUTH2_ISSUER_URI}
+        registration:
+          admin:
+            client-id: ${ADMIN_OAUTH2_CLIENT_ID}
+            client-secret: ${ADMIN_OAUTH2_CLIENT_SECRET}
+            scope: openid,profile,email,admin
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+
+# Admin interface configuration
+admin:
+  server:
     enabled: true
-    authentication:
-      type: jwt
-      jwt:
-        secret: ${ADMIN_JWT_SECRET}
-        expiration: 3600
-    authorization:
+    port: 8081
+    context-path: /admin
+    name: tigateway-admin
+    security:
       enabled: true
-      defaultRole: VIEWER
-    audit:
+      oauth2:
       enabled: true
-      logLevel: INFO
-    rateLimit:
-      enabled: true
-      requests: 100
-      window: 60s
-    csrf:
-      enabled: true
-      tokenHeader: X-CSRF-Token
+        client-registration: admin
+      session:
+        timeout: 30m
+        max-sessions: 1
 ```
 
-### Audit Logging
+## Deployment Configuration
 
-All admin operations are logged with:
+### Kubernetes Deployment
 
-- **User Information**: Who performed the action
-- **Action Details**: What action was performed
-- **Resource Information**: Which resource was affected
-- **Timestamp**: When the action occurred
-- **IP Address**: Source IP address
-- **Result**: Success or failure status
+```yaml
+# Admin interface Kubernetes deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tigateway-admin
+  namespace: tigateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tigateway-admin
+  template:
+    metadata:
+      labels:
+        app: tigateway-admin
+    spec:
+      containers:
+      - name: tigateway-admin
+        image: tigateway/admin:latest
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+        - name: ADMIN_SERVER_PORT
+          value: "8081"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /admin/actuator/health
+            port: 8081
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /admin/actuator/health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
 
-## Best Practices
-
-### Admin Interface Usage
-
-1. **Use HTTPS**: Always use HTTPS in production
-2. **Strong Authentication**: Use strong passwords and JWT secrets
-3. **Role-based Access**: Assign appropriate roles to users
-4. **Regular Backups**: Backup configuration regularly
-5. **Monitor Access**: Monitor admin interface access
-
-### API Usage
-
-1. **Rate Limiting**: Respect API rate limits
-2. **Error Handling**: Implement proper error handling
-3. **Authentication**: Always authenticate API requests
-4. **Validation**: Validate input data
-5. **Documentation**: Keep API documentation updated
-
-### Security
-
-1. **Access Control**: Implement proper access control
-2. **Audit Logging**: Enable audit logging
-3. **Regular Updates**: Keep admin interface updated
-4. **Security Monitoring**: Monitor for security issues
-5. **Incident Response**: Have incident response procedures
-
-## Troubleshooting
-
-### Common Issues
-
-#### Admin Interface Not Accessible
-
-```bash
-# Check admin interface status
-curl http://localhost:8080/admin/health
-
-# Check authentication configuration
-curl http://localhost:8080/actuator/configprops | grep -i admin
-
-# Check security configuration
-curl http://localhost:8080/actuator/configprops | grep -i security
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tigateway-admin-service
+  namespace: tigateway
+spec:
+  selector:
+    app: tigateway-admin
+  ports:
+  - name: http
+    port: 8081
+    targetPort: 8081
+  type: ClusterIP
 ```
-
-#### Authentication Issues
-
-```bash
-# Test authentication
-curl -H "Authorization: Bearer <token>" http://localhost:8080/admin/api/routes
-
-# Check JWT configuration
-curl http://localhost:8080/actuator/configprops | grep -i jwt
-
-# Check user management
-curl http://localhost:8080/admin/api/users
-```
-
-#### API Issues
-
-```bash
-# Test API endpoints
-curl http://localhost:8080/admin/api/routes
-
-# Check API configuration
-curl http://localhost:8080/actuator/configprops | grep -i api
-
-# Check rate limiting
-curl http://localhost:8080/actuator/metrics/rate.limiter.requests
-```
-
-### Debug Commands
-
-```bash
-# Check admin interface logs
-tail -f logs/tigateway.log | grep -i admin
-
-# Check API logs
-tail -f logs/tigateway.log | grep -i api
-
-# Check security logs
-tail -f logs/tigateway.log | grep -i security
-
-# Check user management logs
-tail -f logs/tigateway.log | grep -i user
-```
-
-## Next Steps
-
-After setting up the admin interface:
-
-1. **[Monitoring Setup](../monitoring-and-metrics.md)** - Set up comprehensive monitoring
-2. **[Security Best Practices](../security-best-practices.md)** - Implement security measures
-3. **[Troubleshooting Guide](../troubleshooting.md)** - Common admin interface issues
-4. **[Performance Tuning](../performance-tuning.md)** - Optimize admin interface performance
 
 ---
 
-**Ready to set up monitoring?** Check out our [Monitoring Setup](../monitoring-and-metrics.md) guide for comprehensive monitoring solutions.
+**Related Documentation**:
+- [Configuration Guide](../configuration/configuration.md)
+- [Security Guide](../security/security-best-practices.md)
+- [Monitoring Guide](../deployment/monitoring.md)
+- [API Reference](../api/api-reference.md)

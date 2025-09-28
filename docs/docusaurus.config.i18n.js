@@ -2,7 +2,7 @@ const {themes: prismThemes} = require('prism-react-renderer');
 
 const config = {
   title: 'TiGateway',
-  tagline: '基于 Spring Cloud Gateway 的 Kubernetes 原生 API 网关',
+  tagline: 'Kubernetes-native API Gateway based on Spring Cloud Gateway',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -80,11 +80,11 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: '文档',
+            label: 'Documentation',
           },
           {
             to: '/blog',
-            label: '博客',
+            label: 'Blog',
             position: 'left'
           },
           {
@@ -102,48 +102,48 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: '文档',
+            title: 'Documentation',
             items: [
               {
-                label: '快速开始',
+                label: 'Quick Start',
                 to: '/docs/quick-start',
               },
               {
-                label: '安装指南',
+                label: 'Installation Guide',
                 to: '/docs/installation',
               },
               {
-                label: 'API 参考',
+                label: 'API Reference',
                 to: '/docs/api/rest-api',
               },
             ],
           },
           {
-            title: '社区',
+            title: 'Community',
             items: [
               {
                 label: 'GitHub',
                 href: 'https://github.com/tigateway/tigateway',
               },
               {
-                label: '问题反馈',
+                label: 'Issues',
                 href: 'https://github.com/tigateway/tigateway/issues',
               },
               {
-                label: '讨论区',
+                label: 'Discussions',
                 href: 'https://github.com/tigateway/tigateway/discussions',
               },
             ],
           },
           {
-            title: '更多',
+            title: 'More',
             items: [
               {
-                label: '博客',
+                label: 'Blog',
                 to: '/blog',
               },
               {
-                label: '更新日志',
+                label: 'Changelog',
                 to: '/docs/changelog',
               },
             ],

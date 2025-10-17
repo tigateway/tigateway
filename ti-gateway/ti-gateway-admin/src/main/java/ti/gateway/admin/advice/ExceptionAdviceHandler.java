@@ -35,7 +35,7 @@ public class ExceptionAdviceHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result handleValidException(MethodArgumentNotValidException e, ServerHttpRequest request) {
+    public Result<?> handleValidException(MethodArgumentNotValidException e, ServerHttpRequest request) {
         FieldError fieldError = e.getBindingResult().getFieldError();
         log.warn("Exception uri:{} field:{} ex:{} exDetail:", request.getPath(),
                 fieldError.getField(), fieldError.getDefaultMessage(), e);

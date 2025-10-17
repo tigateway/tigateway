@@ -97,16 +97,17 @@ public class IngressWatcher {
                 // 获取当前资源版本
                 V1IngressList ingressList = networkingV1Api.listNamespacedIngress(
                     namespace, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null,
-                        false
+                    null, // pretty
+                    null, // allowWatchBookmarks
+                    null, // continue
+                    null, // fieldSelector
+                    null, // labelSelector
+                    null, // limit
+                    null, // resourceVersion
+                    null, // resourceVersionMatch
+                    null, // timeoutSeconds
+                    null, // watch
+                    null  // sendInitialEvents
                 );
 
                 V1ListMeta listMeta = ingressList.getMetadata();
@@ -119,17 +120,18 @@ public class IngressWatcher {
                     networkingV1Api.getApiClient(),
                     networkingV1Api.listNamespacedIngressCall(
                         namespace,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
+                        null, // pretty
+                        null, // allowWatchBookmarks
+                        null, // continue
+                        null, // fieldSelector
+                        null, // labelSelector
+                        null, // limit
                         resourceVersion,
-                        null,
-                        null,
-                        true,
-                        null
+                        null, // resourceVersionMatch
+                        null, // timeoutSeconds
+                        1, // watch (1 for true, 0 for false)
+                        null, // sendInitialEvents
+                        null  // callback
                     ),
                     V1Ingress.class
                 );

@@ -49,7 +49,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
         if (error.getCause() != null && error.getCause() instanceof ConnectException) {
             return HttpStatus.SERVICE_UNAVAILABLE;
         } else {
-            return error instanceof ResponseStatusException ? ((ResponseStatusException) error).getStatus() :
+            return error instanceof ResponseStatusException ? HttpStatus.valueOf(((ResponseStatusException) error).getStatusCode().value()) :
                     responseStatusAnnotation
                     .getValue("code", HttpStatus.class)
                     .orElse(HttpStatus.INTERNAL_SERVER_ERROR);

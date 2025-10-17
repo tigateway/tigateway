@@ -61,16 +61,17 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
         try {
             V1IngressList ingressList = networkingV1Api.listNamespacedIngress(
                 namespace, 
-                null, 
-                null, 
-                null, 
-                null, 
-                null, 
-                null, 
-                null, 
-                null, 
-                null,
-                    false
+                null, // pretty
+                null, // allowWatchBookmarks
+                null, // continue
+                null, // fieldSelector
+                null, // labelSelector
+                null, // limit
+                null, // resourceVersion
+                null, // resourceVersionMatch
+                null, // timeoutSeconds
+                null, // watch
+                null  // sendInitialEvents
             );
 
             for (V1Ingress ingress : ingressList.getItems()) {

@@ -3,6 +3,8 @@ package ti.gateway.mcp.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ti.gateway.mcp.model.RouteInfo;
+import ti.gateway.mcp.model.ServiceInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,39 +20,44 @@ public class TiGatewayKubernetesService {
     /**
      * List routes in a namespace
      */
-    public List<Map<String, Object>> listRoutes(String namespace, String filter) {
+    public List<RouteInfo> listRoutes(String namespace, String filter) {
         logger.info("Listing routes in namespace: {} with filter: {}", namespace, filter);
         
         // TODO: Implement actual Kubernetes API calls
         // This is a mock implementation
-        List<Map<String, Object>> routes = new java.util.ArrayList<>();
+        List<RouteInfo> routes = new java.util.ArrayList<>();
         
-        Map<String, Object> route1 = new java.util.HashMap<>();
-        route1.put("name", "user-service-route");
-        route1.put("namespace", namespace);
-        route1.put("path", "/api/users/**");
-        route1.put("service", "user-service");
-        route1.put("port", 8080);
-        route1.put("status", "active");
-        route1.put("created", "2024-01-01T10:00:00Z");
+        RouteInfo route1 = new RouteInfo(
+            "user-service-route",
+            namespace,
+            "/api/users/**",
+            "user-service",
+            8080,
+            "active"
+        );
+        route1.setCreated("2024-01-01T10:00:00Z");
+        route1.setPredicates(List.of("Path=/api/users/**"));
+        route1.setFilters(List.of("StripPrefix=1"));
         routes.add(route1);
         
-        Map<String, Object> route2 = new java.util.HashMap<>();
-        route2.put("name", "order-service-route");
-        route2.put("namespace", namespace);
-        route2.put("path", "/api/orders/**");
-        route2.put("service", "order-service");
-        route2.put("port", 8080);
-        route2.put("status", "active");
-        route2.put("created", "2024-01-01T10:30:00Z");
+        RouteInfo route2 = new RouteInfo(
+            "order-service-route",
+            namespace,
+            "/api/orders/**",
+            "order-service",
+            8080,
+            "active"
+        );
+        route2.setCreated("2024-01-01T10:30:00Z");
+        route2.setPredicates(List.of("Path=/api/orders/**"));
+        route2.setFilters(List.of("StripPrefix=1"));
         routes.add(route2);
         
         // Apply filter if provided
         if (!filter.isEmpty()) {
-            List<Map<String, Object>> filteredRoutes = new java.util.ArrayList<>();
-            for (Map<String, Object> route : routes) {
-                if (route.get("name").toString().contains(filter) || 
-                    route.get("path").toString().contains(filter)) {
+            List<RouteInfo> filteredRoutes = new java.util.ArrayList<>();
+            for (RouteInfo route : routes) {
+                if (route.getName().contains(filter) || route.getPath().contains(filter)) {
                     filteredRoutes.add(route);
                 }
             }
@@ -142,44 +149,32 @@ public class TiGatewayKubernetesService {
     /**
      * List services in a namespace
      */
-    public List<Map<String, Object>> listServices(String namespace, String filter) {
+    public List<ServiceInfo> listServices(String namespace, String filter) {
         logger.info("Listing services in namespace: {} with filter: {}", namespace, filter);
         
         // TODO: Implement actual Kubernetes API calls
         // This is a mock implementation
-        List<Map<String, Object>> services = new java.util.ArrayList<>();
+        List<ServiceInfo> services = new java.util.ArrayList<>();
         
-        Map<String, Object> service1 = new java.util.HashMap<>();
-        service1.put("name", "user-service");
-        service1.put("namespace", namespace);
-        service1.put("type", "ClusterIP");
-        service1.put("clusterIP", "10.96.1.1");
-        Map<String, Object> port1 = new java.util.HashMap<>();
-        port1.put("port", 8080);
-        port1.put("targetPort", 8080);
-        port1.put("protocol", "TCP");
-        service1.put("ports", List.of(port1));
-        service1.put("status", "running");
+        ServiceInfo service1 = new ServiceInfo("user-service", namespace, "ClusterIP", "running");
+        service1.setClusterIP("10.96.1.1");
+        ServiceInfo.ServicePort port1 = new ServiceInfo.ServicePort("http", 8080, "8080", "TCP");
+        service1.setPorts(List.of(port1));
+        service1.setCreated("2024-01-01T10:00:00Z");
         services.add(service1);
         
-        Map<String, Object> service2 = new java.util.HashMap<>();
-        service2.put("name", "order-service");
-        service2.put("namespace", namespace);
-        service2.put("type", "ClusterIP");
-        service2.put("clusterIP", "10.96.1.2");
-        Map<String, Object> port2 = new java.util.HashMap<>();
-        port2.put("port", 8080);
-        port2.put("targetPort", 8080);
-        port2.put("protocol", "TCP");
-        service2.put("ports", List.of(port2));
-        service2.put("status", "running");
+        ServiceInfo service2 = new ServiceInfo("order-service", namespace, "ClusterIP", "running");
+        service2.setClusterIP("10.96.1.2");
+        ServiceInfo.ServicePort port2 = new ServiceInfo.ServicePort("http", 8080, "8080", "TCP");
+        service2.setPorts(List.of(port2));
+        service2.setCreated("2024-01-01T10:30:00Z");
         services.add(service2);
         
         // Apply filter if provided
         if (!filter.isEmpty()) {
-            List<Map<String, Object>> filteredServices = new java.util.ArrayList<>();
-            for (Map<String, Object> service : services) {
-                if (service.get("name").toString().contains(filter)) {
+            List<ServiceInfo> filteredServices = new java.util.ArrayList<>();
+            for (ServiceInfo service : services) {
+                if (service.getName().contains(filter)) {
                     filteredServices.add(service);
                 }
             }

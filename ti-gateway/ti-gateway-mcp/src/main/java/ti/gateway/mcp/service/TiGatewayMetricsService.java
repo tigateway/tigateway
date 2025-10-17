@@ -3,6 +3,7 @@ package ti.gateway.mcp.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ti.gateway.mcp.model.MetricsInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,23 +19,38 @@ public class TiGatewayMetricsService {
     /**
      * Get metrics by type
      */
-    public Map<String, Object> getMetrics(String type, String timeRange, String namespace) {
+    public MetricsInfo getMetrics(String type, String timeRange, String namespace) {
         logger.info("Getting metrics for type: {} timeRange: {} namespace: {}", type, timeRange, namespace);
+        
+        MetricsInfo metricsInfo = new MetricsInfo(System.currentTimeMillis(), type, namespace);
         
         switch (type) {
             case "routes":
-                return getRouteMetrics(timeRange, namespace);
+                metricsInfo.setMetrics(getRouteMetrics(timeRange, namespace));
+                break;
             case "services":
-                return getServiceMetrics(timeRange, namespace);
+                metricsInfo.setMetrics(getServiceMetrics(timeRange, namespace));
+                break;
             case "requests":
-                return getRequestMetrics(timeRange, namespace);
+                metricsInfo.setMetrics(getRequestMetrics(timeRange, namespace));
+                break;
             case "errors":
-                return getErrorMetrics(timeRange, namespace);
+                metricsInfo.setMetrics(getErrorMetrics(timeRange, namespace));
+                break;
             case "performance":
-                return getPerformanceMetrics(timeRange, namespace);
+                metricsInfo.setMetrics(getPerformanceMetrics(timeRange, namespace));
+                break;
             default:
                 throw new IllegalArgumentException("Unknown metrics type: " + type);
         }
+        
+        // Set summary
+        MetricsInfo.MetricsSummary summary = new MetricsInfo.MetricsSummary(
+            1000L, 950L, 50L, 150.5, 5.0, 100.0
+        );
+        metricsInfo.setSummary(summary);
+        
+        return metricsInfo;
     }
     
     private Map<String, Object> getRouteMetrics(String timeRange, String namespace) {

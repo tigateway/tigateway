@@ -3,6 +3,7 @@ package ti.gateway.mcp.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ti.gateway.mcp.model.LogInfo;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,35 +22,41 @@ public class TiGatewayLogsService {
     /**
      * Get logs with filters
      */
-    public List<Map<String, Object>> getLogs(String level, Integer lines, String namespace, 
-                                           String service, String filter) {
+    public List<LogInfo> getLogs(String level, Integer lines, String namespace, 
+                                String service, String filter) {
         logger.info("Getting logs - level: {} lines: {} namespace: {} service: {} filter: {}", 
                    level, lines, namespace, service, filter);
         
         // TODO: Implement actual log retrieval from Kubernetes or log aggregation system
         // This is a mock implementation
-        List<Map<String, Object>> logs = new ArrayList<>();
+        List<LogInfo> logs = new ArrayList<>();
         
         // Generate mock logs
         for (int i = 0; i < Math.min(lines, 10); i++) {
-            Map<String, Object> logEntry = new HashMap<>();
-            logEntry.put("timestamp", Instant.now().minusSeconds(i * 10).toString());
-            logEntry.put("level", level);
-            logEntry.put("namespace", namespace);
-            logEntry.put("service", service.isEmpty() ? "tigateway" : service);
-            logEntry.put("pod", "tigateway-" + (i % 3 + 1));
-            logEntry.put("message", generateMockLogMessage(level, i));
-            logEntry.put("thread", "http-nio-8080-exec-" + (i % 10 + 1));
-            logEntry.put("logger", "ti.gateway.core.RouteHandler");
+            LogInfo logEntry = new LogInfo(
+                Instant.now().minusSeconds(i * 10).toString(),
+                level,
+                service != null ? service : "tigateway",
+                generateMockLogMessage(level, i)
+            );
+            logEntry.setNamespace(namespace);
+            logEntry.setThread("http-nio-8080-exec-" + (i % 10 + 1));
+            logEntry.setLogger("ti.gateway.core.RouteHandler");
+            
+            // Set context information
+            Map<String, Object> context = new HashMap<>();
+            context.put("pod", "tigateway-" + (i % 3 + 1));
+            context.put("service", service != null && !service.isEmpty() ? service : "tigateway");
+            logEntry.setContext(context);
             
             logs.add(logEntry);
         }
         
         // Apply text filter if provided
         if (!filter.isEmpty()) {
-            List<Map<String, Object>> filteredLogs = new ArrayList<>();
-            for (Map<String, Object> log : logs) {
-                if (log.get("message").toString().toLowerCase().contains(filter.toLowerCase())) {
+            List<LogInfo> filteredLogs = new ArrayList<>();
+            for (LogInfo log : logs) {
+                if (log.getMessage().toLowerCase().contains(filter.toLowerCase())) {
                     filteredLogs.add(log);
                 }
             }

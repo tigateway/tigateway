@@ -9,6 +9,7 @@
         <module>ti-gateway-kubernetes</module>
         <module>ti-gateway-kubernetes-extensions</module>
         <module>ti-gateway</module>
+        <module>ti-gateway-ai-native</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

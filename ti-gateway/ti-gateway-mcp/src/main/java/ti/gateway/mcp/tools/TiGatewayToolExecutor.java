@@ -92,7 +92,7 @@ public class TiGatewayToolExecutor {
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String filter = (String) arguments.getOrDefault("filter", "");
         
-        List<Map<String, Object>> routes = kubernetesService.listRoutes(namespace, filter);
+        List<ti.gateway.mcp.model.RouteInfo> routes = kubernetesService.listRoutes(namespace, filter);
         
         Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
@@ -182,7 +182,7 @@ public class TiGatewayToolExecutor {
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String filter = (String) arguments.getOrDefault("filter", "");
         
-        List<Map<String, Object>> services = kubernetesService.listServices(namespace, filter);
+        List<ti.gateway.mcp.model.ServiceInfo> services = kubernetesService.listServices(namespace, filter);
         
         Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
@@ -209,7 +209,7 @@ public class TiGatewayToolExecutor {
         String timeRange = (String) arguments.getOrDefault("timeRange", "1h");
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         
-        Map<String, Object> metrics = metricsService.getMetrics(type, timeRange, namespace);
+        ti.gateway.mcp.model.MetricsInfo metrics = metricsService.getMetrics(type, timeRange, namespace);
         
         Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
@@ -224,7 +224,7 @@ public class TiGatewayToolExecutor {
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String format = (String) arguments.getOrDefault("format", "json");
         
-        Map<String, Object> config = configService.getConfig(type, namespace, format);
+        ti.gateway.mcp.model.ConfigInfo config = configService.getConfig(type, namespace, format);
         
         Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
@@ -241,7 +241,7 @@ public class TiGatewayToolExecutor {
         String service = (String) arguments.getOrDefault("service", "");
         String filter = (String) arguments.getOrDefault("filter", "");
         
-        List<Map<String, Object>> logs = logsService.getLogs(level, lines, namespace, service, filter);
+        List<ti.gateway.mcp.model.LogInfo> logs = logsService.getLogs(level, lines, namespace, service, filter);
         
         Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);

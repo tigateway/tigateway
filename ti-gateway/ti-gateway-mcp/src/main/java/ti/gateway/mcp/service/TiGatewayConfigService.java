@@ -3,6 +3,7 @@ package ti.gateway.mcp.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ti.gateway.mcp.model.ConfigInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,23 +19,35 @@ public class TiGatewayConfigService {
     /**
      * Get configuration by type
      */
-    public Map<String, Object> getConfig(String type, String namespace, String format) {
+    public ConfigInfo getConfig(String type, String namespace, String format) {
         logger.info("Getting config for type: {} namespace: {} format: {}", type, namespace, format);
+        
+        ConfigInfo configInfo = new ConfigInfo(type + "-config", namespace, type, "kubernetes");
+        configInfo.setVersion("1.0.0");
+        configInfo.setLastModified("2024-01-01T10:00:00Z");
+        configInfo.setStatus("active");
         
         switch (type) {
             case "routes":
-                return getRoutesConfig(namespace, format);
+                configInfo.setProperties(getRoutesConfig(namespace, format));
+                break;
             case "filters":
-                return getFiltersConfig(namespace, format);
+                configInfo.setProperties(getFiltersConfig(namespace, format));
+                break;
             case "global":
-                return getGlobalConfig(namespace, format);
+                configInfo.setProperties(getGlobalConfig(namespace, format));
+                break;
             case "security":
-                return getSecurityConfig(namespace, format);
+                configInfo.setProperties(getSecurityConfig(namespace, format));
+                break;
             case "monitoring":
-                return getMonitoringConfig(namespace, format);
+                configInfo.setProperties(getMonitoringConfig(namespace, format));
+                break;
             default:
                 throw new IllegalArgumentException("Unknown config type: " + type);
         }
+        
+        return configInfo;
     }
     
     private Map<String, Object> getRoutesConfig(String namespace, String format) {

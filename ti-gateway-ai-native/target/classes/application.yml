@@ -1,0 +1,249 @@
+# TiGateway AI Native Configuration
+server:
+  port: 8083
+  servlet:
+    context-path: /ai-native
+
+spring:
+  application:
+    name: tigateway-ai-native
+  
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  # WebFlux配置
+  webflux:
+    base-path: /ai-native
+
+# TiGateway AI原生配置
+tigateway:
+  ai:
+    enabled: true
+    
+    # AI开发插件配置
+    ai-development:
+      # LLM缓存配置
+      llm-cache:
+        enabled: true
+        max-size: 1000
+        ttl: 3600
+        cache-type: redis
+      
+      # 提示词模板配置
+      prompt-template:
+        enabled: true
+        template-path: /templates
+        templates:
+          default: "你是一个有用的AI助手"
+          creative: "你是一个富有创意的AI助手"
+          technical: "你是一个技术专家AI助手"
+      
+      # 提示词装饰器配置
+      prompt-decorator:
+        enabled: true
+        decorators:
+          - "add-context"
+          - "add-examples"
+          - "add-constraints"
+      
+      # 请求转换配置
+      request-transformation:
+        enabled: true
+        transformations:
+          openai-to-anthropic: "convert-openai-to-anthropic"
+          anthropic-to-openai: "convert-anthropic-to-openai"
+      
+      # 响应转换配置
+      response-transformation:
+        enabled: true
+        transformations:
+          standardize-format: "standardize-response-format"
+          add-metadata: "add-response-metadata"
+      
+      # 向量检索配置
+      vector-retrieval:
+        enabled: true
+        vector-database: redis
+        index-name: ai_vectors
+        top-k: 10
+    
+    # AI安全防护配置
+    ai-security:
+      # 内容审核配置
+      content-review:
+        enabled: true
+        provider: alibaba
+        config:
+          confidence-threshold: 0.8
+          review-types:
+            - text
+            - image
+      
+      # Token限流配置
+      token-rate-limit:
+        enabled: true
+        requests-per-minute: 100
+        tokens-per-minute: 10000
+      
+      # Token配额配置
+      token-quota:
+        enabled: true
+        daily-quota: 100000
+        monthly-quota: 3000000
+    
+    # 多模型适配配置
+    multi-model:
+      # AI代理配置
+      ai-proxy:
+        enabled: true
+        max-retries: 3
+        timeout: 30000
+        fallback-enabled: true
+      
+      # 支持的模型列表
+      models:
+        - name: gpt-3.5-turbo
+          provider: openai
+          endpoint: https://api.openai.com/v1
+          api-key: ${OPENAI_API_KEY:}
+          parameters:
+            max-tokens: 4096
+            temperature: 0.7
+        
+        - name: gpt-4
+          provider: openai
+          endpoint: https://api.openai.com/v1
+          api-key: ${OPENAI_API_KEY:}
+          parameters:
+            max-tokens: 8192
+            temperature: 0.7
+        
+        - name: claude-3-sonnet
+          provider: anthropic
+          endpoint: https://api.anthropic.com/v1
+          api-key: ${ANTHROPIC_API_KEY:}
+          parameters:
+            max-tokens: 4096
+            temperature: 0.7
+        
+        - name: qwen-turbo
+          provider: alibaba
+          endpoint: https://dashscope.aliyuncs.com/api/v1
+          api-key: ${ALIBABA_API_KEY:}
+          parameters:
+            max-tokens: 2048
+            temperature: 0.7
+    
+    # 可观测性配置
+    observability:
+      # AI统计配置
+      ai-statistics:
+        enabled: true
+        collection-interval: 30
+      
+      # LLM访问日志配置
+      llm-access-log:
+        enabled: true
+        log-level: INFO
+        include-request: true
+        include-response: false
+      
+      # Token消费观测配置
+      token-consumption-observation:
+        enabled: true
+        observation-interval: 60
+      
+      # 可用性告警配置
+      availability-alert:
+        enabled: true
+        threshold: 0.95
+        alert-channels:
+          - email
+          - webhook
+
+---
+# Spring Cloud Gateway配置
+spring:
+  cloud:
+    gateway:
+      routes:
+        # AI原生路由
+        - id: ai-native-route
+          uri: lb://tigateway-ai-native
+          predicates:
+            - Path=/ai/**
+          filters:
+            - name: LlmCache
+              args:
+                enabled: true
+                ttl: PT1H
+                max-size: 1000
+            - name: PromptTemplate
+              args:
+                enabled: true
+                template-path: /templates
+            - name: ContentReview
+              args:
+                enabled: true
+                fail-open: true
+                review-types:
+                  - text
+                  - image
+            - name: TokenRateLimit
+              args:
+                enabled: true
+                requests-per-minute: 100
+                tokens-per-minute: 10000
+            - name: AiProxy
+              args:
+                enabled: true
+                fallback-enabled: true
+                max-retries: 3
+                timeout: 30000
+            - name: AiStatistics
+              args:
+                enabled: true
+                collection-interval: PT30S
+                metrics-to-collect:
+                  - requests
+                  - duration
+                  - errors
+                  - tokens
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,ai-stats
+  endpoint:
+    health:
+      show-details: always
+    ai-stats:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# 日志配置
+logging:
+  level:
+    ti.gateway.ainative: INFO
+    org.springframework.cloud.gateway: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/tigateway-ai-native.log

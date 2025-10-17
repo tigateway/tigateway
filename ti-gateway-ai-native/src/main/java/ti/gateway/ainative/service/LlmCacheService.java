@@ -2,6 +2,7 @@ package ti.gateway.ainative.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -19,10 +20,11 @@ import java.time.Duration;
  */
 @Slf4j
 @Service
+@ConditionalOnClass(ReactiveRedisTemplate.class)
 public class LlmCacheService {
 
     @Autowired
-    private ReactiveRedisTemplate<String, LlmResponse> redisTemplate;
+    private ReactiveRedisTemplate<String, Object> redisTemplate;
 
     private static final String CACHE_PREFIX = "llm_cache:";
     private static final Duration DEFAULT_TTL = Duration.ofHours(1);
@@ -35,6 +37,7 @@ public class LlmCacheService {
         
         return redisTemplate.opsForValue()
             .get(fullKey)
+            .cast(LlmResponse.class)
             .doOnNext(response -> {
                 if (response != null) {
                     log.debug("Cache hit for key: {}", fullKey);

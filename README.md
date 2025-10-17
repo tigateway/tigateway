@@ -1,8 +1,8 @@
 # TiGateway - Spring Cloud Gateway for Kubernetes
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Java](https://img.shields.io/badge/Java-11+-orange.svg)](https://openjdk.java.net/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.6.3-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://openjdk.java.net/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.0-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-1.20+-blue.svg)](https://kubernetes.io/)
 
 TiGateway 是一个基于 Spring Cloud Gateway 的 Kubernetes 原生网关解决方案，通过自定义 CRD 资源提供云原生的 API 网关功能。
@@ -13,8 +13,10 @@ TiGateway 是一个基于 Spring Cloud Gateway 的 Kubernetes 原生网关解决
 - **Kubernetes 原生**: 完全基于 Kubernetes 和 ConfigMap 存储，无需传统数据库
 - **自定义 CRD 资源**: 使用 `tigateway.cn` API 组管理网关配置
 - **动态路由**: 支持 Kubernetes Ingress 自动发现和动态路由配置
-- **多端口架构**: 主网关、管理界面、监控端点独立部署
+- **多端口架构**: 主网关、管理界面、MCP 服务、监控端点独立部署
 - **云原生存储**: 基于 ConfigMap 的配置存储，支持 YAML Schema 验证
+- **AI 原生支持**: 集成 LLM 缓存、内容审核、多模型适配等 AI 功能
+- **MCP 协议**: 支持 Model Context Protocol，提供 AI 驱动的管理接口
 
 ### 技术特性
 - **响应式架构**: 基于 Spring WebFlux 和 Reactor Netty
@@ -40,6 +42,15 @@ ti-gateway/
 │   ├── 主应用 (端口 8080)
 │   ├── Ingress 控制器
 │   └── 服务发现集成
+├── ti-gateway-mcp/                     # MCP 服务模块
+│   ├── Model Context Protocol 支持
+│   ├── AI 驱动的管理接口
+│   └── 独立端口 8082
+├── ti-gateway-ai-native/               # AI 原生网关模块
+│   ├── LLM 缓存和模板
+│   ├── 内容审核和限流
+│   ├── 多模型适配
+│   └── AI 可观测性
 └── ti-gateway-kubernetes-extensions/   # 扩展模块
     └── 自定义扩展功能
 ```
@@ -47,6 +58,7 @@ ti-gateway/
 ### 服务端口
 - **主 Gateway**: `8080` - 网关核心服务
 - **Admin 管理界面**: `8081` - 独立管理服务
+- **MCP 服务**: `8082` - AI 驱动的管理接口
 - **Management 端点**: `8090` - 监控和健康检查
 
 ## 📋 自定义 CRD 资源
@@ -127,8 +139,8 @@ spec:
 ## 🛠️ 技术栈
 
 ### 后端技术
-- **Spring Cloud Gateway 3.1.3**: 网关核心框架
-- **Spring Boot 2.6.3**: 应用框架
+- **Spring Cloud Gateway 4.0.0+**: 网关核心框架
+- **Spring Boot 3.2.0**: 应用框架
 - **Spring WebFlux**: 响应式 Web 框架
 - **Kubernetes Java Client 18.0.1**: Kubernetes API 集成
 - **Spring Cloud Kubernetes**: Kubernetes 服务发现和配置
@@ -149,7 +161,7 @@ spec:
 ## 🚀 快速开始
 
 ### 环境要求
-- Java 11+
+- Java 17+
 - Maven 3.6+
 - Docker
 - Kubernetes 1.20+
@@ -422,12 +434,12 @@ mvn test -Dtest=*IntegrationTest
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目采用 Apache 2.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 🆘 支持和帮助
 
 ### 常见问题
-- **Java 版本问题**: 确保使用 Java 11 或更高版本
+- **Java 版本问题**: 确保使用 Java 17 或更高版本
 - **端口冲突**: 检查 8080、8081、8090 端口是否被占用
 - **Kubernetes 连接**: 确保 kubectl 配置正确
 
@@ -445,6 +457,14 @@ mvn test -Dtest=*IntegrationTest
 - [ ] 支持 WebSocket 代理
 - [ ] 多集群支持
 - [ ] 配置模板化
+
+### 已实现的功能
+- [x] AI 原生网关支持 (ti-gateway-ai-native)
+- [x] MCP 协议集成 (ti-gateway-mcp)
+- [x] LLM 缓存和模板管理
+- [x] 内容审核和 Token 限流
+- [x] 多模型适配和代理
+- [x] AI 可观测性和统计
 
 ### 长期计划
 - [ ] 支持 Service Mesh 集成

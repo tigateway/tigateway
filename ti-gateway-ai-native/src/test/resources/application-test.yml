@@ -1,0 +1,80 @@
+# TiGateway AI Native Test Configuration
+server:
+  port: 0  # 随机端口
+
+spring:
+  application:
+    name: tigateway-ai-native-test
+  main:
+    allow-bean-definition-overriding: true  # 允许bean覆盖
+    web-application-type: reactive  # 设置为响应式应用
+  
+  # 测试环境Redis配置（使用嵌入式Redis或Mock）
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 1  # 使用不同的数据库避免冲突
+
+# TiGateway AI原生配置 - 测试环境
+tigateway:
+  ai:
+    enabled: true
+    
+    # AI开发插件配置 - 测试环境
+    ai-development:
+      llm-cache:
+        enabled: false  # 测试环境禁用缓存
+      prompt-template:
+        enabled: false  # 测试环境禁用模板
+      prompt-decorator:
+        enabled: false
+      request-transformation:
+        enabled: false
+      response-transformation:
+        enabled: false
+      vector-retrieval:
+        enabled: false
+    
+    # AI安全防护配置 - 测试环境
+    ai-security:
+      content-review:
+        enabled: false  # 测试环境禁用内容审核
+      token-rate-limit:
+        enabled: false  # 测试环境禁用限流
+      token-quota:
+        enabled: false
+    
+    # 多模型适配配置 - 测试环境
+    multi-model:
+      ai-proxy:
+        enabled: false  # 测试环境禁用代理
+      models: []
+    
+    # 可观测性配置 - 测试环境
+    observability:
+      ai-statistics:
+        enabled: false  # 测试环境禁用统计
+      llm-access-log:
+        enabled: false
+      token-consumption-observation:
+        enabled: false
+      availability-alert:
+        enabled: false
+
+# 管理端点配置 - 测试环境
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+# 日志配置 - 测试环境
+logging:
+  level:
+    ti.gateway.ainative: WARN
+    org.springframework.cloud.gateway: WARN
+    org.springframework.web.reactive: WARN

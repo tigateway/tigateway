@@ -2,6 +2,7 @@ package ti.gateway.ainative.plugins.development;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@ConditionalOnBean(LlmCacheService.class)
 public class LlmCachePlugin extends AbstractGatewayFilterFactory<LlmCachePlugin.Config> {
 
     @Autowired

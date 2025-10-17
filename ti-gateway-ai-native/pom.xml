@@ -49,6 +49,12 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
+        <!-- Guava for caching -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>

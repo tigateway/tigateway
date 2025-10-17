@@ -2,6 +2,7 @@ package ti.gateway.ainative.plugins.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -27,6 +28,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@ConditionalOnBean(TokenRateLimitService.class)
 public class TokenRateLimitPlugin extends AbstractGatewayFilterFactory<TokenRateLimitPlugin.Config> {
 
     @Autowired

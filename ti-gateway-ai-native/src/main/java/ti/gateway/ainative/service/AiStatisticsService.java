@@ -2,6 +2,7 @@ package ti.gateway.ainative.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -23,6 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @Slf4j
 @Service
+@ConditionalOnClass(ReactiveRedisTemplate.class)
 public class AiStatisticsService {
 
     @Autowired

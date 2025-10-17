@@ -2,6 +2,7 @@ package ti.gateway.ainative.plugins.observability;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Component
+@ConditionalOnBean(AiStatisticsService.class)
 public class AiStatisticsPlugin extends AbstractGatewayFilterFactory<AiStatisticsPlugin.Config> {
 
     @Autowired

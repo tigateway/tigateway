@@ -2,7 +2,9 @@ package ti.gateway.ainative;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.gateway.config.GatewayResilience4JCircuitBreakerAutoConfiguration;
+import ti.gateway.ainative.config.AiNativeProperties;
 
 /**
  * TiGateway AI Native Application
@@ -23,6 +25,7 @@ import org.springframework.cloud.gateway.config.GatewayResilience4JCircuitBreake
         "ti.gateway.mcp"
     }
 )
+@EnableConfigurationProperties(AiNativeProperties.class)
 public class TiGatewayAiNativeApplication {
 
     public static void main(String[] args) {

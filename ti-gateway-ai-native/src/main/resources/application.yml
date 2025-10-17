@@ -7,6 +7,8 @@ server:
 spring:
   application:
     name: tigateway-ai-native
+  main:
+    allow-bean-definition-overriding: true  # 允许bean覆盖
   
   # Redis配置
   data:
@@ -172,9 +174,7 @@ tigateway:
           - email
           - webhook
 
----
-# Spring Cloud Gateway配置
-spring:
+  # Spring Cloud Gateway配置
   cloud:
     gateway:
       routes:

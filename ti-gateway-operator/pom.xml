@@ -13,10 +13,10 @@
     <version>1.0.0</version>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
 
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <docker-maven-plugin.version>0.39.1</docker-maven-plugin.version>
     </properties>
@@ -44,20 +44,22 @@
         <dependency>
             <groupId>io.kubernetes</groupId>
             <artifactId>client-java</artifactId>
-            <version>13.0.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.kubernetes/client-java-spring-integration -->
         <dependency>
             <groupId>io.kubernetes</groupId>
             <artifactId>client-java-spring-integration</artifactId>
-            <version>13.0.2</version>
+            <version>19.0.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.kubernetes/client-java-prometheus-operator-models -->
+        <!-- Temporarily commented out due to version availability issues -->
+        <!--
         <dependency>
             <groupId>io.kubernetes</groupId>
             <artifactId>client-java-prometheus-operator-models</artifactId>
-            <version>10.0.2</version>
+            <version>18.0.1</version>
         </dependency>
+        -->
         <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-core -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>

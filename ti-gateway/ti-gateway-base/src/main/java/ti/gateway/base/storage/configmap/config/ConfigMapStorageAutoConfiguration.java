@@ -88,7 +88,7 @@ public class ConfigMapStorageAutoConfiguration {
     public PodUtils<V1Pod> podUtils() {
         return new PodUtils<V1Pod>() {
             @Override
-            public Boolean isInsideKubernetes() {
+            public boolean isInsideKubernetes() {
                 return false; // 在非Kubernetes环境中运行
             }
             

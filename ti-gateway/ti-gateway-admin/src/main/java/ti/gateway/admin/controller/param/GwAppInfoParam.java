@@ -2,7 +2,7 @@ package ti.gateway.admin.controller.param;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * 网关应用配置Vo

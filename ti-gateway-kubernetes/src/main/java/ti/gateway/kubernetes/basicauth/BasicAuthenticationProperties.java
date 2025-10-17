@@ -2,7 +2,7 @@ package ti.gateway.kubernetes.basicauth;
 
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 @Validated
 public class BasicAuthenticationProperties {

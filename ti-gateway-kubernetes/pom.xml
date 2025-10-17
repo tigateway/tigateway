@@ -13,11 +13,9 @@
     <version>1.0.0</version>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-
-        <java.version>11</java.version>
-
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>17</java.version>
         <docker-maven-plugin.version>0.39.1</docker-maven-plugin.version>
     </properties>
 
@@ -64,38 +62,38 @@
         <dependency>
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-core</artifactId>
-            <version>6.4.1</version>
+            <version>7.6.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.vladimir-bukhtoyarov/bucket4j-hazelcast -->
         <dependency>
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-hazelcast</artifactId>
-            <version>6.4.1</version>
+            <version>7.6.0</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.vladimir-bukhtoyarov/bucket4j-jcache -->
         <dependency>
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-jcache</artifactId>
-            <version>6.4.1</version>
+            <version>7.6.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.70</version>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.78.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk15on -->
+        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk18on -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-jdk15on</artifactId>
-            <version>1.68</version>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <version>1.78.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>9.14</version>
+            <version>9.37.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-kubernetes -->
         <dependency>
@@ -107,67 +105,67 @@
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-http</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-httpasyncclient</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-httpclient</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-jms</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-kafka-clients</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-kafka-streams</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-messaging</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-mongodb</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-rpc</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-http -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-spring-rabbit</artifactId>
-            <version>5.13.7</version>
+            <version>5.16.0</version>
         </dependency>
 
 

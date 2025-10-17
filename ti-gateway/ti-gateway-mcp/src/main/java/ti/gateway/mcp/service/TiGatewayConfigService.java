@@ -4,9 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,28 +38,28 @@ public class TiGatewayConfigService {
     }
     
     private Map<String, Object> getRoutesConfig(String namespace, String format) {
-        Map<String, Object> config = new HashMap<>();
+        Map<String, Object> config = new java.util.HashMap<>();
         config.put("type", "routes");
         config.put("namespace", namespace);
         config.put("format", format);
         
         // Mock routes configuration
-        List<Map<String, Object>> routes = new ArrayList<>();
+        List<Map<String, Object>> routes = new java.util.ArrayList<>();
         
-        Map<String, Object> route1 = new HashMap<>();
+        Map<String, Object> route1 = new java.util.HashMap<>();
         route1.put("name", "user-service-route");
         route1.put("path", "/api/users/**");
         route1.put("service", "user-service");
         route1.put("port", 8080);
-        route1.put("filters", Arrays.asList("StripPrefix=2", "AddRequestHeader=X-Service=user-service"));
+        route1.put("filters", List.of("StripPrefix=2", "AddRequestHeader=X-Service=user-service"));
         routes.add(route1);
         
-        Map<String, Object> route2 = new HashMap<>();
+        Map<String, Object> route2 = new java.util.HashMap<>();
         route2.put("name", "order-service-route");
         route2.put("path", "/api/orders/**");
         route2.put("service", "order-service");
         route2.put("port", 8080);
-        route2.put("filters", Arrays.asList("StripPrefix=2", "CircuitBreaker=order-service-cb"));
+        route2.put("filters", List.of("StripPrefix=2", "CircuitBreaker=order-service-cb"));
         routes.add(route2);
         
         config.put("routes", routes);
@@ -72,27 +69,27 @@ public class TiGatewayConfigService {
     }
     
     private Map<String, Object> getFiltersConfig(String namespace, String format) {
-        Map<String, Object> config = new HashMap<>();
+        Map<String, Object> config = new java.util.HashMap<>();
         config.put("type", "filters");
         config.put("namespace", namespace);
         config.put("format", format);
         
         // Mock filters configuration
-        List<Map<String, Object>> filters = new ArrayList<>();
+        List<Map<String, Object>> filters = new java.util.ArrayList<>();
         
-        Map<String, Object> filter1 = new HashMap<>();
+        Map<String, Object> filter1 = new java.util.HashMap<>();
         filter1.put("name", "StripPrefix");
         filter1.put("type", "pre");
         filter1.put("description", "Strip prefix from request path");
         filters.add(filter1);
         
-        Map<String, Object> filter2 = new HashMap<>();
+        Map<String, Object> filter2 = new java.util.HashMap<>();
         filter2.put("name", "AddRequestHeader");
         filter2.put("type", "pre");
         filter2.put("description", "Add header to request");
         filters.add(filter2);
         
-        Map<String, Object> filter3 = new HashMap<>();
+        Map<String, Object> filter3 = new java.util.HashMap<>();
         filter3.put("name", "CircuitBreaker");
         filter3.put("type", "pre");
         filter3.put("description", "Circuit breaker for fault tolerance");
@@ -105,13 +102,13 @@ public class TiGatewayConfigService {
     }
     
     private Map<String, Object> getGlobalConfig(String namespace, String format) {
-        Map<String, Object> config = new HashMap<>();
+        Map<String, Object> config = new java.util.HashMap<>();
         config.put("type", "global");
         config.put("namespace", namespace);
         config.put("format", format);
         
         // Mock global configuration
-        Map<String, Object> globalSettings = new HashMap<>();
+        Map<String, Object> globalSettings = new java.util.HashMap<>();
         globalSettings.put("server.port", 8080);
         globalSettings.put("spring.application.name", "tigateway");
         globalSettings.put("management.endpoints.web.exposure.include", "*");
@@ -123,13 +120,13 @@ public class TiGatewayConfigService {
     }
     
     private Map<String, Object> getSecurityConfig(String namespace, String format) {
-        Map<String, Object> config = new HashMap<>();
+        Map<String, Object> config = new java.util.HashMap<>();
         config.put("type", "security");
         config.put("namespace", namespace);
         config.put("format", format);
         
         // Mock security configuration
-        Map<String, Object> securitySettings = new HashMap<>();
+        Map<String, Object> securitySettings = new java.util.HashMap<>();
         securitySettings.put("authentication.enabled", true);
         securitySettings.put("authentication.type", "oauth2");
         securitySettings.put("authorization.enabled", true);
@@ -142,13 +139,13 @@ public class TiGatewayConfigService {
     }
     
     private Map<String, Object> getMonitoringConfig(String namespace, String format) {
-        Map<String, Object> config = new HashMap<>();
+        Map<String, Object> config = new java.util.HashMap<>();
         config.put("type", "monitoring");
         config.put("namespace", namespace);
         config.put("format", format);
         
         // Mock monitoring configuration
-        Map<String, Object> monitoringSettings = new HashMap<>();
+        Map<String, Object> monitoringSettings = new java.util.HashMap<>();
         monitoringSettings.put("metrics.enabled", true);
         monitoringSettings.put("metrics.export.prometheus.enabled", true);
         monitoringSettings.put("tracing.enabled", true);

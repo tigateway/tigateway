@@ -4,9 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +23,9 @@ public class TiGatewayKubernetesService {
         
         // TODO: Implement actual Kubernetes API calls
         // This is a mock implementation
-        List<Map<String, Object>> routes = new ArrayList<>();
+        List<Map<String, Object>> routes = new java.util.ArrayList<>();
         
-        Map<String, Object> route1 = new HashMap<>();
+        Map<String, Object> route1 = new java.util.HashMap<>();
         route1.put("name", "user-service-route");
         route1.put("namespace", namespace);
         route1.put("path", "/api/users/**");
@@ -38,7 +35,7 @@ public class TiGatewayKubernetesService {
         route1.put("created", "2024-01-01T10:00:00Z");
         routes.add(route1);
         
-        Map<String, Object> route2 = new HashMap<>();
+        Map<String, Object> route2 = new java.util.HashMap<>();
         route2.put("name", "order-service-route");
         route2.put("namespace", namespace);
         route2.put("path", "/api/orders/**");
@@ -50,7 +47,7 @@ public class TiGatewayKubernetesService {
         
         // Apply filter if provided
         if (!filter.isEmpty()) {
-            List<Map<String, Object>> filteredRoutes = new ArrayList<>();
+            List<Map<String, Object>> filteredRoutes = new java.util.ArrayList<>();
             for (Map<String, Object> route : routes) {
                 if (route.get("name").toString().contains(filter) || 
                     route.get("path").toString().contains(filter)) {
@@ -127,11 +124,11 @@ public class TiGatewayKubernetesService {
         
         // TODO: Implement actual route testing
         // This is a mock implementation
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("status", "success");
         result.put("statusCode", 200);
         result.put("responseTime", "45ms");
-        Map<String, String> responseHeaders = new HashMap<>();
+        Map<String, String> responseHeaders = new java.util.HashMap<>();
         responseHeaders.put("Content-Type", "application/json");
         result.put("headers", responseHeaders);
         result.put("body", "{\"message\": \"Route test successful\"}");
@@ -150,37 +147,37 @@ public class TiGatewayKubernetesService {
         
         // TODO: Implement actual Kubernetes API calls
         // This is a mock implementation
-        List<Map<String, Object>> services = new ArrayList<>();
+        List<Map<String, Object>> services = new java.util.ArrayList<>();
         
-        Map<String, Object> service1 = new HashMap<>();
+        Map<String, Object> service1 = new java.util.HashMap<>();
         service1.put("name", "user-service");
         service1.put("namespace", namespace);
         service1.put("type", "ClusterIP");
         service1.put("clusterIP", "10.96.1.1");
-        Map<String, Object> port1 = new HashMap<>();
+        Map<String, Object> port1 = new java.util.HashMap<>();
         port1.put("port", 8080);
         port1.put("targetPort", 8080);
         port1.put("protocol", "TCP");
-        service1.put("ports", Arrays.asList(port1));
+        service1.put("ports", List.of(port1));
         service1.put("status", "running");
         services.add(service1);
         
-        Map<String, Object> service2 = new HashMap<>();
+        Map<String, Object> service2 = new java.util.HashMap<>();
         service2.put("name", "order-service");
         service2.put("namespace", namespace);
         service2.put("type", "ClusterIP");
         service2.put("clusterIP", "10.96.1.2");
-        Map<String, Object> port2 = new HashMap<>();
+        Map<String, Object> port2 = new java.util.HashMap<>();
         port2.put("port", 8080);
         port2.put("targetPort", 8080);
         port2.put("protocol", "TCP");
-        service2.put("ports", Arrays.asList(port2));
+        service2.put("ports", List.of(port2));
         service2.put("status", "running");
         services.add(service2);
         
         // Apply filter if provided
         if (!filter.isEmpty()) {
-            List<Map<String, Object>> filteredServices = new ArrayList<>();
+            List<Map<String, Object>> filteredServices = new java.util.ArrayList<>();
             for (Map<String, Object> service : services) {
                 if (service.get("name").toString().contains(filter)) {
                     filteredServices.add(service);
@@ -200,19 +197,19 @@ public class TiGatewayKubernetesService {
         
         // TODO: Implement actual health check
         // This is a mock implementation
-        Map<String, Object> health = new HashMap<>();
+        Map<String, Object> health = new java.util.HashMap<>();
         health.put("service", serviceName);
         health.put("namespace", namespace);
         health.put("status", "healthy");
         health.put("uptime", "99.9%");
         health.put("lastCheck", "2024-01-01T12:00:00Z");
-        List<Map<String, Object>> endpoints = new ArrayList<>();
-        Map<String, Object> endpoint1 = new HashMap<>();
+        List<Map<String, Object>> endpoints = new java.util.ArrayList<>();
+        Map<String, Object> endpoint1 = new java.util.HashMap<>();
         endpoint1.put("address", "10.244.1.1:8080");
         endpoint1.put("status", "ready");
         endpoints.add(endpoint1);
         
-        Map<String, Object> endpoint2 = new HashMap<>();
+        Map<String, Object> endpoint2 = new java.util.HashMap<>();
         endpoint2.put("address", "10.244.1.2:8080");
         endpoint2.put("status", "ready");
         endpoints.add(endpoint2);

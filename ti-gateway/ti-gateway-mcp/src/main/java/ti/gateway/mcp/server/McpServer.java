@@ -9,8 +9,6 @@ import ti.gateway.mcp.model.*;
 import ti.gateway.mcp.tools.TiGatewayToolExecutor;
 import ti.gateway.mcp.tools.TiGatewayTools;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,20 +63,20 @@ public class McpServer {
     private McpResponse handleInitialize(InitializeRequest request) {
         logger.info("Handling initialize request");
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("protocolVersion", "2024-11-05");
-        Map<String, Object> capabilities = new HashMap<>();
-        Map<String, Object> toolsCap = new HashMap<>();
+        Map<String, Object> capabilities = new java.util.HashMap<>();
+        Map<String, Object> toolsCap = new java.util.HashMap<>();
         toolsCap.put("listChanged", true);
         capabilities.put("tools", toolsCap);
         
-        Map<String, Object> resourcesCap = new HashMap<>();
+        Map<String, Object> resourcesCap = new java.util.HashMap<>();
         resourcesCap.put("subscribe", false);
         resourcesCap.put("listChanged", true);
         capabilities.put("resources", resourcesCap);
         result.put("capabilities", capabilities);
         
-        Map<String, Object> serverInfo = new HashMap<>();
+        Map<String, Object> serverInfo = new java.util.HashMap<>();
         serverInfo.put("name", "TiGateway MCP Server");
         serverInfo.put("version", "1.0.0");
         serverInfo.put("description", "MCP server for TiGateway API Gateway management");
@@ -95,7 +93,7 @@ public class McpServer {
         
         List<McpTool> toolList = tools.getAllTools();
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("tools", toolList);
         
         return new McpResponse(request.getId(), result);
@@ -121,7 +119,7 @@ public class McpServer {
     private McpResponse handleResourcesList(ResourcesListRequest request) {
         logger.info("Handling resources/list request");
         
-        List<McpResource> resources = Arrays.asList(
+        List<McpResource> resources = List.of(
             new McpResource(
                 "tigateway://routes",
                 "TiGateway Routes",
@@ -148,7 +146,7 @@ public class McpServer {
             )
         );
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("resources", resources);
         
         return new McpResponse(request.getId(), result);
@@ -163,39 +161,39 @@ public class McpServer {
         
         logger.info("Handling resources/read request for URI: {}", uri);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         
         switch (uri) {
             case "tigateway://routes": {
-                Map<String, Object> content = new HashMap<>();
+                Map<String, Object> content = new java.util.HashMap<>();
                 content.put("uri", uri);
                 content.put("mimeType", "application/json");
                 content.put("text", "{\"routes\": [{\"name\": \"user-service-route\", \"path\": \"/api/users/**\"}]}");
-                result.put("contents", Arrays.asList(content));
+                result.put("contents", List.of(content));
                 break;
             }
             case "tigateway://services": {
-                Map<String, Object> content = new HashMap<>();
+                Map<String, Object> content = new java.util.HashMap<>();
                 content.put("uri", uri);
                 content.put("mimeType", "application/json");
                 content.put("text", "{\"services\": [{\"name\": \"user-service\", \"status\": \"running\"}]}");
-                result.put("contents", Arrays.asList(content));
+                result.put("contents", List.of(content));
                 break;
             }
             case "tigateway://config": {
-                Map<String, Object> content = new HashMap<>();
+                Map<String, Object> content = new java.util.HashMap<>();
                 content.put("uri", uri);
                 content.put("mimeType", "application/yaml");
                 content.put("text", "server:\n  port: 8080\nspring:\n  application:\n    name: tigateway");
-                result.put("contents", Arrays.asList(content));
+                result.put("contents", List.of(content));
                 break;
             }
             case "tigateway://metrics": {
-                Map<String, Object> content = new HashMap<>();
+                Map<String, Object> content = new java.util.HashMap<>();
                 content.put("uri", uri);
                 content.put("mimeType", "application/json");
                 content.put("text", "{\"metrics\": {\"requests\": 125000, \"errors\": 5000}}");
-                result.put("contents", Arrays.asList(content));
+                result.put("contents", List.of(content));
                 break;
             }
             default:

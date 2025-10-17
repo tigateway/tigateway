@@ -11,8 +11,6 @@ import ti.gateway.mcp.service.TiGatewayMetricsService;
 import ti.gateway.mcp.service.TiGatewayConfigService;
 import ti.gateway.mcp.service.TiGatewayLogsService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -96,7 +94,7 @@ public class TiGatewayToolExecutor {
         
         List<Map<String, Object>> routes = kubernetesService.listRoutes(namespace, filter);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("data", routes);
         result.put("count", routes.size());
@@ -111,11 +109,11 @@ public class TiGatewayToolExecutor {
         String service = (String) arguments.get("service");
         Integer port = (Integer) arguments.get("port");
         @SuppressWarnings("unchecked")
-        List<String> filters = (List<String>) arguments.getOrDefault("filters", new ArrayList<>());
+        List<String> filters = (List<String>) arguments.getOrDefault("filters", List.of());
         @SuppressWarnings("unchecked")
-        List<String> predicates = (List<String>) arguments.getOrDefault("predicates", new ArrayList<>());
+        List<String> predicates = (List<String>) arguments.getOrDefault("predicates", List.of());
         
-        Map<String, Object> routeConfig = new HashMap<>();
+        Map<String, Object> routeConfig = new java.util.HashMap<>();
         routeConfig.put("name", name);
         routeConfig.put("path", path);
         routeConfig.put("service", service);
@@ -125,7 +123,7 @@ public class TiGatewayToolExecutor {
         
         boolean success = kubernetesService.createRoute(namespace, routeConfig);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", success);
         result.put("message", success ? "Route created successfully" : "Failed to create route");
         result.put("route", routeConfig);
@@ -136,13 +134,13 @@ public class TiGatewayToolExecutor {
         String name = (String) arguments.get("name");
         String namespace = (String) arguments.get("namespace");
         
-        Map<String, Object> updates = new HashMap<>(arguments);
+        Map<String, Object> updates = new java.util.HashMap<>(arguments);
         updates.remove("name");
         updates.remove("namespace");
         
         boolean success = kubernetesService.updateRoute(namespace, name, updates);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", success);
         result.put("message", success ? "Route updated successfully" : "Failed to update route");
         result.put("routeName", name);
@@ -156,7 +154,7 @@ public class TiGatewayToolExecutor {
         
         boolean success = kubernetesService.deleteRoute(namespace, name);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", success);
         result.put("message", success ? "Route deleted successfully" : "Failed to delete route");
         result.put("routeName", name);
@@ -169,12 +167,12 @@ public class TiGatewayToolExecutor {
         String path = (String) arguments.get("path");
         String method = (String) arguments.get("method");
         @SuppressWarnings("unchecked")
-        Map<String, String> headers = (Map<String, String>) arguments.getOrDefault("headers", new HashMap<>());
+        Map<String, String> headers = (Map<String, String>) arguments.getOrDefault("headers", Map.of());
         String body = (String) arguments.getOrDefault("body", "");
         
         Map<String, Object> testResult = kubernetesService.testRoute(namespace, name, path, method, headers, body);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("testResult", testResult);
         return result;
@@ -186,7 +184,7 @@ public class TiGatewayToolExecutor {
         
         List<Map<String, Object>> services = kubernetesService.listServices(namespace, filter);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("data", services);
         result.put("count", services.size());
@@ -200,7 +198,7 @@ public class TiGatewayToolExecutor {
         
         Map<String, Object> health = kubernetesService.getServiceHealth(namespace, service);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("health", health);
         return result;
@@ -213,7 +211,7 @@ public class TiGatewayToolExecutor {
         
         Map<String, Object> metrics = metricsService.getMetrics(type, timeRange, namespace);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("metrics", metrics);
         result.put("type", type);
@@ -228,7 +226,7 @@ public class TiGatewayToolExecutor {
         
         Map<String, Object> config = configService.getConfig(type, namespace, format);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("config", config);
         result.put("type", type);
@@ -245,7 +243,7 @@ public class TiGatewayToolExecutor {
         
         List<Map<String, Object>> logs = logsService.getLogs(level, lines, namespace, service, filter);
         
-        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> result = new java.util.HashMap<>();
         result.put("success", true);
         result.put("logs", logs);
         result.put("count", logs.size());

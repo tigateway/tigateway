@@ -11,7 +11,6 @@ import ti.gateway.mcp.model.McpRequest;
 import ti.gateway.mcp.model.McpResponse;
 import ti.gateway.mcp.server.McpServer;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -60,7 +59,7 @@ public class McpController {
      */
     @GetMapping("/health")
     public Mono<Map<String, Object>> health() {
-        Map<String, Object> health = new HashMap<>();
+        Map<String, Object> health = new java.util.HashMap<>();
         health.put("status", "healthy");
         health.put("service", "TiGateway MCP Server");
         health.put("version", "1.0.0");
@@ -73,18 +72,18 @@ public class McpController {
      */
     @GetMapping("/info")
     public Mono<Map<String, Object>> info() {
-        Map<String, Object> info = new HashMap<>();
+        Map<String, Object> info = new java.util.HashMap<>();
         info.put("name", "TiGateway MCP Server");
         info.put("version", "1.0.0");
         info.put("description", "MCP server for TiGateway API Gateway management");
         info.put("protocolVersion", "2024-11-05");
         
-        Map<String, Object> capabilities = new HashMap<>();
-        Map<String, Object> tools = new HashMap<>();
+        Map<String, Object> capabilities = new java.util.HashMap<>();
+        Map<String, Object> tools = new java.util.HashMap<>();
         tools.put("listChanged", true);
         capabilities.put("tools", tools);
         
-        Map<String, Object> resources = new HashMap<>();
+        Map<String, Object> resources = new java.util.HashMap<>();
         resources.put("subscribe", false);
         resources.put("listChanged", true);
         capabilities.put("resources", resources);

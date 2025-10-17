@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ public class TiGatewayMetricsService {
     }
     
     private Map<String, Object> getRouteMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new HashMap<>();
+        Map<String, Object> metrics = new java.util.HashMap<>();
         metrics.put("type", "routes");
         metrics.put("timeRange", timeRange);
         metrics.put("namespace", namespace);
@@ -48,7 +47,7 @@ public class TiGatewayMetricsService {
         metrics.put("totalRoutes", 15);
         metrics.put("activeRoutes", 14);
         metrics.put("inactiveRoutes", 1);
-        Map<String, Object> routesByService = new HashMap<>();
+        Map<String, Object> routesByService = new java.util.HashMap<>();
         routesByService.put("user-service", 3);
         routesByService.put("order-service", 2);
         routesByService.put("payment-service", 1);
@@ -58,7 +57,7 @@ public class TiGatewayMetricsService {
     }
     
     private Map<String, Object> getServiceMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new HashMap<>();
+        Map<String, Object> metrics = new java.util.HashMap<>();
         metrics.put("type", "services");
         metrics.put("timeRange", timeRange);
         metrics.put("namespace", namespace);
@@ -67,7 +66,7 @@ public class TiGatewayMetricsService {
         metrics.put("totalServices", 8);
         metrics.put("healthyServices", 7);
         metrics.put("unhealthyServices", 1);
-        Map<String, Object> serviceStatus = new HashMap<>();
+        Map<String, Object> serviceStatus = new java.util.HashMap<>();
         serviceStatus.put("user-service", "healthy");
         serviceStatus.put("order-service", "healthy");
         serviceStatus.put("payment-service", "unhealthy");
@@ -77,7 +76,7 @@ public class TiGatewayMetricsService {
     }
     
     private Map<String, Object> getRequestMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new HashMap<>();
+        Map<String, Object> metrics = new java.util.HashMap<>();
         metrics.put("type", "requests");
         metrics.put("timeRange", timeRange);
         metrics.put("namespace", namespace);
@@ -95,7 +94,7 @@ public class TiGatewayMetricsService {
     }
     
     private Map<String, Object> getErrorMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new HashMap<>();
+        Map<String, Object> metrics = new java.util.HashMap<>();
         metrics.put("type", "errors");
         metrics.put("timeRange", timeRange);
         metrics.put("namespace", namespace);
@@ -103,11 +102,11 @@ public class TiGatewayMetricsService {
         // Mock error metrics
         metrics.put("totalErrors", 5000);
         metrics.put("errorRate", "4.0%");
-        Map<String, Object> errorsByType = new HashMap<>();
+        Map<String, Object> errorsByType = new java.util.HashMap<>();
         errorsByType.put("4xx", 3000);
         errorsByType.put("5xx", 2000);
         metrics.put("errorsByType", errorsByType);
-        Map<String, Object> errorsByService = new HashMap<>();
+        Map<String, Object> errorsByService = new java.util.HashMap<>();
         errorsByService.put("user-service", 1000);
         errorsByService.put("order-service", 2000);
         errorsByService.put("payment-service", 2000);
@@ -117,7 +116,7 @@ public class TiGatewayMetricsService {
     }
     
     private Map<String, Object> getPerformanceMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new HashMap<>();
+        Map<String, Object> metrics = new java.util.HashMap<>();
         metrics.put("type", "performance");
         metrics.put("timeRange", timeRange);
         metrics.put("namespace", namespace);

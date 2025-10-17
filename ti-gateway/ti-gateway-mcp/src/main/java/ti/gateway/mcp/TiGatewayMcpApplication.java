@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import ti.gateway.mcp.config.McpProperties;
 
+import java.util.Map;
+
 /**
  * TiGateway MCP Server Application
  */

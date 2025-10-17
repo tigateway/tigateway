@@ -2,7 +2,6 @@ package ti.gateway.mcp.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ public class McpProperties {
     /**
      * Allowed origins for CORS
      */
-    private List<String> allowedOrigins = Arrays.asList("*");
+    private List<String> allowedOrigins = List.of("*");
     
     /**
      * Enable authentication

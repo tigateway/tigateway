@@ -1,6 +1,6 @@
 {
-  "short_name": "Traefik Proxy",
-  "name": "Traefik Proxy",
+  "short_name": "TiGateway",
+  "name": "TiGateway - Spring Cloud Gateway for Kubernetes",
   "icons": [
     {
       "src": "favicon-16x16.png",

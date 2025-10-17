@@ -222,7 +222,7 @@ export const SideNav = ({
               ? { mt: '$4', px: 0, justifyContent: 'center' }
               : undefined,
           }}
-          href="https://github.com/traefik/traefik/"
+          href="https://github.com/tigateway/tigateway"
           target="_blank"
           data-testid="proxy-main-nav"
         >
@@ -277,10 +277,10 @@ export const SideNav = ({
               mt: '$3',
               whiteSpace: 'nowrap',
             }}
-            href="https://plugins.traefik.io/"
+            href="https://github.com/tigateway/tigateway"
             target="_blank"
           >
-            {!isSmallScreen || isExpanded ? 'Plugins' : ''}
+            {!isSmallScreen || isExpanded ? 'GitHub' : ''}
           </NavigationLink>
         </Flex>
       </Container>
@@ -289,19 +289,9 @@ export const SideNav = ({
 }
 
 export const TopNav = () => {
-  const { showHubButton, version } = useVersion()
+  const { showHubButton } = useVersion()
   const isDarkMode = useIsDarkMode()
 
-  const parsedVersion = useMemo(() => {
-    if (!version?.Version) {
-      return 'master'
-    }
-    if (version.Version === 'dev') {
-      return 'master'
-    }
-    const matches = version.Version.match(/^(v?\d+\.\d+)/)
-    return matches ? 'v' + matches[1] : 'master'
-  }, [version])
 
   return (
     <Flex as="nav" role="navigation" justify="end" align="center" css={{ gap: '$2', mb: '$6' }}>
@@ -326,7 +316,7 @@ export const TopNav = () => {
             <DropdownMenuGroup>
               <DropdownMenuItem css={{ height: '$6', cursor: 'pointer' }}>
                 <Link
-                  href={`https://doc.traefik.io/traefik/${parsedVersion}`}
+                  href="https://github.com/tigateway/tigateway/blob/main/README.md"
                   target="_blank"
                   css={{ textDecoration: 'none', '&:hover': { textDecoration: 'none' } }}
                 >
@@ -338,13 +328,13 @@ export const TopNav = () => {
               </DropdownMenuItem>
               <DropdownMenuItem css={{ height: '$6', cursor: 'pointer' }}>
                 <Link
-                  href="https://github.com/traefik/traefik/"
+                  href="https://github.com/tigateway/tigateway"
                   target="_blank"
                   css={{ textDecoration: 'none', '&:hover': { textDecoration: 'none' } }}
                 >
                   <Flex align="center" gap={2}>
                     <FiGithub size={20} />
-                    <Text>Github Repository</Text>
+                    <Text>GitHub Repository</Text>
                   </Flex>
                 </Link>
               </DropdownMenuItem>

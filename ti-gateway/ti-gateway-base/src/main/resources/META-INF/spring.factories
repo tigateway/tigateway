@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-ti.gateway.base.storage.configmap.config.ConfigMapStorageAutoConfiguration,\
-ti.gateway.base.config.schema.ConfigSchemaValidator,\
-ti.gateway.base.config.schema.ConfigTransformer,\
-ti.gateway.base.storage.configmap.ConfigMapSchemaStorage

@@ -1,7 +1,29 @@
+# Logs
 logs
-target
+*.log
 
+# Maven target directories
+target/
+*/target/
+**/target/
+
+# IDE files
 .iml
+.idea/
+.vscode/
 
-.idea
-.vscode
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+*.jar
+*.war
+
+# OS files
+.DS_Store
+Thumbs.db

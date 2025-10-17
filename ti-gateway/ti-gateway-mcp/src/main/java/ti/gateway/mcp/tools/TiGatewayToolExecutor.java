@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ti.gateway.mcp.model.McpError;
-import ti.gateway.mcp.model.McpResponse;
+import ti.gateway.mcp.model.*;
 import ti.gateway.mcp.service.TiGatewayKubernetesService;
 import ti.gateway.mcp.service.TiGatewayMetricsService;
 import ti.gateway.mcp.service.TiGatewayConfigService;
@@ -41,7 +40,7 @@ public class TiGatewayToolExecutor {
         try {
             logger.info("Executing tool: {} with arguments: {}", toolName, arguments);
             
-            Map<String, Object> result;
+            Object result;
             switch (toolName) {
                 case "tigateway_list_routes":
                     result = executeListRoutes(arguments);
@@ -88,21 +87,15 @@ public class TiGatewayToolExecutor {
         }
     }
     
-    private Map<String, Object> executeListRoutes(Map<String, Object> arguments) {
+    private RouteResponse executeListRoutes(Map<String, Object> arguments) {
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String filter = (String) arguments.getOrDefault("filter", "");
         
-        List<ti.gateway.mcp.model.RouteInfo> routes = kubernetesService.listRoutes(namespace, filter);
-        
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("data", routes);
-        result.put("count", routes.size());
-        result.put("namespace", namespace);
-        return result;
+        List<RouteInfo> routes = kubernetesService.listRoutes(namespace, filter);
+        return RouteResponse.listSuccess(routes, namespace);
     }
     
-    private Map<String, Object> executeCreateRoute(Map<String, Object> arguments) {
+    private RouteResponse executeCreateRoute(Map<String, Object> arguments) {
         String name = (String) arguments.get("name");
         String namespace = (String) arguments.get("namespace");
         String path = (String) arguments.get("path");
@@ -123,14 +116,17 @@ public class TiGatewayToolExecutor {
         
         boolean success = kubernetesService.createRoute(namespace, routeConfig);
         
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", success);
-        result.put("message", success ? "Route created successfully" : "Failed to create route");
-        result.put("route", routeConfig);
-        return result;
+        if (success) {
+            RouteInfo route = new RouteInfo(name, namespace, path, service, port, "active");
+            route.setFilters(filters);
+            route.setPredicates(predicates);
+            return RouteResponse.createSuccess(route);
+        } else {
+            return RouteResponse.createError("Failed to create route");
+        }
     }
     
-    private Map<String, Object> executeUpdateRoute(Map<String, Object> arguments) {
+    private RouteResponse executeUpdateRoute(Map<String, Object> arguments) {
         String name = (String) arguments.get("name");
         String namespace = (String) arguments.get("namespace");
         
@@ -140,28 +136,27 @@ public class TiGatewayToolExecutor {
         
         boolean success = kubernetesService.updateRoute(namespace, name, updates);
         
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", success);
-        result.put("message", success ? "Route updated successfully" : "Failed to update route");
-        result.put("routeName", name);
-        result.put("updates", updates);
-        return result;
+        if (success) {
+            return RouteResponse.updateSuccess(name, updates);
+        } else {
+            return RouteResponse.updateError("Failed to update route");
+        }
     }
     
-    private Map<String, Object> executeDeleteRoute(Map<String, Object> arguments) {
+    private RouteResponse executeDeleteRoute(Map<String, Object> arguments) {
         String name = (String) arguments.get("name");
         String namespace = (String) arguments.get("namespace");
         
         boolean success = kubernetesService.deleteRoute(namespace, name);
         
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", success);
-        result.put("message", success ? "Route deleted successfully" : "Failed to delete route");
-        result.put("routeName", name);
-        return result;
+        if (success) {
+            return RouteResponse.deleteSuccess(name);
+        } else {
+            return RouteResponse.deleteError("Failed to delete route");
+        }
     }
     
-    private Map<String, Object> executeTestRoute(Map<String, Object> arguments) {
+    private RouteResponse executeTestRoute(Map<String, Object> arguments) {
         String name = (String) arguments.get("name");
         String namespace = (String) arguments.get("namespace");
         String path = (String) arguments.get("path");
@@ -172,82 +167,51 @@ public class TiGatewayToolExecutor {
         
         Map<String, Object> testResult = kubernetesService.testRoute(namespace, name, path, method, headers, body);
         
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("testResult", testResult);
-        return result;
+        return RouteResponse.testSuccess(testResult);
     }
     
-    private Map<String, Object> executeListServices(Map<String, Object> arguments) {
+    private ServiceResponse executeListServices(Map<String, Object> arguments) {
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String filter = (String) arguments.getOrDefault("filter", "");
         
-        List<ti.gateway.mcp.model.ServiceInfo> services = kubernetesService.listServices(namespace, filter);
-        
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("data", services);
-        result.put("count", services.size());
-        result.put("namespace", namespace);
-        return result;
+        List<ServiceInfo> services = kubernetesService.listServices(namespace, filter);
+        return ServiceResponse.listSuccess(services, namespace);
     }
     
-    private Map<String, Object> executeServiceHealth(Map<String, Object> arguments) {
+    private ServiceResponse executeServiceHealth(Map<String, Object> arguments) {
         String service = (String) arguments.get("service");
         String namespace = (String) arguments.get("namespace");
         
         Map<String, Object> health = kubernetesService.getServiceHealth(namespace, service);
-        
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("health", health);
-        return result;
+        return ServiceResponse.healthSuccess(health);
     }
     
-    private Map<String, Object> executeGetMetrics(Map<String, Object> arguments) {
+    private MetricsResponse executeGetMetrics(Map<String, Object> arguments) {
         String type = (String) arguments.get("type");
         String timeRange = (String) arguments.getOrDefault("timeRange", "1h");
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         
-        ti.gateway.mcp.model.MetricsInfo metrics = metricsService.getMetrics(type, timeRange, namespace);
-        
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("metrics", metrics);
-        result.put("type", type);
-        result.put("timeRange", timeRange);
-        return result;
+        MetricsInfo metrics = metricsService.getMetrics(type, timeRange, namespace);
+        return MetricsResponse.success(metrics, type, timeRange, namespace);
     }
     
-    private Map<String, Object> executeGetConfig(Map<String, Object> arguments) {
+    private ConfigResponse executeGetConfig(Map<String, Object> arguments) {
         String type = (String) arguments.get("type");
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String format = (String) arguments.getOrDefault("format", "json");
         
-        ti.gateway.mcp.model.ConfigInfo config = configService.getConfig(type, namespace, format);
-        
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("config", config);
-        result.put("type", type);
-        result.put("format", format);
-        return result;
+        ConfigInfo config = configService.getConfig(type, namespace, format);
+        return ConfigResponse.success(config, type, format, namespace);
     }
     
-    private Map<String, Object> executeGetLogs(Map<String, Object> arguments) {
+    private LogsResponse executeGetLogs(Map<String, Object> arguments) {
         String level = (String) arguments.getOrDefault("level", "INFO");
         Integer lines = (Integer) arguments.getOrDefault("lines", 100);
         String namespace = (String) arguments.getOrDefault("namespace", "default");
         String service = (String) arguments.getOrDefault("service", "");
         String filter = (String) arguments.getOrDefault("filter", "");
         
-        List<ti.gateway.mcp.model.LogInfo> logs = logsService.getLogs(level, lines, namespace, service, filter);
-        
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("success", true);
-        result.put("logs", logs);
-        result.put("count", logs.size());
-        result.put("level", level);
-        return result;
+        List<LogInfo> logs = logsService.getLogs(level, lines, namespace, service, filter);
+        return LogsResponse.success(logs, level, namespace, service, filter);
     }
 }

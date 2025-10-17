@@ -16,7 +16,7 @@ public class McpResponse {
     private String id;
     
     @JsonProperty("result")
-    private Map<String, Object> result;
+    private Object result;
     
     @JsonProperty("error")
     private McpError error;
@@ -27,7 +27,7 @@ public class McpResponse {
         this.id = id;
     }
     
-    public McpResponse(String id, Map<String, Object> result) {
+    public McpResponse(String id, Object result) {
         this.id = id;
         this.result = result;
     }
@@ -53,11 +53,11 @@ public class McpResponse {
         this.id = id;
     }
     
-    public Map<String, Object> getResult() {
+    public Object getResult() {
         return result;
     }
     
-    public void setResult(Map<String, Object> result) {
+    public void setResult(Object result) {
         this.result = result;
     }
     

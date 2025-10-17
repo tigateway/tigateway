@@ -292,7 +292,6 @@ export const TopNav = () => {
   const { showHubButton } = useVersion()
   const isDarkMode = useIsDarkMode()
 
-
   return (
     <Flex as="nav" role="navigation" justify="end" align="center" css={{ gap: '$2', mb: '$6' }}>
       {showHubButton && (

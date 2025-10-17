@@ -9,7 +9,7 @@ type LogoProps = {
   isSmallScreen?: boolean
 }
 
-const TiGatewayLogo = ({ textColor = '#000', ...props }: { textColor?: string; [key: string]: any }) => {
+const TiGatewayLogo = ({ ...props }: { [key: string]: unknown }) => {
   return (
     <svg viewBox="0 0 280 108" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g clipPath="url(#clip0_tigateway)">
@@ -46,7 +46,7 @@ const TiGatewayLogo = ({ textColor = '#000', ...props }: { textColor?: string; [
           d="M230 75C230 70.5817 233.582 67 238 67H242C246.418 67 250 70.5817 250 75V95C250 99.4183 246.418 103 242 103H238C233.582 103 230 99.4183 230 95V75Z"
           fill="#2563EB"
         />
-        
+
         {/* Gateway Icon */}
         <g clipPath="url(#clip1_tigateway)">
           <path

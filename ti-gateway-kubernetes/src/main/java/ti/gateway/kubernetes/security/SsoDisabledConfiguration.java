@@ -20,6 +20,7 @@ public class SsoDisabledConfiguration {
     public SsoDisabledConfiguration() {
     }
 
+
     @Bean
     public SecurityWebFilterChain defaultWebFilterChain(ServerHttpSecurity httpSecurity) {
         log.info("SSO is disabled, setting up default security filters");

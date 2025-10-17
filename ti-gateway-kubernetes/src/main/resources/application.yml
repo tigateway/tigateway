@@ -46,6 +46,7 @@ tigateway:
 spring:
   main:
     allow-bean-definition-overriding: true
+    web-application-type: reactive
   cloud:
     loadbalancer:
       cache:

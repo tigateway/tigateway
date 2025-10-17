@@ -34,7 +34,7 @@ public class RouteResponse {
     private java.util.Map<String, Object> updates;
     
     @JsonProperty("testResult")
-    private java.util.Map<String, Object> testResult;
+    private RouteTestResult testResult;
     
     public RouteResponse() {}
     
@@ -82,7 +82,7 @@ public class RouteResponse {
         return new RouteResponse(false, message);
     }
     
-    public static RouteResponse testSuccess(java.util.Map<String, Object> testResult) {
+    public static RouteResponse testSuccess(RouteTestResult testResult) {
         RouteResponse response = new RouteResponse(true, "Route test completed");
         response.setTestResult(testResult);
         return response;
@@ -152,11 +152,11 @@ public class RouteResponse {
         this.updates = updates;
     }
     
-    public java.util.Map<String, Object> getTestResult() {
+    public RouteTestResult getTestResult() {
         return testResult;
     }
     
-    public void setTestResult(java.util.Map<String, Object> testResult) {
+    public void setTestResult(RouteTestResult testResult) {
         this.testResult = testResult;
     }
 }

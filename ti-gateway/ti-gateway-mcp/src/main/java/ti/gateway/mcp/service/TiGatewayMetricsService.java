@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ti.gateway.mcp.model.MetricsInfo;
+import ti.gateway.mcp.model.MetricsData;
 
 import java.util.List;
 import java.util.Map;
@@ -53,97 +54,86 @@ public class TiGatewayMetricsService {
         return metricsInfo;
     }
     
-    private Map<String, Object> getRouteMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new java.util.HashMap<>();
-        metrics.put("type", "routes");
-        metrics.put("timeRange", timeRange);
-        metrics.put("namespace", namespace);
+    private MetricsData getRouteMetrics(String timeRange, String namespace) {
+        MetricsData metrics = new MetricsData("routes", timeRange, namespace);
         
         // Mock route metrics
-        metrics.put("totalRoutes", 15);
-        metrics.put("activeRoutes", 14);
-        metrics.put("inactiveRoutes", 1);
-        Map<String, Object> routesByService = new java.util.HashMap<>();
+        metrics.setTotalRoutes(15);
+        metrics.setActiveRoutes(14);
+        metrics.setInactiveRoutes(1);
+        
+        Map<String, Integer> routesByService = new java.util.HashMap<>();
         routesByService.put("user-service", 3);
         routesByService.put("order-service", 2);
         routesByService.put("payment-service", 1);
-        metrics.put("routesByService", routesByService);
+        metrics.setRoutesByService(routesByService);
         
         return metrics;
     }
     
-    private Map<String, Object> getServiceMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new java.util.HashMap<>();
-        metrics.put("type", "services");
-        metrics.put("timeRange", timeRange);
-        metrics.put("namespace", namespace);
+    private MetricsData getServiceMetrics(String timeRange, String namespace) {
+        MetricsData metrics = new MetricsData("services", timeRange, namespace);
         
         // Mock service metrics
-        metrics.put("totalServices", 8);
-        metrics.put("healthyServices", 7);
-        metrics.put("unhealthyServices", 1);
-        Map<String, Object> serviceStatus = new java.util.HashMap<>();
+        metrics.setTotalServices(8);
+        metrics.setHealthyServices(7);
+        metrics.setUnhealthyServices(1);
+        
+        Map<String, String> serviceStatus = new java.util.HashMap<>();
         serviceStatus.put("user-service", "healthy");
         serviceStatus.put("order-service", "healthy");
         serviceStatus.put("payment-service", "unhealthy");
-        metrics.put("serviceStatus", serviceStatus);
+        metrics.setServiceStatus(serviceStatus);
         
         return metrics;
     }
     
-    private Map<String, Object> getRequestMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new java.util.HashMap<>();
-        metrics.put("type", "requests");
-        metrics.put("timeRange", timeRange);
-        metrics.put("namespace", namespace);
+    private MetricsData getRequestMetrics(String timeRange, String namespace) {
+        MetricsData metrics = new MetricsData("requests", timeRange, namespace);
         
         // Mock request metrics
-        metrics.put("totalRequests", 125000);
-        metrics.put("successfulRequests", 120000);
-        metrics.put("failedRequests", 5000);
-        metrics.put("requestsPerSecond", 35.2);
-        metrics.put("averageResponseTime", "125ms");
-        metrics.put("p95ResponseTime", "250ms");
-        metrics.put("p99ResponseTime", "500ms");
+        metrics.setTotalRequests(125000L);
+        metrics.setSuccessfulRequests(120000L);
+        metrics.setFailedRequests(5000L);
+        metrics.setRequestsPerSecond(35.2);
+        metrics.setAverageResponseTime("125ms");
+        metrics.setP95ResponseTime("250ms");
+        metrics.setP99ResponseTime("500ms");
         
         return metrics;
     }
     
-    private Map<String, Object> getErrorMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new java.util.HashMap<>();
-        metrics.put("type", "errors");
-        metrics.put("timeRange", timeRange);
-        metrics.put("namespace", namespace);
+    private MetricsData getErrorMetrics(String timeRange, String namespace) {
+        MetricsData metrics = new MetricsData("errors", timeRange, namespace);
         
         // Mock error metrics
-        metrics.put("totalErrors", 5000);
-        metrics.put("errorRate", "4.0%");
-        Map<String, Object> errorsByType = new java.util.HashMap<>();
+        metrics.setTotalErrors(5000L);
+        metrics.setErrorRate("4.0%");
+        
+        Map<String, Integer> errorsByType = new java.util.HashMap<>();
         errorsByType.put("4xx", 3000);
         errorsByType.put("5xx", 2000);
-        metrics.put("errorsByType", errorsByType);
-        Map<String, Object> errorsByService = new java.util.HashMap<>();
+        metrics.setErrorsByType(errorsByType);
+        
+        Map<String, Integer> errorsByService = new java.util.HashMap<>();
         errorsByService.put("user-service", 1000);
         errorsByService.put("order-service", 2000);
         errorsByService.put("payment-service", 2000);
-        metrics.put("errorsByService", errorsByService);
+        metrics.setErrorsByService(errorsByService);
         
         return metrics;
     }
     
-    private Map<String, Object> getPerformanceMetrics(String timeRange, String namespace) {
-        Map<String, Object> metrics = new java.util.HashMap<>();
-        metrics.put("type", "performance");
-        metrics.put("timeRange", timeRange);
-        metrics.put("namespace", namespace);
+    private MetricsData getPerformanceMetrics(String timeRange, String namespace) {
+        MetricsData metrics = new MetricsData("performance", timeRange, namespace);
         
         // Mock performance metrics
-        metrics.put("cpuUsage", "45%");
-        metrics.put("memoryUsage", "2.1GB");
-        metrics.put("diskUsage", "15GB");
-        metrics.put("networkThroughput", "125MB/s");
-        metrics.put("activeConnections", 1250);
-        metrics.put("connectionPoolUtilization", "60%");
+        metrics.setCpuUsage("45%");
+        metrics.setMemoryUsage("2.1GB");
+        metrics.setDiskUsage("15GB");
+        metrics.setNetworkThroughput("125MB/s");
+        metrics.setActiveConnections(1250);
+        metrics.setConnectionPoolUtilization("60%");
         
         return metrics;
     }

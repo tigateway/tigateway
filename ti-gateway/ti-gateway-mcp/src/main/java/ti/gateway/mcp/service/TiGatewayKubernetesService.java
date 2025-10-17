@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ti.gateway.mcp.model.RouteInfo;
 import ti.gateway.mcp.model.ServiceInfo;
+import ti.gateway.mcp.model.RouteTestResult;
+import ti.gateway.mcp.model.ServiceHealth;
 
 import java.util.List;
 import java.util.Map;
@@ -124,24 +126,22 @@ public class TiGatewayKubernetesService {
     /**
      * Test a route
      */
-    public Map<String, Object> testRoute(String namespace, String routeName, String path, 
-                                       String method, Map<String, String> headers, String body) {
+    public RouteTestResult testRoute(String namespace, String routeName, String path, 
+                                   String method, Map<String, String> headers, String body) {
         logger.info("Testing route {} in namespace: {} with path: {} method: {}", 
                    routeName, namespace, path, method);
         
         // TODO: Implement actual route testing
         // This is a mock implementation
-        Map<String, Object> result = new java.util.HashMap<>();
-        result.put("status", "success");
-        result.put("statusCode", 200);
-        result.put("responseTime", "45ms");
+        RouteTestResult result = new RouteTestResult("success", 200, "45ms");
+        
         Map<String, String> responseHeaders = new java.util.HashMap<>();
         responseHeaders.put("Content-Type", "application/json");
-        result.put("headers", responseHeaders);
-        result.put("body", "{\"message\": \"Route test successful\"}");
-        result.put("route", routeName);
-        result.put("path", path);
-        result.put("method", method);
+        result.setHeaders(responseHeaders);
+        result.setBody("{\"message\": \"Route test successful\"}");
+        result.setRoute(routeName);
+        result.setPath(path);
+        result.setMethod(method);
         
         return result;
     }
@@ -187,29 +187,19 @@ public class TiGatewayKubernetesService {
     /**
      * Get service health status
      */
-    public Map<String, Object> getServiceHealth(String namespace, String serviceName) {
+    public ServiceHealth getServiceHealth(String namespace, String serviceName) {
         logger.info("Getting health status for service {} in namespace: {}", serviceName, namespace);
         
         // TODO: Implement actual health check
         // This is a mock implementation
-        Map<String, Object> health = new java.util.HashMap<>();
-        health.put("service", serviceName);
-        health.put("namespace", namespace);
-        health.put("status", "healthy");
-        health.put("uptime", "99.9%");
-        health.put("lastCheck", "2024-01-01T12:00:00Z");
-        List<Map<String, Object>> endpoints = new java.util.ArrayList<>();
-        Map<String, Object> endpoint1 = new java.util.HashMap<>();
-        endpoint1.put("address", "10.244.1.1:8080");
-        endpoint1.put("status", "ready");
-        endpoints.add(endpoint1);
+        ServiceHealth health = new ServiceHealth(serviceName, namespace, "healthy");
+        health.setUptime("99.9%");
+        health.setLastCheck("2024-01-01T12:00:00Z");
         
-        Map<String, Object> endpoint2 = new java.util.HashMap<>();
-        endpoint2.put("address", "10.244.1.2:8080");
-        endpoint2.put("status", "ready");
-        endpoints.add(endpoint2);
-        
-        health.put("endpoints", endpoints);
+        List<ServiceHealth.ServiceEndpoint> endpoints = new java.util.ArrayList<>();
+        endpoints.add(new ServiceHealth.ServiceEndpoint("10.244.1.1:8080", "ready"));
+        endpoints.add(new ServiceHealth.ServiceEndpoint("10.244.1.2:8080", "ready"));
+        health.setEndpoints(endpoints);
         
         return health;
     }

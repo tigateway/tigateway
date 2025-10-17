@@ -165,7 +165,7 @@ public class TiGatewayToolExecutor {
         Map<String, String> headers = (Map<String, String>) arguments.getOrDefault("headers", Map.of());
         String body = (String) arguments.getOrDefault("body", "");
         
-        Map<String, Object> testResult = kubernetesService.testRoute(namespace, name, path, method, headers, body);
+        RouteTestResult testResult = kubernetesService.testRoute(namespace, name, path, method, headers, body);
         
         return RouteResponse.testSuccess(testResult);
     }
@@ -182,7 +182,7 @@ public class TiGatewayToolExecutor {
         String service = (String) arguments.get("service");
         String namespace = (String) arguments.get("namespace");
         
-        Map<String, Object> health = kubernetesService.getServiceHealth(namespace, service);
+        ServiceHealth health = kubernetesService.getServiceHealth(namespace, service);
         return ServiceResponse.healthSuccess(health);
     }
     

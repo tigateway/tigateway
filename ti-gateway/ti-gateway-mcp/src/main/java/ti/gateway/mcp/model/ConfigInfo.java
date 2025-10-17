@@ -26,7 +26,7 @@ public class ConfigInfo {
     private String lastModified;
     
     @JsonProperty("properties")
-    private java.util.Map<String, Object> properties;
+    private ConfigData properties;
     
     @JsonProperty("metadata")
     private java.util.Map<String, String> metadata;
@@ -91,11 +91,11 @@ public class ConfigInfo {
         this.lastModified = lastModified;
     }
     
-    public java.util.Map<String, Object> getProperties() {
+    public ConfigData getProperties() {
         return properties;
     }
     
-    public void setProperties(java.util.Map<String, Object> properties) {
+    public void setProperties(ConfigData properties) {
         this.properties = properties;
     }
     

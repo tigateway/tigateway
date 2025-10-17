@@ -25,7 +25,7 @@ public class ServiceResponse {
     private String namespace;
     
     @JsonProperty("health")
-    private java.util.Map<String, Object> health;
+    private ServiceHealth health;
     
     public ServiceResponse() {}
     
@@ -42,7 +42,7 @@ public class ServiceResponse {
         return response;
     }
     
-    public static ServiceResponse healthSuccess(java.util.Map<String, Object> health) {
+    public static ServiceResponse healthSuccess(ServiceHealth health) {
         ServiceResponse response = new ServiceResponse(true, "Service health retrieved successfully");
         response.setHealth(health);
         return response;
@@ -92,11 +92,11 @@ public class ServiceResponse {
         this.namespace = namespace;
     }
     
-    public java.util.Map<String, Object> getHealth() {
+    public ServiceHealth getHealth() {
         return health;
     }
     
-    public void setHealth(java.util.Map<String, Object> health) {
+    public void setHealth(ServiceHealth health) {
         this.health = health;
     }
 }

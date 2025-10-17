@@ -17,7 +17,7 @@ public class MetricsInfo {
     private String namespace;
     
     @JsonProperty("metrics")
-    private java.util.Map<String, Object> metrics;
+    private MetricsData metrics;
     
     @JsonProperty("summary")
     private MetricsSummary summary;
@@ -54,11 +54,11 @@ public class MetricsInfo {
         this.namespace = namespace;
     }
     
-    public java.util.Map<String, Object> getMetrics() {
+    public MetricsData getMetrics() {
         return metrics;
     }
     
-    public void setMetrics(java.util.Map<String, Object> metrics) {
+    public void setMetrics(MetricsData metrics) {
         this.metrics = metrics;
     }
     

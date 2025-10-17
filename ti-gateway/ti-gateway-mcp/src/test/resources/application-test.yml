@@ -1,0 +1,23 @@
+server:
+  port: 0  # Random port for testing
+
+spring:
+  application:
+    name: tigateway-mcp-test
+
+# Test configuration
+tigateway:
+  mcp:
+    enabled: true
+    authentication-enabled: false
+    kubernetes:
+      namespace: test
+    metrics:
+      enabled: false
+
+# Test logging
+logging:
+  level:
+    ti.gateway.mcp: DEBUG
+    org.springframework.web: DEBUG
+    reactor.netty: WARN

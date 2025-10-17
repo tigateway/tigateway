@@ -16,6 +16,7 @@
         <module>ti-gateway-limit</module>
         <module>ti-gateway-admin</module>
         <module>ti-gateway-base</module>
+        <module>ti-gateway-mcp</module>
     </modules>
 
     <properties>

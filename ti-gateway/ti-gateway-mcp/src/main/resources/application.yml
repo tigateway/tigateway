@@ -1,0 +1,88 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /mcp
+
+spring:
+  application:
+    name: tigateway-mcp
+  profiles:
+    active: dev
+
+# TiGateway MCP Configuration
+tigateway:
+  mcp:
+    enabled: true
+    port: 8082
+    context-path: /mcp
+    allowed-origins:
+      - "*"
+    authentication-enabled: false
+    kubernetes:
+      namespace: default
+      api-server-url: ${KUBERNETES_SERVICE_HOST:https://kubernetes.default.svc}
+      service-account-token-path: /var/run/secrets/kubernetes.io/serviceaccount/token
+      ca-cert-path: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    metrics:
+      enabled: true
+      collection-interval: 30
+      retention-period: 24
+
+# Logging configuration
+logging:
+  level:
+    ti.gateway.mcp: INFO
+    org.springframework.web: INFO
+    reactor.netty: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+---
+# Development profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    ti.gateway.mcp: DEBUG
+    org.springframework.web: DEBUG
+
+tigateway:
+  mcp:
+    authentication-enabled: false
+
+---
+# Production profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    ti.gateway.mcp: INFO
+    org.springframework.web: WARN
+
+tigateway:
+  mcp:
+    authentication-enabled: true
+    allowed-origins:
+      - "https://your-domain.com"
+      - "https://admin.your-domain.com"

@@ -210,6 +210,13 @@
             <version>1.0.0</version>
         </dependency>
 
+        <!-- TiGateway MCP Module -->
+        <dependency>
+            <groupId>io.github.mavenreposs</groupId>
+            <artifactId>ti-gateway-mcp</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- Kubernetes Client Dependencies -->
         <dependency>
             <groupId>io.kubernetes</groupId>

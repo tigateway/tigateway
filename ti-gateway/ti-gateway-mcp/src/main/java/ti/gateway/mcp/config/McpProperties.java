@@ -16,7 +16,12 @@ public class McpProperties {
     private boolean enabled = true;
     
     /**
-     * MCP server port
+     * Enable independent port for MCP server
+     */
+    private boolean independentPort = false;
+    
+    /**
+     * MCP server port (used when independent-port is true)
      */
     private int port = 8082;
     
@@ -56,6 +61,14 @@ public class McpProperties {
     
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+    
+    public boolean isIndependentPort() {
+        return independentPort;
+    }
+    
+    public void setIndependentPort(boolean independentPort) {
+        this.independentPort = independentPort;
     }
     
     public int getPort() {

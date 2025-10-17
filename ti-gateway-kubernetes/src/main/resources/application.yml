@@ -23,6 +23,26 @@ admin:
     context-path: /admin
     name: tigateway-admin
 
+# MCP配置
+tigateway:
+  mcp:
+    enabled: true
+    independent-port: false  # 设置为true启用独立端口
+    port: 8082
+    context-path: /mcp
+    allowed-origins:
+      - "*"
+    authentication-enabled: false
+    kubernetes:
+      namespace: default
+      api-server-url: ""
+      service-account-token-path: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+      ca-cert-path: "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    metrics:
+      enabled: true
+      collection-interval: 30
+      retention-period: 24
+
 spring:
   main:
     allow-bean-definition-overriding: true

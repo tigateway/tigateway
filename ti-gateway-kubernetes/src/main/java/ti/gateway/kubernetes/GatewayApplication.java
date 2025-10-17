@@ -19,7 +19,7 @@ import java.security.Security;
             KubernetesClientAutoConfiguration.class,
             KubernetesClientActuatorConfiguration.class
         },
-        scanBasePackages = {"ti.gateway.kubernetes", "ti.gateway.admin", "ti.gateway.base"},
+        scanBasePackages = {"ti.gateway.kubernetes", "ti.gateway.admin", "ti.gateway.base", "ti.gateway.mcp"},
         scanBasePackageClasses = {}
 )
 public class GatewayApplication {

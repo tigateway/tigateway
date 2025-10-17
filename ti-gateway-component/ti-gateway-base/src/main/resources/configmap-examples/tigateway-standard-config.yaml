@@ -1,0 +1,437 @@
+# TiGateway标准化配置示例
+# 符合TiGateway Configuration Schema v1.0.0规范
+
+metadata:
+  name: "tigateway-production-config"
+  version: "1.0.0"
+  description: "TiGateway生产环境配置"
+  created_at: "2024-01-01T00:00:00Z"
+  updated_at: "2024-01-01T00:00:00Z"
+
+# 应用配置
+applications:
+  - id: "web-app"
+    name: "Web Application"
+    description: "Web应用配置"
+    type: "web"
+    status: "active"
+    credentials:
+      app_key: "web-app-key"
+      app_secret: "web-app-secret-key-123456789"
+      algorithm: "HMAC-SHA256"
+    permissions:
+      - resource: "user-service"
+        actions: ["read", "write"]
+      - resource: "order-service"
+        actions: ["read", "write"]
+      - resource: "payment-service"
+        actions: ["read"]
+    rate_limits:
+      requests_per_second: 100
+      requests_per_minute: 1000
+      requests_per_hour: 10000
+      burst_size: 20
+      strategy: "token_bucket"
+    tags:
+      - "web"
+      - "frontend"
+      - "production"
+
+  - id: "mobile-app"
+    name: "Mobile Application"
+    description: "移动应用配置"
+    type: "mobile"
+    status: "active"
+    credentials:
+      app_key: "mobile-app-key"
+      app_secret: "mobile-app-secret-key-987654321"
+      algorithm: "HMAC-SHA256"
+    permissions:
+      - resource: "user-service"
+        actions: ["read", "write"]
+      - resource: "notification-service"
+        actions: ["read", "write"]
+      - resource: "location-service"
+        actions: ["read"]
+    rate_limits:
+      requests_per_second: 50
+      requests_per_minute: 500
+      requests_per_hour: 5000
+      burst_size: 10
+      strategy: "sliding_window"
+    tags:
+      - "mobile"
+      - "ios"
+      - "android"
+
+  - id: "admin-app"
+    name: "Admin Application"
+    description: "管理后台应用配置"
+    type: "admin"
+    status: "active"
+    credentials:
+      app_key: "admin-app-key"
+      app_secret: "admin-app-secret-key-abcdef123456"
+      algorithm: "HMAC-SHA256"
+    permissions:
+      - resource: "user-service"
+        actions: ["read", "write", "admin"]
+      - resource: "order-service"
+        actions: ["read", "write", "admin"]
+      - resource: "payment-service"
+        actions: ["read", "write", "admin"]
+      - resource: "admin-service"
+        actions: ["read", "write", "admin"]
+    rate_limits:
+      requests_per_second: 200
+      requests_per_minute: 2000
+      requests_per_hour: 20000
+      burst_size: 50
+      strategy: "fixed_window"
+    tags:
+      - "admin"
+      - "backend"
+      - "management"
+
+# 服务配置
+services:
+  - id: "user-service"
+    name: "User Service"
+    description: "用户服务"
+    type: "http"
+    endpoints:
+      - url: "http://user-service:8080"
+        weight: 1
+        health_check_path: "/health"
+        metadata:
+          version: "v1.0.0"
+          region: "us-east-1"
+      - url: "http://user-service-2:8080"
+        weight: 1
+        health_check_path: "/health"
+        metadata:
+          version: "v1.0.0"
+          region: "us-west-1"
+    health_check:
+      enabled: true
+      interval: 30
+      timeout: 5
+      retries: 3
+      path: "/health"
+    load_balancing:
+      strategy: "round_robin"
+      sticky_session: false
+    circuit_breaker:
+      enabled: true
+      failure_threshold: 5
+      success_threshold: 3
+      timeout: 60
+    retry_policy:
+      enabled: true
+      max_attempts: 3
+      backoff_strategy: "exponential"
+      initial_delay: 1000
+      max_delay: 10000
+    timeout:
+      connect: 5000
+      read: 30000
+      write: 30000
+    tags:
+      - "user"
+      - "authentication"
+      - "profile"
+
+  - id: "order-service"
+    name: "Order Service"
+    description: "订单服务"
+    type: "http"
+    endpoints:
+      - url: "http://order-service:8080"
+        weight: 1
+        health_check_path: "/health"
+    health_check:
+      enabled: true
+      interval: 30
+      timeout: 5
+      retries: 3
+    load_balancing:
+      strategy: "least_connections"
+    circuit_breaker:
+      enabled: true
+      failure_threshold: 3
+      success_threshold: 2
+      timeout: 30
+    retry_policy:
+      enabled: true
+      max_attempts: 2
+      backoff_strategy: "linear"
+      initial_delay: 500
+      max_delay: 5000
+    timeout:
+      connect: 3000
+      read: 20000
+      write: 20000
+    tags:
+      - "order"
+      - "business"
+      - "transaction"
+
+  - id: "payment-service"
+    name: "Payment Service"
+    description: "支付服务"
+    type: "http"
+    endpoints:
+      - url: "http://payment-service:8080"
+        weight: 1
+        health_check_path: "/health"
+    health_check:
+      enabled: true
+      interval: 15
+      timeout: 3
+      retries: 5
+    load_balancing:
+      strategy: "weighted_round_robin"
+    circuit_breaker:
+      enabled: true
+      failure_threshold: 2
+      success_threshold: 1
+      timeout: 120
+    retry_policy:
+      enabled: false
+    timeout:
+      connect: 10000
+      read: 60000
+      write: 60000
+    tags:
+      - "payment"
+      - "financial"
+      - "critical"
+
+# 路由配置
+routes:
+  - id: "user-routes"
+    name: "User Routes"
+    description: "用户相关路由"
+    path: "/api/users"
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    host: "api.example.com"
+    priority: 100
+    service_id: "user-service"
+    middlewares: ["auth", "rate-limit", "logging"]
+    predicates:
+      - type: "path"
+        config:
+          pattern: "/api/users/**"
+      - type: "method"
+        config:
+          methods: ["GET", "POST", "PUT", "DELETE"]
+    filters:
+      - type: "add_request_header"
+        config:
+          name: "X-Forwarded-For"
+          value: "${request.remoteAddress}"
+      - type: "add_response_header"
+        config:
+          name: "X-Response-Time"
+          value: "${response.time}"
+    tags:
+      - "user"
+      - "api"
+      - "rest"
+
+  - id: "order-routes"
+    name: "Order Routes"
+    description: "订单相关路由"
+    path: "/api/orders"
+    methods: ["GET", "POST", "PUT"]
+    host: "api.example.com"
+    priority: 90
+    service_id: "order-service"
+    middlewares: ["auth", "rate-limit", "logging"]
+    predicates:
+      - type: "path"
+        config:
+          pattern: "/api/orders/**"
+    filters:
+      - type: "rewrite_path"
+        config:
+          regexp: "/api/orders/(?<segment>.*)"
+          replacement: "/orders/${segment}"
+    tags:
+      - "order"
+      - "api"
+      - "rest"
+
+  - id: "payment-routes"
+    name: "Payment Routes"
+    description: "支付相关路由"
+    path: "/api/payments"
+    methods: ["POST"]
+    host: "api.example.com"
+    priority: 80
+    service_id: "payment-service"
+    middlewares: ["auth", "rate-limit", "logging", "encryption"]
+    predicates:
+      - type: "path"
+        config:
+          pattern: "/api/payments/**"
+      - type: "header"
+        config:
+          name: "Content-Type"
+          value: "application/json"
+    filters:
+      - type: "circuit_breaker"
+        config:
+          name: "payment-circuit-breaker"
+          fallback_uri: "forward:/fallback/payment"
+    tags:
+      - "payment"
+      - "api"
+      - "financial"
+
+# 中间件配置
+middlewares:
+  - id: "auth"
+    name: "Authentication Middleware"
+    type: "auth"
+    enabled: true
+    order: 1
+    config:
+      type: "jwt"
+      secret: "jwt-secret-key"
+      issuer: "tigateway"
+      audience: "api-clients"
+      expires_in: 3600
+      algorithm: "HS256"
+
+  - id: "rate-limit"
+    name: "Rate Limiting Middleware"
+    type: "rate_limit"
+    enabled: true
+    order: 2
+    config:
+      requests_per_second: 10
+      requests_per_minute: 100
+      burst_size: 20
+      strategy: "token_bucket"
+      key_resolver: "ip"
+
+  - id: "cors"
+    name: "CORS Middleware"
+    type: "cors"
+    enabled: true
+    order: 3
+    config:
+      allowed_origins: ["https://example.com", "https://admin.example.com"]
+      allowed_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+      allowed_headers: ["*"]
+      exposed_headers: ["X-Response-Time", "X-Request-ID"]
+      allow_credentials: true
+      max_age: 3600
+
+  - id: "logging"
+    name: "Logging Middleware"
+    type: "logging"
+    enabled: true
+    order: 4
+    config:
+      level: "INFO"
+      format: "json"
+      include_request_body: false
+      include_response_body: false
+      sensitive_headers: ["Authorization", "Cookie"]
+
+  - id: "metrics"
+    name: "Metrics Middleware"
+    type: "metrics"
+    enabled: true
+    order: 5
+    config:
+      enabled: true
+      exporters: ["prometheus"]
+      interval: 30
+      include_histograms: true
+
+  - id: "encryption"
+    name: "Encryption Middleware"
+    type: "transform"
+    enabled: true
+    order: 6
+    config:
+      encrypt_request: true
+      encrypt_response: true
+      algorithm: "AES-256-GCM"
+      key: "encryption-key-32-chars-long"
+
+# 安全配置
+security:
+  cors:
+    enabled: true
+    allowed_origins: 
+      - "https://example.com"
+      - "https://admin.example.com"
+      - "https://mobile.example.com"
+    allowed_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allowed_headers: ["*"]
+    exposed_headers: ["X-Response-Time", "X-Request-ID"]
+    allow_credentials: true
+    max_age: 3600
+
+  authentication:
+    enabled: true
+    type: "jwt"
+    config:
+      secret: "jwt-secret-key"
+      issuer: "tigateway"
+      audience: "api-clients"
+      expires_in: 3600
+      algorithm: "HS256"
+      refresh_token_expires_in: 86400
+
+  authorization:
+    enabled: true
+    type: "rbac"
+    config:
+      default_role: "user"
+      admin_role: "admin"
+      super_admin_role: "super_admin"
+
+  ssl:
+    enabled: true
+    certificate: |
+      -----BEGIN CERTIFICATE-----
+      [SSL Certificate Content]
+      -----END CERTIFICATE-----
+    private_key: |
+      -----BEGIN PRIVATE KEY-----
+      [Private Key Content]
+      -----END PRIVATE KEY-----
+
+# 监控配置
+monitoring:
+  metrics:
+    enabled: true
+    exporters: ["prometheus", "influxdb"]
+    interval: 30
+    include_histograms: true
+    include_gauges: true
+    include_counters: true
+
+  tracing:
+    enabled: true
+    exporters: ["jaeger", "zipkin"]
+    sampling_rate: 0.1
+    trace_id_header: "X-Trace-ID"
+    span_id_header: "X-Span-ID"
+
+  logging:
+    level: "INFO"
+    format: "json"
+    outputs: ["console", "file", "elasticsearch"]
+    file_path: "/var/log/tigateway/application.log"
+    max_file_size: "100MB"
+    max_files: 10
+    elasticsearch:
+      url: "http://elasticsearch:9200"
+      index: "tigateway-logs"
+      type: "log"

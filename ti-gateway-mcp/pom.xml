@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.mavenreposs</groupId>
-        <artifactId>ti-gateway</artifactId>
+        <artifactId>ti-gateway-component</artifactId>
         <version>1.0.0</version>
     </parent>
 

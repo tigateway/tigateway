@@ -1,0 +1,73 @@
+# 外部服务代理配置示例
+# 展示如何通过 TiGateway 代理外部服务
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: external-services-routes
+  namespace: default
+  labels:
+    app: tigateway
+    type: external-proxy
+spec:
+  routes:
+    - title: "GitHub Proxy"
+      description: "代理 GitHub API 请求"
+      uri: "https://api.github.com"
+      predicates:
+        - "Path=/github/**"
+      filters:
+        - "StripPrefix=1"
+        - "AddRequestHeader=X-Forwarded-Host,api.github.com"
+      order: 1
+      ssoEnabled: false
+      tags:
+        - "external"
+        - "github"
+        - "proxy"
+    - title: "External API Proxy"
+      description: "代理外部 API 服务"
+      uri: "https://httpbin.org"
+      predicates:
+        - "Path=/httpbin/**"
+      filters:
+        - "StripPrefix=1"
+        - "AddRequestHeader=X-Proxy-Source,TiGateway"
+      order: 2
+      ssoEnabled: false
+      tags:
+        - "external"
+        - "proxy"
+    - title: "Third-party Service"
+      description: "第三方服务代理"
+      uri: "https://jsonplaceholder.typicode.com"
+      predicates:
+        - "Path=/api/external/**"
+      filters:
+        - "StripPrefix=2"
+        - "RewritePath=/api/external/(?<segment>.*), /${segment}"
+      order: 3
+      ssoEnabled: true
+      tags:
+        - "external"
+        - "third-party"
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: external-services-mapping
+  namespace: default
+  labels:
+    app: tigateway
+    type: external-proxy
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: external-services-routes
+    namespace: default
+  priority: 50
+  enabled: true

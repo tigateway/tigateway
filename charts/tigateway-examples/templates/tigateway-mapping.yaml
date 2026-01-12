@@ -1,0 +1,21 @@
+{{- if .Values.mapping.enabled }}
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: {{ .Values.mapping.name }}
+  namespace: {{ .Values.mapping.namespace | default (include "tigateway-examples.namespace" .) }}
+  labels:
+    {{- include "tigateway-examples.labels" . | nindent 4 }}
+    example: "true"
+spec:
+  gatewayRef:
+    name: {{ .Values.mapping.gatewayRef.name }}
+    namespace: {{ .Values.mapping.gatewayRef.namespace | default (include "tigateway-examples.namespace" .) }}
+  routeConfigRef:
+    name: {{ .Values.mapping.routeConfigRef.name }}
+    namespace: {{ .Values.mapping.routeConfigRef.namespace | default (include "tigateway-examples.namespace" .) }}
+  {{- if .Values.mapping.priority }}
+  priority: {{ .Values.mapping.priority }}
+  {{- end }}
+  enabled: {{ .Values.mapping.enabled }}
+{{- end }}

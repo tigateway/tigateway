@@ -1,2 +1,0 @@
-This chart contains the Kubernetes operator for Spring Cloud Gateway.
-Install the chart spring-cloud-gateway-crds before installing this chart

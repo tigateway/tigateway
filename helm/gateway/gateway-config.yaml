@@ -1,4 +1,0 @@
-apiVersion: tanzu.vmware.com/v1
-kind: SpringCloudGateway
-metadata:
-  name: my-gateway

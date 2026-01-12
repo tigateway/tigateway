@@ -1,0 +1,111 @@
+# TiGateway 基础示例 - 硬编码参考
+# 这些是硬编码的示例文件，仅用于学习和参考
+# 推荐使用 Helm Chart 模板方式（通过 values.yaml 配置）
+
+---
+# TiGateway 实例配置示例
+apiVersion: tigateway.cn/v1
+kind: TiGateway
+metadata:
+  name: my-gateway
+  namespace: default
+  labels:
+    app: tigateway
+    example: "true"
+spec:
+  count: 2
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+  ingress:
+    enabled: true
+    namespace: default
+    refreshInterval: 30
+    cacheEnabled: true
+
+---
+# TiGatewayRouteConfig 路由配置示例
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: my-gateway-routes
+  namespace: default
+  labels:
+    app: tigateway
+    example: "true"
+spec:
+  routes:
+    - title: "GitHub Proxy"
+      description: "Proxy requests to GitHub"
+      uri: https://github.com
+      predicates:
+        - "Path=/github/**"
+      filters:
+        - "StripPrefix=1"
+      order: 1
+      tags:
+        - "external"
+        - "proxy"
+  ingress:
+    autoDiscovery: true
+    namespace: default
+    refreshInterval: 30
+    cacheEnabled: true
+
+---
+# TiGatewayMapping 映射关系示例
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: example-gateway-mapping
+  namespace: default
+  labels:
+    app: tigateway
+    example: "true"
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: my-gateway-routes
+    namespace: default
+  priority: 100
+  enabled: true
+
+---
+# Kubernetes Ingress 示例
+# TiGateway 会自动发现此 Ingress 并转换为路由
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-app-ingress
+  namespace: default
+  labels:
+    app: tigateway
+  annotations:
+    tigateway.cn/auto-discover: "true"
+    tigateway.cn/rewrite-target: /$2
+spec:
+  ingressClassName: tigateway
+  rules:
+    - host: example.local
+      http:
+        paths:
+          - path: /api(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: example-api-service
+                port:
+                  number: 8080
+          - path: /web(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: example-web-service
+                port:
+                  number: 80

@@ -1,0 +1,81 @@
+{{- if .Values.configMap.create }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configMap.name | default (printf "%s-config" (include "tigateway.fullname" .)) }}
+  namespace: {{ .Values.namespace | default "default" }}
+  labels:
+    {{- include "tigateway.labels" . | nindent 4 }}
+data:
+  {{- if .Values.configMap.data }}
+  {{- toYaml .Values.configMap.data | nindent 2 }}
+  {{- else }}
+  application.yml: |
+    management:
+      endpoint:
+        health:
+          show-details: when_authorized
+        gateway:
+          enabled: true
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+      server:
+        port: 8090
+      metrics:
+        export:
+          prometheus:
+            enabled: true
+
+    spring:
+      application:
+        name: tigateway
+      cloud:
+        loadbalancer:
+          cache:
+            ttl: 5S
+        gateway:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          filter:
+            token-relay:
+              enabled: false
+          actuator:
+            verbose:
+              enabled: false
+          kubernetes:
+            ingress:
+              enabled: {{ .Values.ingress.config.enabled | default .Values.ingress.enabled | default false }}
+              namespace: {{ .Values.ingress.config.namespace | default .Values.namespace | default "default" }}
+              refresh-interval: {{ .Values.ingress.config.refreshInterval | default 30 }}
+              cache-enabled: {{ .Values.ingress.config.cacheEnabled | default true }}
+              cache-expiration: {{ .Values.ingress.config.cacheExpiration | default 300 }}
+              tls-enabled: {{ .Values.ingress.config.tlsEnabled | default true }}
+              default-service-port: {{ .Values.ingress.config.defaultServicePort | default .Values.service.ports.gateway | default 80 }}
+              path-rewrite-enabled: {{ .Values.ingress.config.pathRewrite.enabled | default true }}
+              path-rewrite-pattern: "{{ .Values.ingress.config.pathRewrite.pattern | default "/(.*)" }}"
+              path-rewrite-replacement: "{{ .Values.ingress.config.pathRewrite.replacement | default "/$1" }}"
+          routes:
+            - id: example
+              uri: http://example.com
+              predicates:
+                - Path=/api/**
+      kubernetes:
+        discovery:
+          enabled: true
+        config:
+          enabled: true
+
+    logging:
+      level:
+        root: {{ .Values.logging.level.root | default "INFO" }}
+        ti.gateway: {{ .Values.logging.level."ti.gateway" | default "INFO" }}
+        "ti.gateway.kubernetes.ingress": {{ .Values.logging.level."ti.gateway.kubernetes.ingress" | default "INFO" }}
+        "org.springframework.cloud.gateway": {{ .Values.logging.level."org.springframework.cloud.gateway" | default "DEBUG" }}
+        "org.springframework.web": {{ .Values.logging.level."org.springframework.web" | default "INFO" }}
+        "io.kubernetes.client": {{ .Values.logging.level."io.kubernetes.client" | default "WARN" }}
+  {{- end }}
+{{- end }}

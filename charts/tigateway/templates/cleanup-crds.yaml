@@ -1,0 +1,33 @@
+{{- if .Values.cleanupCustomResources.forceDeletion }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-cleanup"
+  namespace: {{ .Values.namespace | default "default" }}
+  labels:
+    app: "{{ .Release.Name }}-cleanup"
+    {{- include "tigateway.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": "pre-delete"
+    "helm.sh/hook-weight": "3"
+spec:
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-cleanup"
+    spec:
+      serviceAccountName: {{ include "tigateway.serviceAccountName" . }}
+      containers:
+      - name: kubectl
+        image: bitnami/kubectl:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        - -c
+        - >
+          kubectl delete tigatewayrouteconfigs --all --all-namespaces --ignore-not-found;
+          kubectl delete tigatewaymappings --all --all-namespaces --ignore-not-found;
+          kubectl delete tigateways --all --all-namespaces --ignore-not-found;
+          sleep 10;
+      restartPolicy: Never
+{{- end }}

@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tigateway.fullname" . }}
+  namespace: {{ .Values.namespace | default "default" }}
+  labels:
+    {{- include "tigateway.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "tigateway.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "tigateway.selectorLabels" . | nindent 8 }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{ .Values.service.ports.management }}"
+        prometheus.io/path: "/actuator/prometheus"
+        {{- if .Values.configMap.create }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum | trunc 10 }}
+        {{- end }}
+    spec:
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tigateway.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: tigateway
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8081
+          name: admin
+          protocol: TCP
+        - containerPort: 8090
+          name: management
+          protocol: TCP
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "kubernetes"
+        - name: SPRING_CLOUD_KUBERNETES_CONFIG_ENABLED
+          value: "true"
+        - name: SPRING_CLOUD_KUBERNETES_DISCOVERY_ENABLED
+          value: "true"
+        - name: SPRING_CLOUD_GATEWAY_KUBERNETES_INGRESS_ENABLED
+          value: "{{ .Values.ingress.enabled | default false }}"
+        - name: SPRING_CLOUD_GATEWAY_KUBERNETES_INGRESS_NAMESPACE
+          value: "{{ .Values.namespace | default "default" }}"
+        - name: JAVA_OPTS
+          value: "-Xmx{{ .Values.resources.limits.memory | default "1Gi" }} -Xms{{ .Values.resources.requests.memory | default "512Mi" }}"
+        {{- if .Values.env }}
+        {{- toYaml .Values.env | nindent 8 }}
+        {{- end }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        livenessProbe:
+          {{- toYaml .Values.probes.liveness | nindent 10 }}
+        readinessProbe:
+          {{- toYaml .Values.probes.readiness | nindent 10 }}
+        {{- if .Values.configMap.create }}
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: logs-volume
+          mountPath: /app/logs
+        {{- end }}
+      {{- if .Values.configMap.create }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Values.configMap.name | default (printf "%s-config" (include "tigateway.fullname" .)) }}
+      - name: logs-volume
+        emptyDir: {}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+        {{- toYaml .Values.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if .Values.affinity }}
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      {{- end }}

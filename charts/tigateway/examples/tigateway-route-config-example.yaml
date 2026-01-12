@@ -1,0 +1,46 @@
+# Example TiGatewayRouteConfig - 定义路由规则
+# 这是使用 TiGateway CRD 的业务示例
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: example-routes
+  namespace: default
+  labels:
+    app: tigateway
+    example: "true"
+spec:
+  routes:
+    - title: "User API"
+      description: "User management endpoints"
+      uri: "lb://user-service"
+      predicates:
+        - "Path=/api/users/**"
+        - "Method=GET,POST,PUT,DELETE"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,user"
+      order: 1
+      ssoEnabled: true
+      tokenRelay: true
+      tags:
+        - "user"
+        - "api"
+    - title: "Product API"
+      description: "Product catalog endpoints"
+      uri: "lb://product-service"
+      predicates:
+        - "Path=/api/products/**"
+        - "Method=GET,POST"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,product"
+      order: 2
+      ssoEnabled: false
+      tags:
+        - "product"
+        - "api"
+  ingress:
+    autoDiscovery: true
+    namespace: default
+    refreshInterval: 30
+    cacheEnabled: true

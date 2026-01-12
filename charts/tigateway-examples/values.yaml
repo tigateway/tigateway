@@ -1,0 +1,194 @@
+# Default values for tigateway-examples
+# 这是一个业务示例 Chart，用于生成 TiGateway CRD 配置
+
+# 全局配置
+global:
+  namespace: default
+  labels:
+    app: tigateway
+    managed-by: helm
+
+# 网关实例配置
+gateway:
+  enabled: true
+  name: my-gateway
+  namespace: default
+  count: 2
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 200m
+      memory: 512Mi
+  ingress:
+    enabled: true
+    namespace: default
+    refreshInterval: 30
+    cacheEnabled: true
+
+# 基础路由配置
+routes:
+  enabled: true
+  name: my-gateway-routes
+  namespace: default
+  ingress:
+    autoDiscovery: true
+    namespace: default
+    refreshInterval: 30
+    cacheEnabled: true
+  routes:
+    - title: "GitHub Proxy"
+      description: "Proxy requests to GitHub"
+      uri: "https://github.com"
+      predicates:
+        - "Path=/github/**"
+      filters:
+        - "StripPrefix=1"
+      order: 1
+      ssoEnabled: false
+      tags:
+        - "external"
+        - "proxy"
+
+# 映射关系配置
+mapping:
+  enabled: true
+  name: example-gateway-mapping
+  namespace: default
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: my-gateway-routes
+    namespace: default
+  priority: 100
+
+# 业务场景示例
+scenarios:
+  # 微服务架构示例
+  microservices:
+    enabled: false
+    namespace: default
+    services:
+      - name: user-service
+        routes:
+          - title: "User API - List Users"
+            uri: "lb://user-service"
+            predicates:
+              - "Path=/api/users"
+              - "Method=GET"
+            filters:
+              - "StripPrefix=2"
+              - "AddRequestHeader=X-Service,user"
+            ssoEnabled: true
+          - title: "User API - Get User"
+            uri: "lb://user-service"
+            predicates:
+              - "Path=/api/users/{id}"
+              - "Method=GET"
+            filters:
+              - "StripPrefix=2"
+              - "AddRequestHeader=X-Service,user"
+            ssoEnabled: true
+      - name: product-service
+        routes:
+          - title: "Product API"
+            uri: "lb://product-service"
+            predicates:
+              - "Path=/api/products/**"
+              - "Method=GET,POST,PUT,DELETE"
+            filters:
+              - "StripPrefix=2"
+              - "AddRequestHeader=X-Service,product"
+            ssoEnabled: false
+      - name: order-service
+        routes:
+          - title: "Order API"
+            uri: "lb://order-service"
+            predicates:
+              - "Path=/api/orders/**"
+              - "Method=GET,POST,PUT"
+            filters:
+              - "StripPrefix=2"
+              - "AddRequestHeader=X-Service,order"
+            ssoEnabled: true
+            tokenRelay: true
+
+  # 外部服务代理示例
+  externalServices:
+    enabled: false
+    namespace: default
+    services:
+      - title: "GitHub Proxy"
+        uri: "https://api.github.com"
+        predicates:
+          - "Path=/github/**"
+        filters:
+          - "StripPrefix=1"
+          - "AddRequestHeader=X-Forwarded-Host,api.github.com"
+        ssoEnabled: false
+      - title: "External API Proxy"
+        uri: "https://httpbin.org"
+        predicates:
+          - "Path=/httpbin/**"
+        filters:
+          - "StripPrefix=1"
+          - "AddRequestHeader=X-Proxy-Source,TiGateway"
+        ssoEnabled: false
+
+  # 多租户示例
+  multiTenant:
+    enabled: false
+    tenants:
+      - name: tenant-a
+        namespace: tenant-a
+        routes:
+          - title: "Tenant A - API Routes"
+            uri: "lb://tenant-a-service"
+            predicates:
+              - "Path=/api/tenant-a/**"
+              - "Header=X-Tenant-ID,tenant-a"
+            filters:
+              - "StripPrefix=3"
+              - "AddRequestHeader=X-Tenant-ID,tenant-a"
+            ssoEnabled: true
+      - name: tenant-b
+        namespace: tenant-b
+        routes:
+          - title: "Tenant B - API Routes"
+            uri: "lb://tenant-b-service"
+            predicates:
+              - "Path=/api/tenant-b/**"
+              - "Header=X-Tenant-ID,tenant-b"
+            filters:
+              - "StripPrefix=3"
+              - "AddRequestHeader=X-Tenant-ID,tenant-b"
+            ssoEnabled: true
+
+# Ingress 示例
+ingress:
+  enabled: false
+  namespace: default
+  name: example-app-ingress
+  ingressClassName: tigateway
+  annotations:
+    tigateway.cn/auto-discover: "true"
+    tigateway.cn/rewrite-target: /$2
+  rules:
+    - host: api.example.com
+      paths:
+        - path: /api/users(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: user-service
+              port:
+                number: 8080
+        - path: /api/products(/|$)(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: product-service
+              port:
+                number: 8080

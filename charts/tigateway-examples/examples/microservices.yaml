@@ -1,0 +1,174 @@
+# 微服务路由配置示例
+# 展示如何为多个微服务配置路由规则
+
+---
+# 用户服务路由配置
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: user-service-routes
+  namespace: default
+  labels:
+    app: tigateway
+    service: user-service
+spec:
+  routes:
+    - title: "User API - List Users"
+      description: "获取用户列表"
+      uri: "lb://user-service"
+      predicates:
+        - "Path=/api/users"
+        - "Method=GET"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,user"
+      order: 1
+      ssoEnabled: true
+      tags:
+        - "user"
+        - "api"
+        - "rest"
+    - title: "User API - Get User"
+      description: "获取单个用户信息"
+      uri: "lb://user-service"
+      predicates:
+        - "Path=/api/users/{id}"
+        - "Method=GET"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,user"
+      order: 2
+      ssoEnabled: true
+      tags:
+        - "user"
+        - "api"
+        - "rest"
+    - title: "User API - Create User"
+      description: "创建新用户"
+      uri: "lb://user-service"
+      predicates:
+        - "Path=/api/users"
+        - "Method=POST"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,user"
+      order: 3
+      ssoEnabled: true
+      tags:
+        - "user"
+        - "api"
+        - "rest"
+
+---
+# 产品服务路由配置
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: product-service-routes
+  namespace: default
+  labels:
+    app: tigateway
+    service: product-service
+spec:
+  routes:
+    - title: "Product API"
+      description: "产品管理 API"
+      uri: "lb://product-service"
+      predicates:
+        - "Path=/api/products/**"
+        - "Method=GET,POST,PUT,DELETE"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,product"
+      order: 1
+      ssoEnabled: false
+      tags:
+        - "product"
+        - "api"
+
+---
+# 订单服务路由配置
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: order-service-routes
+  namespace: default
+  labels:
+    app: tigateway
+    service: order-service
+spec:
+  routes:
+    - title: "Order API"
+      description: "订单管理 API"
+      uri: "lb://order-service"
+      predicates:
+        - "Path=/api/orders/**"
+        - "Method=GET,POST,PUT"
+      filters:
+        - "StripPrefix=2"
+        - "AddRequestHeader=X-Service,order"
+        - "AddRequestHeader=X-Request-ID,${T(java.util.UUID).randomUUID()}"
+      order: 1
+      ssoEnabled: true
+      tokenRelay: true
+      tags:
+        - "order"
+        - "api"
+
+---
+# 将所有路由配置映射到网关实例
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: microservices-mapping
+  namespace: default
+  labels:
+    app: tigateway
+    type: microservices
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: user-service-routes
+    namespace: default
+  priority: 100
+  enabled: true
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: product-service-mapping
+  namespace: default
+  labels:
+    app: tigateway
+    type: microservices
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: product-service-routes
+    namespace: default
+  priority: 100
+  enabled: true
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: order-service-mapping
+  namespace: default
+  labels:
+    app: tigateway
+    type: microservices
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: order-service-routes
+    namespace: default
+  priority: 100
+  enabled: true

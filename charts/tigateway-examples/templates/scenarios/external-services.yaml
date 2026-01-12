@@ -1,0 +1,67 @@
+{{- if .Values.scenarios.externalServices.enabled }}
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: external-services-routes
+  namespace: {{ .Values.scenarios.externalServices.namespace | default (include "tigateway-examples.namespace" .) }}
+  labels:
+    {{- include "tigateway-examples.labels" . | nindent 4 }}
+    type: external-proxy
+    scenario: external-services
+spec:
+  routes:
+    {{- range .Values.scenarios.externalServices.services }}
+    - {{- if .title }}
+      title: {{ .title | quote }}
+      {{- end }}
+      {{- if .description }}
+      description: {{ .description | quote }}
+      {{- end }}
+      uri: {{ .uri | quote }}
+      {{- if .predicates }}
+      predicates:
+        {{- range .predicates }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .filters }}
+      filters:
+        {{- range .filters }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .order }}
+      order: {{ .order }}
+      {{- end }}
+      {{- if .ssoEnabled }}
+      ssoEnabled: {{ .ssoEnabled }}
+      {{- end }}
+      {{- if .tags }}
+      tags:
+        {{- range .tags }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: external-services-mapping
+  namespace: {{ .Values.scenarios.externalServices.namespace | default (include "tigateway-examples.namespace" .) }}
+  labels:
+    {{- include "tigateway-examples.labels" . | nindent 4 }}
+    type: external-proxy
+    scenario: external-services
+spec:
+  gatewayRef:
+    name: {{ .Values.gateway.name }}
+    namespace: {{ .Values.gateway.namespace | default (include "tigateway-examples.namespace" .) }}
+  routeConfigRef:
+    name: external-services-routes
+    namespace: {{ .Values.scenarios.externalServices.namespace | default (include "tigateway-examples.namespace" .) }}
+  priority: 50
+  enabled: true
+{{- end }}

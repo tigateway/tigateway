@@ -1,5 +1,0 @@
-apiVersion: v2
-description: Custom Resource Definitions for Spring Cloud Gateway for Kubernetes
-name: spring-cloud-gateway-crds
-type: application
-version: 1.0.10

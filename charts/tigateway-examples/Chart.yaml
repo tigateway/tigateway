@@ -1,0 +1,15 @@
+apiVersion: v2
+name: tigateway-examples
+description: TiGateway 业务使用示例 Chart - 通过 Helm 模板生成 TiGateway CRD 配置，支持多种业务场景
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - tigateway
+  - gateway
+  - api-gateway
+  - kubernetes
+  - examples
+home: https://github.com/tigateway/tigateway
+maintainers:
+  - name: TiGateway Team

@@ -190,10 +190,10 @@ kubectl apply -f helm/tigateway-crds/templates/
 ### 4. 部署 Gateway
 ```bash
 # 使用 Helm 部署
-helm install tigateway ./helm/gateway
+helm install tigateway ./charts/tigateway
 
-# 或直接应用 YAML
-kubectl apply -f helm/gateway/
+# 或使用业务示例 Chart
+helm install tigateway-examples ./charts/tigateway-examples
 ```
 
 ### 5. 验证部署

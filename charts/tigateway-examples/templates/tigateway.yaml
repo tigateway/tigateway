@@ -1,0 +1,27 @@
+{{- if .Values.gateway.enabled }}
+apiVersion: tigateway.cn/v1
+kind: TiGateway
+metadata:
+  name: {{ .Values.gateway.name }}
+  namespace: {{ .Values.gateway.namespace | default (include "tigateway-examples.namespace" .) }}
+  labels:
+    {{- include "tigateway-examples.labels" . | nindent 4 }}
+    example: "true"
+spec:
+  count: {{ .Values.gateway.count }}
+  {{- if .Values.gateway.resources }}
+  resources:
+    {{- toYaml .Values.gateway.resources | nindent 4 }}
+  {{- end }}
+  {{- if .Values.gateway.ingress }}
+  ingress:
+    enabled: {{ .Values.gateway.ingress.enabled }}
+    namespace: {{ .Values.gateway.ingress.namespace | default (include "tigateway-examples.namespace" .) }}
+    {{- if .Values.gateway.ingress.refreshInterval }}
+    refreshInterval: {{ .Values.gateway.ingress.refreshInterval }}
+    {{- end }}
+    {{- if .Values.gateway.ingress.cacheEnabled }}
+    cacheEnabled: {{ .Values.gateway.ingress.cacheEnabled }}
+    {{- end }}
+  {{- end }}
+{{- end }}

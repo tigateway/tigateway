@@ -1,0 +1,69 @@
+{{- if .Values.scenarios.multiTenant.enabled }}
+{{- range .Values.scenarios.multiTenant.tenants }}
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: {{ .name }}-routes
+  namespace: {{ .namespace }}
+  labels:
+    {{- include "tigateway-examples.labels" $ | nindent 4 }}
+    tenant: {{ .name }}
+    scenario: multi-tenant
+spec:
+  routes:
+    {{- range .routes }}
+    - {{- if .title }}
+      title: {{ .title | quote }}
+      {{- end }}
+      {{- if .description }}
+      description: {{ .description | quote }}
+      {{- end }}
+      uri: {{ .uri | quote }}
+      {{- if .predicates }}
+      predicates:
+        {{- range .predicates }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .filters }}
+      filters:
+        {{- range .filters }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .order }}
+      order: {{ .order }}
+      {{- end }}
+      {{- if .ssoEnabled }}
+      ssoEnabled: {{ .ssoEnabled }}
+      {{- end }}
+      {{- if .tags }}
+      tags:
+        {{- range .tags }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: {{ .name }}-mapping
+  namespace: {{ .namespace }}
+  labels:
+    {{- include "tigateway-examples.labels" $ | nindent 4 }}
+    tenant: {{ .name }}
+    scenario: multi-tenant
+spec:
+  gatewayRef:
+    name: {{ $.Values.gateway.name }}
+    namespace: {{ $.Values.gateway.namespace | default (include "tigateway-examples.namespace" $) }}
+  routeConfigRef:
+    name: {{ .name }}-routes
+    namespace: {{ .namespace }}
+  priority: 200
+  enabled: true
+{{- end }}
+{{- end }}

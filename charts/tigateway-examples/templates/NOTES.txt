@@ -1,0 +1,39 @@
+TiGateway 业务示例 Chart 已安装！
+
+{{- if .Values.gateway.enabled }}
+✅ TiGateway 实例: {{ .Values.gateway.name }}
+   命名空间: {{ .Values.gateway.namespace | default (include "tigateway-examples.namespace" .) }}
+{{- end }}
+
+{{- if .Values.routes.enabled }}
+✅ 路由配置: {{ .Values.routes.name }}
+   命名空间: {{ .Values.routes.namespace | default (include "tigateway-examples.namespace" .) }}
+{{- end }}
+
+{{- if .Values.mapping.enabled }}
+✅ 映射关系: {{ .Values.mapping.name }}
+   命名空间: {{ .Values.mapping.namespace | default (include "tigateway-examples.namespace" .) }}
+{{- end }}
+
+{{- if .Values.scenarios.microservices.enabled }}
+✅ 微服务场景: 已启用
+{{- end }}
+
+{{- if .Values.scenarios.externalServices.enabled }}
+✅ 外部服务场景: 已启用
+{{- end }}
+
+{{- if .Values.scenarios.multiTenant.enabled }}
+✅ 多租户场景: 已启用
+{{- end }}
+
+{{- if .Values.ingress.enabled }}
+✅ Ingress 示例: {{ .Values.ingress.name }}
+{{- end }}
+
+查看资源:
+  kubectl get tigateway
+  kubectl get tigatewayrouteconfigs
+  kubectl get tigatewaymappings
+
+更多信息请参考: https://github.com/tigateway/tigateway

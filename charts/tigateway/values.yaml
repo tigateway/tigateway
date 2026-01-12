@@ -1,0 +1,159 @@
+# Default values for tigateway.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# 命名空间
+namespace: default
+
+# 副本数量
+replicaCount: 2
+
+# 镜像配置
+image:
+  repository: tigateway/gateway
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+  # 可选：镜像拉取密钥
+  pullSecrets: []
+
+# 服务配置
+service:
+  name: tigateway
+  type: ClusterIP  # ClusterIP, NodePort, LoadBalancer
+  ports:
+    gateway: 80      # 主网关端口 (targetPort: 8080)
+    admin: 8081      # 管理界面端口
+    management: 8090 # 监控端点端口
+
+# Ingress配置
+ingress:
+  enabled: false
+  className: "tigateway"
+  annotations: {}
+  hosts:
+    - host: gateway.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+    # - secretName: tigateway-tls
+    #   hosts:
+    #     - gateway.local
+  # Ingress 路由配置（用于 TiGateway 从 Kubernetes Ingress 读取路由）
+  config:
+    namespace: default              # 监听的命名空间
+    refreshInterval: 30             # 路由刷新间隔（秒）
+    cacheEnabled: true              # 启用路由缓存
+    cacheExpiration: 300            # 缓存过期时间（秒）
+    tlsEnabled: true                # 启用TLS支持
+    defaultServicePort: 80          # 默认服务端口
+    pathRewrite:
+      enabled: true                 # 启用路径重写
+      pattern: "/(.*)"              # 重写模式
+      replacement: "/$1"            # 重写替换
+
+# 资源限制
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# 节点选择器
+nodeSelector: {}
+
+# 容忍度
+tolerations: []
+
+# 亲和性
+affinity: {}
+
+# 日志级别
+logging:
+  level:
+    root: INFO
+    ti.gateway: INFO
+    ti.gateway.kubernetes.ingress: INFO  # Ingress 相关日志
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: INFO
+    io.kubernetes.client: WARN          # Kubernetes 客户端日志
+
+# 自动扩缩容配置
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Pod安全上下文
+podSecurityContext:
+  fsGroup: 2000
+
+# 容器安全上下文
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# 存活性和就绪性探针配置
+probes:
+  liveness:
+    httpGet:
+      path: /actuator/health
+      port: 8090
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readiness:
+    httpGet:
+      path: /actuator/health/readiness
+      port: 8090
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+# ServiceAccount配置
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# RBAC配置
+rbac:
+  create: true
+
+# 环境变量
+env: []
+  # - name: SPRING_PROFILES_ACTIVE
+  #   value: "kubernetes"
+  # - name: SPRING_CLOUD_KUBERNETES_CONFIG_ENABLED
+  #   value: "true"
+
+# ConfigMap配置
+configMap:
+  create: true
+  name: tigateway-config
+  data: {}
+    # application.yml: |
+    #   spring:
+    #     cloud:
+    #       gateway:
+    #         routes:
+    #           - id: example
+    #             uri: http://example.com
+    #             predicates:
+    #               - Path=/api/**
+
+# 清理自定义资源
+cleanupCustomResources:
+  forceDeletion: false

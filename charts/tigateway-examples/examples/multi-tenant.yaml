@@ -1,0 +1,96 @@
+# 多租户路由配置示例
+# 展示如何为不同租户配置独立的路由规则
+
+---
+# 租户 A 的路由配置
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: tenant-a-routes
+  namespace: tenant-a
+  labels:
+    app: tigateway
+    tenant: tenant-a
+spec:
+  routes:
+    - title: "Tenant A - API Routes"
+      description: "租户 A 的 API 路由"
+      uri: "lb://tenant-a-service"
+      predicates:
+        - "Path=/api/tenant-a/**"
+        - "Header=X-Tenant-ID,tenant-a"
+      filters:
+        - "StripPrefix=3"
+        - "AddRequestHeader=X-Tenant-ID,tenant-a"
+      order: 1
+      ssoEnabled: true
+      tags:
+        - "tenant-a"
+        - "api"
+
+---
+# 租户 B 的路由配置
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: tenant-b-routes
+  namespace: tenant-b
+  labels:
+    app: tigateway
+    tenant: tenant-b
+spec:
+  routes:
+    - title: "Tenant B - API Routes"
+      description: "租户 B 的 API 路由"
+      uri: "lb://tenant-b-service"
+      predicates:
+        - "Path=/api/tenant-b/**"
+        - "Header=X-Tenant-ID,tenant-b"
+      filters:
+        - "StripPrefix=3"
+        - "AddRequestHeader=X-Tenant-ID,tenant-b"
+      order: 1
+      ssoEnabled: true
+      tags:
+        - "tenant-b"
+        - "api"
+
+---
+# 租户 A 的映射
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: tenant-a-mapping
+  namespace: tenant-a
+  labels:
+    app: tigateway
+    tenant: tenant-a
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: tenant-a-routes
+    namespace: tenant-a
+  priority: 200
+  enabled: true
+
+---
+# 租户 B 的映射
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: tenant-b-mapping
+  namespace: tenant-b
+  labels:
+    app: tigateway
+    tenant: tenant-b
+spec:
+  gatewayRef:
+    name: my-gateway
+    namespace: default
+  routeConfigRef:
+    name: tenant-b-routes
+    namespace: tenant-b
+  priority: 200
+  enabled: true

@@ -1,0 +1,72 @@
+{{- if .Values.scenarios.microservices.enabled }}
+{{- range .Values.scenarios.microservices.services }}
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: {{ .name }}-routes
+  namespace: {{ $.Values.scenarios.microservices.namespace | default (include "tigateway-examples.namespace" $) }}
+  labels:
+    {{- include "tigateway-examples.labels" $ | nindent 4 }}
+    service: {{ .name }}
+    scenario: microservices
+spec:
+  routes:
+    {{- range .routes }}
+    - {{- if .title }}
+      title: {{ .title | quote }}
+      {{- end }}
+      {{- if .description }}
+      description: {{ .description | quote }}
+      {{- end }}
+      uri: {{ .uri | quote }}
+      {{- if .predicates }}
+      predicates:
+        {{- range .predicates }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .filters }}
+      filters:
+        {{- range .filters }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .order }}
+      order: {{ .order }}
+      {{- end }}
+      {{- if .ssoEnabled }}
+      ssoEnabled: {{ .ssoEnabled }}
+      {{- end }}
+      {{- if .tokenRelay }}
+      tokenRelay: {{ .tokenRelay }}
+      {{- end }}
+      {{- if .tags }}
+      tags:
+        {{- range .tags }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+---
+apiVersion: tigateway.cn/v1
+kind: TiGatewayMapping
+metadata:
+  name: {{ .name }}-mapping
+  namespace: {{ $.Values.scenarios.microservices.namespace | default (include "tigateway-examples.namespace" $) }}
+  labels:
+    {{- include "tigateway-examples.labels" $ | nindent 4 }}
+    service: {{ .name }}
+    scenario: microservices
+spec:
+  gatewayRef:
+    name: {{ $.Values.gateway.name }}
+    namespace: {{ $.Values.gateway.namespace | default (include "tigateway-examples.namespace" $) }}
+  routeConfigRef:
+    name: {{ .name }}-routes
+    namespace: {{ $.Values.scenarios.microservices.namespace | default (include "tigateway-examples.namespace" $) }}
+  priority: 100
+  enabled: true
+{{- end }}
+{{- end }}

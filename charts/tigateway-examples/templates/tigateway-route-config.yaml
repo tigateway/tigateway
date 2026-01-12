@@ -1,0 +1,65 @@
+{{- if .Values.routes.enabled }}
+apiVersion: tigateway.cn/v1
+kind: TiGatewayRouteConfig
+metadata:
+  name: {{ .Values.routes.name }}
+  namespace: {{ .Values.routes.namespace | default (include "tigateway-examples.namespace" .) }}
+  labels:
+    {{- include "tigateway-examples.labels" . | nindent 4 }}
+    example: "true"
+spec:
+  {{- if .Values.routes.routes }}
+  routes:
+    {{- range .Values.routes.routes }}
+    - {{- if .title }}
+      title: {{ .title | quote }}
+      {{- end }}
+      {{- if .description }}
+      description: {{ .description | quote }}
+      {{- end }}
+      uri: {{ .uri | quote }}
+      {{- if .predicates }}
+      predicates:
+        {{- range .predicates }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .filters }}
+      filters:
+        {{- range .filters }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .order }}
+      order: {{ .order }}
+      {{- end }}
+      {{- if .ssoEnabled }}
+      ssoEnabled: {{ .ssoEnabled }}
+      {{- end }}
+      {{- if .tokenRelay }}
+      tokenRelay: {{ .tokenRelay }}
+      {{- end }}
+      {{- if .tags }}
+      tags:
+        {{- range .tags }}
+        - {{ . | quote }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.routes.ingress }}
+  ingress:
+    {{- if .Values.routes.ingress.autoDiscovery }}
+    autoDiscovery: {{ .Values.routes.ingress.autoDiscovery }}
+    {{- end }}
+    {{- if .Values.routes.ingress.namespace }}
+    namespace: {{ .Values.routes.ingress.namespace }}
+    {{- end }}
+    {{- if .Values.routes.ingress.refreshInterval }}
+    refreshInterval: {{ .Values.routes.ingress.refreshInterval }}
+    {{- end }}
+    {{- if .Values.routes.ingress.cacheEnabled }}
+    cacheEnabled: {{ .Values.routes.ingress.cacheEnabled }}
+    {{- end }}
+  {{- end }}
+{{- end }}

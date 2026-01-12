@@ -1,0 +1,6 @@
+dependencies:
+- name: tigateway-crds
+  repository: file://../tigateway-crds
+  version: 1.0.0
+digest: sha256:e94f337cb373fd34b50b8f14df8fafc04ce86d382b67c56a330d27ab3b0e9c62
+generated: "2026-01-12T17:49:52.99311+08:00"

@@ -1,0 +1,10 @@
+apiVersion: v2
+appVersion: 1.0.0
+dependencies:
+- name: tigateway-crds
+  repository: file://../tigateway-crds
+  version: 1.0.0
+description: A Helm chart for TiGateway - Spring Cloud Gateway for Kubernetes
+name: tigateway
+type: application
+version: 1.0.0

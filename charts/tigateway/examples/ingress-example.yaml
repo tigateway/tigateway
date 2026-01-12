@@ -1,0 +1,42 @@
+# Example Kubernetes Ingress - TiGateway 会自动发现并转换为路由
+# 这是使用 Kubernetes Ingress 的业务示例
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-app-ingress
+  namespace: default
+  labels:
+    app: tigateway
+  annotations:
+    tigateway.cn/auto-discover: "true"
+    tigateway.cn/rewrite-target: /$2
+spec:
+  ingressClassName: tigateway
+  rules:
+    - host: api.example.com
+      http:
+        paths:
+          - path: /api/users(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: user-service
+                port:
+                  number: 8080
+          - path: /api/products(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: product-service
+                port:
+                  number: 8080
+    - host: app.example.com
+      http:
+        paths:
+          - path: /app(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend-service
+                port:
+                  number: 80

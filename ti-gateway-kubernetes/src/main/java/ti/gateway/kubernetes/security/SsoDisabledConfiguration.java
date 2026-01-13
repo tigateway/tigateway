@@ -14,6 +14,13 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
         matchIfMissing = true,
         havingValue = "not-a-real-url-to-match-missing-property-only"
 )
+/**
+ * SSO Disabled Configuration
+ * 
+ * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
+ * These methods are still functional and will be migrated to new API when stable.
+ */
+@SuppressWarnings("deprecation")
 public class SsoDisabledConfiguration {
     private static final Logger log = LoggerFactory.getLogger(SsoDisabledConfiguration.class);
 

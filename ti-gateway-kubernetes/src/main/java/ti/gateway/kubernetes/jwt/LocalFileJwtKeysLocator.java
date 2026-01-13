@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @JwtKeyEnabled
 public class LocalFileJwtKeysLocator {
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileJwtKeysLocator.class);
-    private static final String KEY_SEPARATOR = ",";
     private final Path keysFile;
     private final Clock clock;
     private final Map<String, Key> knownKeys = new ConcurrentHashMap<>();
@@ -65,8 +64,8 @@ public class LocalFileJwtKeysLocator {
                 if ((key = this.watchService.take()) != null) {
                     LOGGER.trace("Detected events");
 
-                    for(Iterator iterator = key.pollEvents().iterator(); iterator.hasNext(); this.lastRefreshTime = this.clock.millis()) {
-                        WatchEvent<?> event = (WatchEvent) iterator.next();
+                    for(Iterator<WatchEvent<?>> iterator = key.pollEvents().iterator(); iterator.hasNext(); this.lastRefreshTime = this.clock.millis()) {
+                        WatchEvent<?> event = iterator.next();
                         if (StandardWatchEventKinds.ENTRY_MODIFY.equals(event.kind()) || StandardWatchEventKinds.ENTRY_CREATE.equals(event.kind())) {
                             LOGGER.debug("JWT keys file changed, reloading");
                             this.reloadKeys(this.keysFile);
@@ -91,8 +90,8 @@ public class LocalFileJwtKeysLocator {
     }
 
     private void reloadKeys(Path keysFile) {
-        try {
-            Map<String, LocalFileJwtKeysLocator.Key> newKeys = (Map) (new Scanner(keysFile))
+        try (Scanner scanner = new Scanner(keysFile)) {
+            Map<String, LocalFileJwtKeysLocator.Key> newKeys = scanner
                     .findAll(".*,.*,.*[\\s\\S]*?(?=" + System.lineSeparator() + ".*?,|$)")
                     .map(MatchResult::group)
                     .map(String::trim)

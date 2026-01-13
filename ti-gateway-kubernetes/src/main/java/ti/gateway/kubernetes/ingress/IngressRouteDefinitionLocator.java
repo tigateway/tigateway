@@ -93,31 +93,53 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
     private List<Route> convertIngressToRoutes(V1Ingress ingress) {
         List<Route> routes = new ArrayList<>();
         
-        if (ingress.getMetadata() == null) {
+        if (ingress == null || ingress.getMetadata() == null) {
+            logger.warn("Ingress or metadata is null, skipping");
+            return routes;
+        }
+        
+        io.kubernetes.client.openapi.models.V1ObjectMeta metadata = ingress.getMetadata();
+        if (metadata == null) {
             logger.warn("Ingress metadata is null, skipping");
             return routes;
         }
         
-        String ingressName = ingress.getMetadata().getName();
-        String ingressNamespace = ingress.getMetadata().getNamespace();
+        String ingressName = metadata.getName();
+        String ingressNamespace = metadata.getNamespace();
         
         if (ingressName == null || ingressNamespace == null) {
             logger.warn("Ingress name or namespace is null, skipping");
             return routes;
         }
 
-        if (ingress.getSpec() == null || ingress.getSpec().getRules() == null) {
+        io.kubernetes.client.openapi.models.V1IngressSpec spec = ingress.getSpec();
+        if (spec == null) {
+            logger.debug("Ingress spec is null for {}, skipping", ingressName);
             return routes;
         }
-
-        for (V1IngressRule rule : ingress.getSpec().getRules()) {
-            String host = rule.getHost();
-            
-            if (rule.getHttp() != null && rule.getHttp().getPaths() != null) {
-                for (V1HTTPIngressPath path : rule.getHttp().getPaths()) {
-                    Route route = buildRoute(ingressName, ingressNamespace, host, path, ingress);
-                    if (route != null) {
-                        routes.add(route);
+        
+        List<V1IngressRule> rules = spec.getRules();
+        if (rules == null) {
+            logger.debug("Ingress rules is null for {}, skipping", ingressName);
+            return routes;
+        }
+        if (rules != null) {
+            for (V1IngressRule rule : rules) {
+                if (rule == null) {
+                    continue;
+                }
+                
+                String host = rule.getHost();
+                
+                    io.kubernetes.client.openapi.models.V1HTTPIngressRuleValue http = rule.getHttp();
+                if (http != null && http.getPaths() != null) {
+                    for (V1HTTPIngressPath path : http.getPaths()) {
+                        if (path != null) {
+                            Route route = buildRoute(ingressName, ingressNamespace, host, path, ingress);
+                            if (route != null) {
+                                routes.add(route);
+                            }
+                        }
                     }
                 }
             }
@@ -170,11 +192,16 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
                 });
 
             // 添加TLS支持
-            if (ingress.getSpec() != null && ingress.getSpec().getTls() != null) {
-                for (V1IngressTLS tls : ingress.getSpec().getTls()) {
-                    if (tls.getHosts() != null && tls.getHosts().contains(host)) {
-                        // 可以在这里添加TLS相关的配置
-                        logger.debug("TLS configured for host: {}", host);
+            io.kubernetes.client.openapi.models.V1IngressSpec ingressSpec = ingress.getSpec();
+            if (ingressSpec != null) {
+                List<V1IngressTLS> tlsList = ingressSpec.getTls();
+                if (tlsList != null) {
+                    for (V1IngressTLS tls : tlsList) {
+                        List<String> hosts = tls != null ? tls.getHosts() : null;
+                        if (hosts != null && host != null && hosts.contains(host)) {
+                            // 可以在这里添加TLS相关的配置
+                            logger.debug("TLS configured for host: {}", host);
+                        }
                     }
                 }
             }
@@ -202,14 +229,20 @@ public class IngressRouteDefinitionLocator implements RouteLocator {
             }
             
             String serviceName = serviceBackend.getName();
+            if (serviceName == null || serviceName.isEmpty()) {
+                logger.warn("Service name is null or empty, using default service");
+                return "lb://default-service";
+            }
+            
             V1ServiceBackendPort port = serviceBackend.getPort();
             
             String portStr = "80";
             if (port != null) {
-                if (port.getName() != null) {
-                    portStr = port.getName();
+                String portName = port.getName();
+                if (portName != null && !portName.isEmpty()) {
+                    portStr = portName;
                 } else if (port.getNumber() != null) {
-                    portStr = port.getNumber().toString();
+                    portStr = String.valueOf(port.getNumber());
                 }
             }
 

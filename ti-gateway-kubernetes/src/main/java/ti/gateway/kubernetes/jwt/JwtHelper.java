@@ -74,21 +74,29 @@ public class JwtHelper {
             return (String)claimValue;
         } else if (claimValue instanceof List) {
             log.warn("Only using first value of claim collection, ignoring the rest");
-            return (String)((List)claimValue).get(0);
+            List<?> list = (List<?>) claimValue;
+            return list.isEmpty() ? null : String.valueOf(list.get(0));
         } else if (claimValue instanceof String[]) {
             log.warn("Only using first value of claim collection, ignoring the rest");
-            return ((String[])claimValue)[0];
+            String[] array = (String[]) claimValue;
+            return array.length > 0 ? array[0] : null;
         } else {
             log.debug("Could not extract claim value: incompatible type, expected String, String[] or List<String>");
             return null;
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static List<String> getClaimAsList(Object claimValue) {
         if (claimValue instanceof String) {
-            return ((String)claimValue).contains(",") ? (List) Arrays.stream(((String)claimValue).split(",")).map(String::trim).collect(Collectors.toList()) : List.of((String)claimValue);
+            String str = (String) claimValue;
+            return str.contains(",") 
+                    ? Arrays.stream(str.split(","))
+                            .map(String::trim)
+                            .collect(Collectors.toList())
+                    : List.of(str);
         } else if (claimValue instanceof List) {
-            return (List)claimValue;
+            return (List<String>) claimValue;
         } else if (claimValue instanceof String[]) {
             return Arrays.asList((String[])claimValue);
         } else if (!(claimValue instanceof Long) && !(claimValue instanceof Double)) {

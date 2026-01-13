@@ -25,8 +25,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Mono;
 
+/**
+ * Scopes Gateway Filter Factory
+ * 
+ * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
+ * These methods are still functional and will be migrated to new API when stable.
+ */
 @Component
 @SsoEnabled
+@SuppressWarnings("deprecation")
 public class ScopesGatewayFilterFactory implements GatewayFilterFactory<ScopesProperties> {
     private final Logger logger = LoggerFactory.getLogger(ScopesGatewayFilterFactory.class);
     private final ReactiveJwtDecoder reactiveJwtDecoder;

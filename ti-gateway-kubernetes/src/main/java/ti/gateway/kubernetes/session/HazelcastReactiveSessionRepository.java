@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.session.FlushMode;
@@ -89,7 +88,9 @@ public class HazelcastReactiveSessionRepository implements ReactiveSessionReposi
             String originalId = session.originalId;
             session.originalId = session.getId();
             result = this.serializeSession(session).flatMap((jsonSession) -> {
-                return Flux.merge(new Publisher[]{Mono.fromCompletionStage(this.sessions.removeAsync(originalId)), Mono.fromCompletionStage(this.sessions.setAsync(session.getId(), jsonSession, session.getMaxInactiveInterval().getSeconds(), TimeUnit.SECONDS))}).then();
+                Mono<Void> removeMono = Mono.fromCompletionStage(this.sessions.removeAsync(originalId)).then();
+                Mono<Void> setMono = Mono.fromCompletionStage(this.sessions.setAsync(session.getId(), jsonSession, session.getMaxInactiveInterval().getSeconds(), TimeUnit.SECONDS)).then();
+                return Flux.merge(removeMono, setMono).then();
             });
         } else if (session.hasChanges()) {
             if (log.isDebugEnabled()) {
@@ -158,7 +159,7 @@ public class HazelcastReactiveSessionRepository implements ReactiveSessionReposi
         }
 
         HazelcastSession(MapSession cached) {
-            this.delta = new HashMap();
+            this.delta = new HashMap<>();
             Assert.notNull(cached, "MapSession cannot be null");
             this.delegate = cached;
             this.originalId = cached.getId();

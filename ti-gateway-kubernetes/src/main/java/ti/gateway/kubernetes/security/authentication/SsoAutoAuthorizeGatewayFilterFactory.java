@@ -57,7 +57,9 @@ public class SsoAutoAuthorizeGatewayFilterFactory extends AbstractGatewayFilterF
     }
 
     private List<GrantedAuthority> parseGrantedAuthorities(SsoAutoAuthorizeGatewayFilterFactory.AuthoritiesProperties config) {
-        return (List)config.getAuthorities().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return config.getAuthorities().stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     public class AuthWebFilter implements WebFilter {

@@ -5,6 +5,7 @@ import io.kubernetes.client.openapi.apis.NetworkingV1Api;
 import io.kubernetes.client.openapi.models.V1Ingress;
 import io.kubernetes.client.openapi.models.V1IngressList;
 import io.kubernetes.client.openapi.models.V1ListMeta;
+import io.kubernetes.client.openapi.models.V1ObjectMeta;
 import io.kubernetes.client.util.Watch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,7 +145,23 @@ public class IngressWatcher {
 
                     V1Ingress ingress = response.object;
                     String eventType = response.type;
-                    String ingressName = ingress.getMetadata().getName();
+                    
+                    if (ingress == null || ingress.getMetadata() == null) {
+                        logger.warn("Received Ingress event with null ingress or metadata, skipping");
+                        continue;
+                    }
+                    
+                    V1ObjectMeta metadata = ingress.getMetadata();
+                    if (metadata == null) {
+                        logger.warn("Received Ingress event with null metadata, skipping");
+                        continue;
+                    }
+                    
+                    String ingressName = metadata.getName();
+                    if (ingressName == null) {
+                        logger.warn("Received Ingress event with null name, skipping");
+                        continue;
+                    }
 
                     logger.debug("Received Ingress event: {} for {}", eventType, ingressName);
 
@@ -182,7 +199,22 @@ public class IngressWatcher {
      * 处理Ingress资源变化
      */
     private void handleIngressChange(String eventType, V1Ingress ingress) {
-        String ingressName = ingress.getMetadata().getName();
+        if (ingress == null || ingress.getMetadata() == null) {
+            logger.warn("Cannot handle Ingress change: ingress or metadata is null");
+            return;
+        }
+        
+        V1ObjectMeta metadata = ingress.getMetadata();
+        if (metadata == null) {
+            logger.warn("Cannot handle Ingress change: metadata is null");
+            return;
+        }
+        
+        String ingressName = metadata.getName();
+        if (ingressName == null) {
+            logger.warn("Cannot handle Ingress change: ingress name is null");
+            return;
+        }
         
         logger.info("Handling Ingress {} event for: {}", eventType, ingressName);
 

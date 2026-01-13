@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.cloud.gateway.support.HasRouteId;
 import org.springframework.util.StringUtils;
 
+@SuppressWarnings("unused")
 class RateLimiterProperties implements HasRouteId {
     private int limit = 0;
     private Duration duration = Duration.ofSeconds(1L);
@@ -18,10 +19,15 @@ class RateLimiterProperties implements HasRouteId {
     private String header;
     private int xForwardedForMaxTrustedIndex = 1;
     private final List<String> ipAddresses = new ArrayList<>();
+    @SuppressWarnings("unused")
     private static final String CLAIM_KEY = "claim:";
+    @SuppressWarnings("unused")
     private static final String HEADER_KEY = "header:";
+    @SuppressWarnings("unused")
     private static final String IP_KEY = "IPs:";
+    @SuppressWarnings("unused")
     private static final String NUMBER_REGEX = "\\d+";
+    @SuppressWarnings("unused")
     private static final int DEFAULT_X_FORWARDED_FOR_MAX_TRUSTED_INDEX = 1;
 
     RateLimiterProperties() {

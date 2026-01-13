@@ -22,6 +22,7 @@ public class JWTClaimRoutePredicateFactory extends AbstractRoutePredicateFactory
     public static final String HEADER_KEY = "header";
     public static final String CLAIM_KEY = "claim";
     public static final String REGEXP_KEY = "regexp";
+    @SuppressWarnings("unused")
     private static final int MAX_HEADER_VALUES_TO_CHECK = 3;
 
     public JWTClaimRoutePredicateFactory() {
@@ -41,7 +42,10 @@ public class JWTClaimRoutePredicateFactory extends AbstractRoutePredicateFactory
             }
 
             public boolean test(ServerWebExchange exchange) {
-                List<String> values = (List)((List)exchange.getRequest().getHeaders().getOrDefault(config.header, Collections.emptyList())).stream().limit(3L).collect(Collectors.toList());
+                List<String> headerValues = exchange.getRequest().getHeaders().getOrDefault(config.header, Collections.emptyList());
+                List<String> values = headerValues.stream()
+                        .limit(3L)
+                        .collect(Collectors.toList());
                 if (values.isEmpty()) {
                     JWTClaimRoutePredicateFactory.LOG.debug("Header: {} is empty", config.header);
                     return false;

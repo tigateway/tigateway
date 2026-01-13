@@ -11,8 +11,11 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 @Component
+@SuppressWarnings({"unused", "unchecked"})
 public class RolesExtractor {
+    @SuppressWarnings("unused")
     private static final String ATTRIBUTE_SEPARATOR = ".";
+    @SuppressWarnings("unused")
     private static final String ATTRIBUTE_SEPARATOR_REGEX = "\\.";
     private final String rolesUserAttributeName;
 
@@ -43,10 +46,10 @@ public class RolesExtractor {
 
     private Set<String> asSet(Iterable<String> values) {
         Set<String> objects = new HashSet<>();
-        Iterator iterator = values.iterator();
+        Iterator<String> iterator = values.iterator();
 
         while (iterator.hasNext()) {
-            String value = (String) iterator.next();
+            String value = iterator.next();
             objects.add(value);
         }
 

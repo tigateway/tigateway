@@ -20,8 +20,11 @@ import reactor.core.publisher.Mono;
         havingValue = "false"
 )
 public class SecureHeadersGatewayGlobalFilter implements GlobalFilter, Ordered {
+    @SuppressWarnings("unused")
     private static final String DEFAULT_CACHE_CONTROL_VALUE = "no-cache, no-store, max-age=0, must-revalidate";
+    @SuppressWarnings("unused")
     private static final String DEFAULT_PRAGMA_VALUE = "no-cache";
+    @SuppressWarnings("unused")
     private static final String DEFAULT_EXPIRES_VALUE = "0";
     private static final Map<String, String> DEFAULT_SECURE_HEADERS = new HashMap<>();
     private final SecureHeadersProperties properties;

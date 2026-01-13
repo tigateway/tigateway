@@ -35,11 +35,17 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * JWT Key Gateway Filter Factory
+ * 
+ * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
+ * These methods are still functional and will be migrated to new API when stable.
+ */
 @Component
 @JwtKeyEnabled
+@SuppressWarnings("deprecation")
 public class JwtKeyGatewayFilterFactory implements GatewayFilterFactory<JwtKeyGatewayFilterFactory.Config> {
     private static final Logger log = LoggerFactory.getLogger(JwtKeyGatewayFilterFactory.class);
-    private static final String DEFAULT_WWW_HEADER_MESSAGE = "Token could not be validated";
     private final KeyParser keyParser;
     private final TokenVerifier tokenVerifier;
     private final LocalFileJwtKeysLocator localFileJwtKeysLocator;
@@ -88,9 +94,9 @@ public class JwtKeyGatewayFilterFactory implements GatewayFilterFactory<JwtKeyGa
     }
 
     private DefaultOAuth2AuthenticatedPrincipal buildPrincipal(String token, JwtKeyGatewayFilterFactory.Config config) {
-        Collection<GrantedAuthority> roles = (Collection) this.rolesExtractor.rolesFromClaim(token).stream().map((role) -> {
-            return new SimpleGrantedAuthority("ROLE_" + role);
-        }).collect(Collectors.toSet());
+        Collection<GrantedAuthority> roles = this.rolesExtractor.rolesFromClaim(token).stream()
+                .map((role) -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toCollection(ArrayList::new));
         return new DefaultOAuth2AuthenticatedPrincipal(Map.of("keyLocation", config.getKeyLocation()), roles);
     }
 
@@ -134,13 +140,13 @@ public class JwtKeyGatewayFilterFactory implements GatewayFilterFactory<JwtKeyGa
             String sourceType = parts[0];
             String source = parts[1];
             if ("header".equals(sourceType)) {
-                return (String) Optional.of(exchange).map(ServerWebExchange::getRequest).map(HttpMessage::getHeaders).map((headers) -> {
-                    return headers.get(source);
-                }).filter((headers) -> {
-                    return !headers.isEmpty();
-                }).map((headers) -> {
-                    return (String)headers.get(0);
-                }).orElse("");
+                return Optional.of(exchange)
+                        .map(ServerWebExchange::getRequest)
+                        .map(HttpMessage::getHeaders)
+                        .map((headers) -> headers.get(source))
+                        .filter((headers) -> headers != null && !headers.isEmpty())
+                        .map((headers) -> headers.get(0))
+                        .orElse("");
             }
 
             if ("claim".equals(sourceType)) {

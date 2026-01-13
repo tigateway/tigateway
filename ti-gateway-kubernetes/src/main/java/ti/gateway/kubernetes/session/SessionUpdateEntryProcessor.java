@@ -49,14 +49,14 @@ class SessionUpdateEntryProcessor implements EntryProcessor<String, String, Bool
             }
 
             if (this.delta != null) {
-                Iterator var4 = this.delta.entrySet().iterator();
+                Iterator<Map.Entry<String, Object>> var4 = this.delta.entrySet().iterator();
 
                 while (var4.hasNext()) {
-                    Entry<String, Object> attribute = (Entry) var4.next();
+                    Map.Entry<String, Object> attribute = var4.next();
                     if (attribute.getValue() != null) {
-                        value.setAttribute((String) attribute.getKey(), attribute.getValue());
+                        value.setAttribute(attribute.getKey(), attribute.getValue());
                     } else {
-                        value.removeAttribute((String) attribute.getKey());
+                        value.removeAttribute(attribute.getKey());
                     }
                 }
             }

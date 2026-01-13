@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
+@SuppressWarnings("unused")
 class DefaultRateLimiter extends AbstractRateLimiter<RateLimiterProperties> {
+    @SuppressWarnings("unused")
     private static final String CONFIGURATION_PROPERTY_NAME = "rate-limiter";
     private static final RateLimiterProperties DEFAULT_CONFIG = new RateLimiterProperties();
     private final RequestCounterFactory requestCounterFactory;

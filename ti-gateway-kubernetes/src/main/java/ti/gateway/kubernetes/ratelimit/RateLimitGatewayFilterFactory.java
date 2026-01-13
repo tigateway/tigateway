@@ -111,11 +111,12 @@ class RateLimitGatewayFilterFactory implements GatewayFilterFactory<RateLimiterP
     }
 
     private String getClaimFromAuthorizationHeaderToken(ServerWebExchange exchange, String claimName) {
-        Optional<String> authorizationHeader = ((List)exchange.getRequest().getHeaders().getOrDefault("Authorization", Collections.emptyList())).stream().findFirst();
+        List<String> authHeaders = exchange.getRequest().getHeaders().getOrDefault("Authorization", Collections.emptyList());
+        Optional<String> authorizationHeader = authHeaders.stream().findFirst();
         if (authorizationHeader.isEmpty()) {
             return "MISSING_RATE_LIMIT_KEY";
         } else {
-            String sanitizedHeader = JwtHelper.cleanupHeaderValue((String)authorizationHeader.get());
+            String sanitizedHeader = JwtHelper.cleanupHeaderValue(authorizationHeader.get());
             return JwtHelper.getClaimAsString(sanitizedHeader, claimName);
         }
     }

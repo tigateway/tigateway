@@ -13,12 +13,16 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Component
+@SuppressWarnings("unused")
 public class CorsGatewayFilterApplicationListener implements ApplicationListener<RefreshRoutesEvent> {
     private final GlobalCorsProperties globalCorsProperties;
     private final RoutePredicateHandlerMapping routePredicateHandlerMapping;
     private final RouteDefinitionLocator routeDefinitionLocator;
+    @SuppressWarnings("unused")
     private static final String PATH_PREDICATE_NAME = "Path";
+    @SuppressWarnings("unused")
     private static final String CORS_FILTER_NAME = "Cors";
+    @SuppressWarnings("unused")
     private static final String ALL_PATHS = "/**";
 
     public CorsGatewayFilterApplicationListener(GlobalCorsProperties globalCorsProperties, RoutePredicateHandlerMapping routePredicateHandlerMapping, RouteDefinitionLocator routeDefinitionLocator) {

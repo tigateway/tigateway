@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,12 @@ import org.springframework.security.web.server.authorization.AuthorizationContex
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+/**
+ * Roles Gateway Filter Factory
+ * 
+ * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
+ * These methods are still functional and will be migrated to new API when stable.
+ */
 @Component
 public class RolesGatewayFilterFactory implements GatewayFilterFactory<RolesGatewayFilterFactory.RolesProperties> {
     private final Logger logger = LoggerFactory.getLogger(RolesGatewayFilterFactory.class);
@@ -41,13 +46,14 @@ public class RolesGatewayFilterFactory implements GatewayFilterFactory<RolesGate
             return authentication.map(Authentication::getAuthorities).filter(Objects::nonNull).doOnNext((grantedAuthorities) -> {
                 this.logger.debug("User authorities: {}, required roles: {}", Strings.join(grantedAuthorities, ','), Strings.join(Arrays.asList(roles), ','));
             }).map((grantedAuthorities) -> {
-                return (Set)grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+                return grantedAuthorities.stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toSet());
             }).map((authorities) -> {
-                Stream var10000 = Arrays.stream(roles).map((s) -> {
-                    return "ROLE_" + s;
-                });
-                Objects.requireNonNull(authorities);
-                boolean hasRole = var10000.anyMatch(authorities::contains);
+                Set<String> roleSet = Arrays.stream(roles)
+                        .map((s) -> "ROLE_" + s)
+                        .collect(Collectors.toSet());
+                boolean hasRole = roleSet.stream().anyMatch(authorities::contains);
                 return new AuthorizationDecision(hasRole);
             });
         };

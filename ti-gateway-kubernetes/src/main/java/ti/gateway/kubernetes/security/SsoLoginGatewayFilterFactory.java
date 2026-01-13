@@ -15,9 +15,17 @@ import org.springframework.security.web.server.authentication.RedirectServerAuth
 import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
 import org.springframework.stereotype.Component;
 
+/**
+ * SSO Login Gateway Filter Factory
+ * 
+ * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
+ * These methods are still functional and will be migrated to new API when stable.
+ */
 @Component
 @SsoEnabled
+@SuppressWarnings({"deprecation", "unused"})
 public class SsoLoginGatewayFilterFactory implements GatewayFilterFactory<SsoLoginConfiguration> {
+    @SuppressWarnings("unused")
     private static final String DEFAULT_SSO_CLIENT_REGISTRATION_ID = "sso";
     private final ReactiveClientRegistrationRepository clientRegistrationRepository;
     private final ServerOAuth2AuthorizedClientRepository authorizedClientRepository;

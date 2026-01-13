@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @ApiKeyRequired
 public class LocalFileApiKeyValidator implements ApiKeyValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalFileApiKeyValidator.class);
+    @SuppressWarnings("unused")
     private static final String SEPARATOR = ",";
     private final Path keysFile;
     private final Map<String, String> knownKeys;

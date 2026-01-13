@@ -13,6 +13,7 @@ import java.util.List;
 
 @Component
 public class BasicAuthGatewayFilterFactory implements GatewayFilterFactory<BasicAuthenticationProperties> {
+    @SuppressWarnings("unused")
     private final Logger LOGGER = LoggerFactory.getLogger(BasicAuthGatewayFilterFactory.class);
     private final AddRequestHeaderGatewayFilterFactory addRequestHeaderGatewayFilterFactory = new AddRequestHeaderGatewayFilterFactory();
 

@@ -20,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@SuppressWarnings("rawtypes")
 public class CircuitBreakerGatewayFilterFactory extends AbstractGatewayFilterFactory<CircuitBreakerGatewayFilterFactory.Resilience4JExtendedConfig> {
     private final ReactiveCircuitBreakerFactory reactiveCircuitBreakerFactory;
     private final ObjectProvider<DispatcherHandler> dispatcherHandlerProvider;

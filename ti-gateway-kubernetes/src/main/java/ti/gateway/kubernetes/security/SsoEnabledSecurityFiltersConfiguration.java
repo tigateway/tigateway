@@ -22,10 +22,18 @@ import org.springframework.security.web.server.util.matcher.PathPatternParserSer
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
 import reactor.core.publisher.Mono;
 
+/**
+ * SSO Enabled Security Filters Configuration
+ * 
+ * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
+ * These methods are still functional and will be migrated to new API when stable.
+ */
 @Configuration
 @SsoEnabled
+@SuppressWarnings("unused")
 public class SsoEnabledSecurityFiltersConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(SsoEnabledSecurityFiltersConfiguration.class);
+    @SuppressWarnings("unused")
     private static final String LOGOUT_PATH = "/scg-logout";
 
     public SsoEnabledSecurityFiltersConfiguration() {

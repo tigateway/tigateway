@@ -70,10 +70,11 @@ public class JWTClaimHeaderGatewayFilterFactory implements GatewayFilterFactory<
     }
 
     private ServerWebExchange addClaimFromAuthorizationHeaderToken(ServerWebExchange exchange, JWTClaimHeaderGatewayFilterFactory.Config config) {
-        Optional<String> authorizationHeader = ((List)exchange.getRequest().getHeaders().getOrDefault("Authorization", Collections.emptyList())).stream().findFirst();
+        List<String> authHeaders = exchange.getRequest().getHeaders().getOrDefault("Authorization", Collections.emptyList());
+        Optional<String> authorizationHeader = authHeaders.stream().findFirst();
         return authorizationHeader.isPresent() ? exchange.mutate().request((request) -> {
             request.headers((headers) -> {
-                String cleanupHeaderValue = JwtHelper.cleanupHeaderValue((String)authorizationHeader.get());
+                String cleanupHeaderValue = JwtHelper.cleanupHeaderValue(authorizationHeader.get());
                 Object value = JwtHelper.getClaimValue(cleanupHeaderValue, config.claim);
                 if (value != null) {
                     List<String> previousValues = headers.get(config.headerName);
@@ -87,12 +88,20 @@ public class JWTClaimHeaderGatewayFilterFactory implements GatewayFilterFactory<
 
     private Collection<Object> addValueToList(List<String> previousValues, Object value) {
         if (previousValues == null) {
-            return (Collection) (value instanceof Collection ? (Collection)value : List.of(value));
+            if (value instanceof Collection) {
+                @SuppressWarnings("unchecked")
+                Collection<Object> valueCollection = (Collection<Object>) value;
+                return new ArrayList<>(valueCollection);
+            } else {
+                return List.of(value);
+            }
         } else {
-            ArrayList mergedValues = new ArrayList();
+            ArrayList<Object> mergedValues = new ArrayList<>();
             if (value instanceof Collection) {
                 mergedValues.addAll(previousValues);
-                mergedValues.addAll((Collection)value);
+                @SuppressWarnings("unchecked")
+                Collection<Object> valueCollection = (Collection<Object>) value;
+                mergedValues.addAll(valueCollection);
             } else {
                 mergedValues.add(value);
             }
@@ -102,7 +111,15 @@ public class JWTClaimHeaderGatewayFilterFactory implements GatewayFilterFactory<
     }
 
     private List<String> buildHeaderValue(Object value) {
-        return value instanceof Collection ? (List)((Collection)value).stream().map(this::mapSimpleValue).collect(Collectors.toList()) : List.of(this.mapSimpleValue(value));
+        if (value instanceof Collection) {
+            @SuppressWarnings("unchecked")
+            Collection<Object> valueCollection = (Collection<Object>) value;
+            return valueCollection.stream()
+                    .map(this::mapSimpleValue)
+                    .collect(Collectors.toList());
+        } else {
+            return List.of(this.mapSimpleValue(value));
+        }
     }
 
     private String mapSimpleValue(Object value) {

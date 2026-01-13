@@ -41,6 +41,8 @@ class RolesSecurityGatewayFilterTest {
                 MockServerHttpRequest.get("/test")
         );
         
+        when(securityWebFilterChain.matches(any(ServerWebExchange.class))).thenReturn(Mono.just(true));
+        when(securityWebFilterChain.getWebFilters()).thenReturn(reactor.core.publisher.Flux.empty());
         when(gatewayFilterChain.filter(any(ServerWebExchange.class))).thenReturn(Mono.empty());
         
         Mono<Void> result = filter.filter(exchange, gatewayFilterChain);

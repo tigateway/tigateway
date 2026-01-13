@@ -11,13 +11,15 @@ public class KeyValueConverter implements Converter<String, KeyValue> {
 
     public KeyValue convert(String source) throws IllegalArgumentException {
         try {
-            String[] split = source.split(":");
-            if (source.contains(":") && StringUtils.hasText(split[0])) {
-                return new KeyValue(split[0], split.length == 1 ? "" : split[1]);
+            int colonIndex = source.indexOf(':');
+            if (colonIndex >= 0 && StringUtils.hasText(source.substring(0, colonIndex))) {
+                String key = source.substring(0, colonIndex);
+                String value = colonIndex < source.length() - 1 ? source.substring(colonIndex + 1) : "";
+                return new KeyValue(key, value);
             } else {
                 throw new IllegalArgumentException("Invalid configuration, expected format is: 'key:value'");
             }
-        } catch (ArrayIndexOutOfBoundsException exception) {
+        } catch (StringIndexOutOfBoundsException exception) {
             throw new IllegalArgumentException("Invalid configuration, expected format is: 'key:value'");
         }
     }

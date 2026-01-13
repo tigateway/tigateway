@@ -14,6 +14,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.isNull;
 
 /**
  * Unit tests for DefaultRateLimiter
@@ -100,24 +101,38 @@ class DefaultRateLimiterTest {
 
     @Test
     void testIsAllowedWithNullRouteId() {
-        // Should handle null routeId gracefully
+        // Should handle null routeId gracefully - will call createOfGet with null routeId
+        when(requestCounterFactory.createOfGet(isNull(), eq("user123"), anyInt(), any(Duration.class)))
+                .thenReturn(Mono.just(requestCounter));
+        when(requestCounter.consume(eq("user123")))
+                .thenReturn(Mono.just(consumeResponse));
+        when(consumeResponse.isAllowed()).thenReturn(false);
+        
         Mono<AbstractRateLimiter.Response> result = rateLimiter.isAllowed(null, "user123");
         
         StepVerifier.create(result)
                 .assertNext(response -> {
                     assertNotNull(response);
+                    assertFalse(response.isAllowed());
                 })
                 .verifyComplete();
     }
 
     @Test
     void testIsAllowedWithNullId() {
-        // Should handle null id gracefully
+        // Should handle null id gracefully - will call createOfGet with null id
+        when(requestCounterFactory.createOfGet(eq("route1"), isNull(), anyInt(), any(Duration.class)))
+                .thenReturn(Mono.just(requestCounter));
+        when(requestCounter.consume(isNull()))
+                .thenReturn(Mono.just(consumeResponse));
+        when(consumeResponse.isAllowed()).thenReturn(false);
+        
         Mono<AbstractRateLimiter.Response> result = rateLimiter.isAllowed("route1", null);
         
         StepVerifier.create(result)
                 .assertNext(response -> {
                     assertNotNull(response);
+                    assertFalse(response.isAllowed());
                 })
                 .verifyComplete();
     }

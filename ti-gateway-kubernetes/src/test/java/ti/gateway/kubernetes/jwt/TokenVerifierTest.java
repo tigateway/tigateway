@@ -60,9 +60,9 @@ class TokenVerifierTest {
     void testVerifyWithNullToken() {
         String key = "test-key";
         
-        assertThrows(Exception.class, () -> {
-            tokenVerifier.verify(null, key);
-        });
+        // verify method catches exceptions and returns false, so we test for false result
+        boolean result = tokenVerifier.verify(null, key);
+        assertFalse(result);
     }
 
     @Test

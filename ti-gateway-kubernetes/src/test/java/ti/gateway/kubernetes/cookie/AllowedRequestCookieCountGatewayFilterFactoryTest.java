@@ -61,7 +61,8 @@ class AllowedRequestCookieCountGatewayFilterFactoryTest {
                 .verifyComplete();
         
         verify(chain, times(1)).filter(any(ServerWebExchange.class));
-        assertEquals(HttpStatus.OK, exchange.getResponse().getStatusCode());
+        // Status code is not set when request is allowed, so it should be null
+        assertNull(exchange.getResponse().getStatusCode());
     }
 
     @Test

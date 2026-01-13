@@ -309,17 +309,10 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>build-info</goal>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <buildInfo>
-                        <properties>
-                            <encoding>UTF-8</encoding>
-                        </properties>
-                    </buildInfo>
-                </configuration>
             </plugin>
         </plugins>
     </build>

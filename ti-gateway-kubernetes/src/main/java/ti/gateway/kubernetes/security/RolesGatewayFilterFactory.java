@@ -24,8 +24,7 @@ import reactor.core.publisher.Mono;
 /**
  * Roles Gateway Filter Factory
  * 
- * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
- * These methods are still functional and will be migrated to new API when stable.
+ * Configures role-based authorization for TiGateway routes using Spring Security 6.1+ API.
  */
 @Component
 public class RolesGatewayFilterFactory implements GatewayFilterFactory<RolesGatewayFilterFactory.RolesProperties> {
@@ -35,7 +34,9 @@ public class RolesGatewayFilterFactory implements GatewayFilterFactory<RolesGate
     }
 
     public GatewayFilter apply(RolesGatewayFilterFactory.RolesProperties config) {
-        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http()).authorizeExchange().anyExchange().access(this.hasAnyRole(config.getRoles())).and().build();
+        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http())
+                .authorizeExchange(exchanges -> exchanges.anyExchange().access(this.hasAnyRole(config.getRoles())))
+                .build();
         return new RolesSecurityGatewayFilter(chain);
     }
 

@@ -17,10 +17,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 /**
  * SSO Disabled Configuration
  * 
- * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
- * These methods are still functional and will be migrated to new API when stable.
+ * Configures default security filters when SSO is disabled using Spring Security 6.1+ API.
  */
-@SuppressWarnings("deprecation")
 public class SsoDisabledConfiguration {
     private static final Logger log = LoggerFactory.getLogger(SsoDisabledConfiguration.class);
 
@@ -31,6 +29,8 @@ public class SsoDisabledConfiguration {
     @Bean
     public SecurityWebFilterChain defaultWebFilterChain(ServerHttpSecurity httpSecurity) {
         log.info("SSO is disabled, setting up default security filters");
-        return CommonSecurity.configureCommonSecurity(httpSecurity).authorizeExchange().anyExchange().permitAll().and().build();
+        return CommonSecurity.configureCommonSecurity(httpSecurity)
+                .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
+                .build();
     }
 }

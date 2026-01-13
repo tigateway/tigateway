@@ -28,12 +28,10 @@ import reactor.core.publisher.Mono;
 /**
  * Scopes Gateway Filter Factory
  * 
- * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
- * These methods are still functional and will be migrated to new API when stable.
+ * Configures scope-based authorization for TiGateway routes using Spring Security 6.1+ API.
  */
 @Component
 @SsoEnabled
-@SuppressWarnings("deprecation")
 public class ScopesGatewayFilterFactory implements GatewayFilterFactory<ScopesProperties> {
     private final Logger logger = LoggerFactory.getLogger(ScopesGatewayFilterFactory.class);
     private final ReactiveJwtDecoder reactiveJwtDecoder;
@@ -43,7 +41,11 @@ public class ScopesGatewayFilterFactory implements GatewayFilterFactory<ScopesPr
     }
 
     public GatewayFilter apply(ScopesProperties config) {
-        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http()).oauth2ResourceServer().jwt().jwtDecoder(this.reactiveJwtDecoder).and().and().authorizeExchange().anyExchange().access(this.hasAnyScopes(config.getScopes())).and().build();
+        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http())
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtDecoder(this.reactiveJwtDecoder)))
+                .authorizeExchange(exchanges -> exchanges.anyExchange().access(this.hasAnyScopes(config.getScopes())))
+                .build();
         return new SecurityGatewayFilter(chain);
     }
 

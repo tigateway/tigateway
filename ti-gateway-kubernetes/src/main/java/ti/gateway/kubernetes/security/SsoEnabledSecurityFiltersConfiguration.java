@@ -25,8 +25,7 @@ import reactor.core.publisher.Mono;
 /**
  * SSO Enabled Security Filters Configuration
  * 
- * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
- * These methods are still functional and will be migrated to new API when stable.
+ * Configures OAuth2 login and logout for TiGateway using Spring Security 6.1+ API.
  */
 @Configuration
 @SsoEnabled
@@ -42,7 +41,9 @@ public class SsoEnabledSecurityFiltersConfiguration {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity httpSecurity) {
         LOGGER.info("SSO is enabled, setting up OAuth2 login");
-        return CommonSecurity.configureCommonSecurity(httpSecurity).oauth2Login().and().build();
+        return CommonSecurity.configureCommonSecurity(httpSecurity)
+                .oauth2Login(oauth2 -> {})
+                .build();
     }
 
     @Bean
@@ -59,7 +60,12 @@ public class SsoEnabledSecurityFiltersConfiguration {
     @Bean
     @Order(-2147483648)
     SecurityWebFilterChain logoutWebFilterChain(ServerHttpSecurity httpSecurity) {
-        return CommonSecurity.configureCommonSecurity(httpSecurity).securityMatcher(new PathPatternParserServerWebExchangeMatcher("/scg-logout")).logout().requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, new String[]{"/scg-logout"})).logoutSuccessHandler(new SsoEnabledSecurityFiltersConfiguration.RedirectAwareLogoutSuccessHandler()).and().build();
+        return CommonSecurity.configureCommonSecurity(httpSecurity)
+                .securityMatcher(new PathPatternParserServerWebExchangeMatcher("/scg-logout"))
+                .logout(logout -> logout
+                        .requiresLogout(ServerWebExchangeMatchers.pathMatchers(HttpMethod.GET, "/scg-logout"))
+                        .logoutSuccessHandler(new SsoEnabledSecurityFiltersConfiguration.RedirectAwareLogoutSuccessHandler()))
+                .build();
     }
 
     private static class RedirectAwareLogoutSuccessHandler implements ServerLogoutSuccessHandler {

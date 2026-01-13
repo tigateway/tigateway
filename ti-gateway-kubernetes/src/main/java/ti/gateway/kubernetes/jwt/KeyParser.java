@@ -1,7 +1,5 @@
 package ti.gateway.kubernetes.jwt;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -20,11 +18,8 @@ import java.util.regex.Pattern;
 
 @Component
 @JwtKeyEnabled
-@SuppressWarnings("unused")
 public class KeyParser {
     private static final Pattern HS_ALG_PATTERN = Pattern.compile("^hs\\d{3}$", 2);
-    @SuppressWarnings("unused")
-    private final Logger log = LoggerFactory.getLogger(KeyParser.class);
 
     KeyParser() {
     }

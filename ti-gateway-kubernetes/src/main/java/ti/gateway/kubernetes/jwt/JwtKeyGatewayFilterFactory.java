@@ -38,12 +38,10 @@ import java.util.stream.Collectors;
 /**
  * JWT Key Gateway Filter Factory
  * 
- * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
- * These methods are still functional and will be migrated to new API when stable.
+ * Configures JWT key-based authentication for TiGateway routes using Spring Security 6.1+ API.
  */
 @Component
 @JwtKeyEnabled
-@SuppressWarnings("deprecation")
 public class JwtKeyGatewayFilterFactory implements GatewayFilterFactory<JwtKeyGatewayFilterFactory.Config> {
     private static final Logger log = LoggerFactory.getLogger(JwtKeyGatewayFilterFactory.class);
     private final KeyParser keyParser;
@@ -74,6 +72,8 @@ public class JwtKeyGatewayFilterFactory implements GatewayFilterFactory<JwtKeyGa
 
     public Mono<ReactiveAuthenticationManager> resolveAuthentication(ServerWebExchange exchange, JwtKeyGatewayFilterFactory.Config config) {
         return Mono.just((authentication) -> {
+            // BearerTokenAuthenticationToken is deprecated but still used by Spring Security framework
+            @SuppressWarnings("deprecation")
             String plainToken = ((BearerTokenAuthenticationToken)authentication).getToken();
 
             JwtKeyGatewayFilterFactory.TokenParser token;

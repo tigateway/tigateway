@@ -12,11 +12,6 @@ import java.util.stream.StreamSupport;
 
 @Component
 public class RolesExtractor {
-
-    private static final String ATTRIBUTE_SEPARATOR = ".";
-
-    private static final String ATTRIBUTE_SEPARATOR_REGEX = "\\.";
-    
     private final String rolesUserAttributeName;
 
     public RolesExtractor(@Value("${sso.roles-attribute-name}") String rolesUserAttributeName) {
@@ -64,6 +59,7 @@ public class RolesExtractor {
         if (this.rolesUserAttributeName.contains(".")) {
             String[] rolesPath = this.rolesUserAttributeName.split("\\.");
             if (rolesPath.length > 0) {
+                @SuppressWarnings("unchecked")
                 Map<String, Object> claimMap = (Map<String, Object>) oidcUser.getClaim(rolesPath[0]);
                 claimRoles = this.rolesFromMap(claimMap, rolesPath, 1);
                 userInfoRoles = this.rolesFromMap(oidcUser.getUserInfo().getClaims(), rolesPath, 0);
@@ -90,6 +86,7 @@ public class RolesExtractor {
         if (rolesClaim instanceof String) {
             return Set.of((String) rolesClaim);
         } else if (rolesClaim instanceof Collection) {
+            @SuppressWarnings("unchecked")
             Collection<String> rolesCollection = (Collection<String>) rolesClaim;
             return Set.copyOf(rolesCollection);
         } else {
@@ -103,6 +100,7 @@ public class RolesExtractor {
         } else {
             Object rolesAttribute = oidcUser.getUserInfo().getClaim(this.rolesUserAttributeName);
             if (rolesAttribute instanceof Iterable) {
+                @SuppressWarnings("unchecked")
                 Iterable<String> rolesIterable = (Iterable<String>) rolesAttribute;
                 return rolesIterable;
             } else {
@@ -121,6 +119,7 @@ public class RolesExtractor {
             } else {
                 Object value = claims.get(rolesPath[index]);
                 if (value instanceof Map) {
+                    @SuppressWarnings("unchecked")
                     Map<String, Object> valueMap = (Map<String, Object>) value;
                     roles = this.rolesFromMap(valueMap, rolesPath, index + 1);
                 }
@@ -129,6 +128,7 @@ public class RolesExtractor {
             if (roles instanceof String) {
                 return Set.of(JwtHelper.getClaimAsString(roles));
             } else if (roles instanceof Collection) {
+                @SuppressWarnings("unchecked")
                 Collection<String> rolesCollection = (Collection<String>) roles;
                 return rolesCollection;
             } else {

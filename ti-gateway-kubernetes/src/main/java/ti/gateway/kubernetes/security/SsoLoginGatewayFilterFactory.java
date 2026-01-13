@@ -18,12 +18,11 @@ import org.springframework.stereotype.Component;
 /**
  * SSO Login Gateway Filter Factory
  * 
- * Note: Uses deprecated Spring Security API methods (deprecated in 6.1+).
- * These methods are still functional and will be migrated to new API when stable.
+ * Configures SSO login for TiGateway routes using Spring Security 6.1+ API.
  */
 @Component
 @SsoEnabled
-@SuppressWarnings({"deprecation", "unused"})
+@SuppressWarnings("unused")
 public class SsoLoginGatewayFilterFactory implements GatewayFilterFactory<SsoLoginConfiguration> {
     @SuppressWarnings("unused")
     private static final String DEFAULT_SSO_CLIENT_REGISTRATION_ID = "sso";
@@ -46,7 +45,19 @@ public class SsoLoginGatewayFilterFactory implements GatewayFilterFactory<SsoLog
         AuthenticationWebFilter refreshIdTokenAuthenticationWebFilter = new AuthenticationWebFilter(this.refreshIdTokenAuthenticationManager);
         refreshIdTokenAuthenticationWebFilter.setSecurityContextRepository(new WebSessionServerSecurityContextRepository());
         refreshIdTokenAuthenticationWebFilter.setServerAuthenticationConverter(new RefreshIdTokenAuthenticationConverter(this.authorizedClientRepository));
-        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http()).oauth2Login().clientRegistrationRepository(this.clientRegistrationRepository).authorizedClientRepository(this.authorizedClientRepository).and().oauth2ResourceServer().jwt().jwtDecoder(this.reactiveJwtDecoder).jwtAuthenticationConverter(this.rolesJwtAuthenticationConverter).and().and().authorizeExchange().anyExchange().authenticated().and().exceptionHandling().authenticationEntryPoint(new RedirectServerAuthenticationEntryPoint("/oauth2/authorization/" + registrationId)).and().addFilterAfter(refreshIdTokenAuthenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION).build();
+        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http())
+                .oauth2Login(oauth2 -> oauth2
+                        .clientRegistrationRepository(this.clientRegistrationRepository)
+                        .authorizedClientRepository(this.authorizedClientRepository))
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt
+                                .jwtDecoder(this.reactiveJwtDecoder)
+                                .jwtAuthenticationConverter(this.rolesJwtAuthenticationConverter)))
+                .authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new RedirectServerAuthenticationEntryPoint("/oauth2/authorization/" + registrationId)))
+                .addFilterAfter(refreshIdTokenAuthenticationWebFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                .build();
         return new SecurityGatewayFilter(chain);
     }
 

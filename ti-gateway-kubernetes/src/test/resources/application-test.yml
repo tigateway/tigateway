@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: ti-gateway-kubernetes-test
+  cloud:
+    gateway:
+      kubernetes:
+        ingress:
+          enabled: false
+
+logging:
+  level:
+    root: INFO
+    ti.gateway.kubernetes: DEBUG

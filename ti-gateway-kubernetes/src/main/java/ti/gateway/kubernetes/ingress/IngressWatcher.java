@@ -116,7 +116,7 @@ public class IngressWatcher {
 
                 logger.debug("Starting to watch Ingress resources from version: {}", resourceVersion);
 
-                // 创建Watch对象
+                // 创建Watch对象 - 使用正确的参数类型
                 watch = Watch.createWatch(
                     networkingV1Api.getApiClient(),
                     networkingV1Api.listNamespacedIngressCall(
@@ -129,50 +129,61 @@ public class IngressWatcher {
                         null, // limit
                         resourceVersion,
                         null, // resourceVersionMatch
-                        null, // timeoutSeconds
-                        1, // watch (1 for true, 0 for false)
+                        null, // timeoutSeconds (Integer)
+                        true, // watch (boolean)
                         null, // sendInitialEvents
                         null  // callback
                     ),
                     V1Ingress.class
                 );
 
-                // 处理Watch事件
-                for (Watch.Response<V1Ingress> response : watch) {
-                    if (!running) {
-                        break;
-                    }
-
-                    V1Ingress ingress = response.object;
-                    String eventType = response.type;
-                    
-                    if (ingress == null || ingress.getMetadata() == null) {
-                        logger.warn("Received Ingress event with null ingress or metadata, skipping");
-                        continue;
-                    }
-                    
-                    V1ObjectMeta metadata = ingress.getMetadata();
-                    if (metadata == null) {
-                        logger.warn("Received Ingress event with null metadata, skipping");
-                        continue;
-                    }
-                    
-                    String ingressName = metadata.getName();
-                    if (ingressName == null) {
-                        logger.warn("Received Ingress event with null name, skipping");
-                        continue;
-                    }
-
-                    logger.debug("Received Ingress event: {} for {}", eventType, ingressName);
-
-                    switch (eventType) {
-                        case "ADDED":
-                        case "MODIFIED":
-                        case "DELETED":
-                            handleIngressChange(eventType, ingress);
+                // 处理Watch事件 - 使用 next() 方法
+                while (running) {
+                    try {
+                        Watch.Response<V1Ingress> response = watch.next();
+                        if (response == null) {
+                            // Watch 已关闭或结束，重新创建
+                            logger.debug("Watch returned null, will recreate");
                             break;
-                        default:
-                            logger.debug("Ignoring unknown event type: {}", eventType);
+                        }
+
+                        V1Ingress ingress = response.object;
+                        String eventType = response.type;
+                        
+                        if (ingress == null || ingress.getMetadata() == null) {
+                            logger.warn("Received Ingress event with null ingress or metadata, skipping");
+                            continue;
+                        }
+                        
+                        V1ObjectMeta metadata = ingress.getMetadata();
+                        if (metadata == null) {
+                            logger.warn("Received Ingress event with null metadata, skipping");
+                            continue;
+                        }
+                        
+                        String ingressName = metadata.getName();
+                        if (ingressName == null) {
+                            logger.warn("Received Ingress event with null name, skipping");
+                            continue;
+                        }
+
+                        logger.debug("Received Ingress event: {} for {}", eventType, ingressName);
+
+                        switch (eventType) {
+                            case "ADDED":
+                            case "MODIFIED":
+                            case "DELETED":
+                                handleIngressChange(eventType, ingress);
+                                break;
+                            default:
+                                logger.debug("Ignoring unknown event type: {}", eventType);
+                        }
+                    } catch (RuntimeException e) {
+                        // Watch 可能因为各种原因失败（连接断开、解析错误等）
+                        if (running) {
+                            logger.warn("Watch error: {}, will retry", e.getMessage());
+                        }
+                        break; // 重新创建 Watch
                     }
                 }
 

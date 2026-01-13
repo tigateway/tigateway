@@ -52,7 +52,10 @@ public class SsoAutoAuthorizeGatewayFilterFactory extends AbstractGatewayFilterF
     }
 
     public GatewayFilter apply(SsoAutoAuthorizeGatewayFilterFactory.AuthoritiesProperties config) {
-        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http()).addFilterAt(new SsoAutoAuthorizeGatewayFilterFactory.AuthWebFilter(this.parseGrantedAuthorities(config)), SecurityWebFiltersOrder.ANONYMOUS_AUTHENTICATION).authorizeExchange().anyExchange().permitAll().and().build();
+        SecurityWebFilterChain chain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http())
+                .addFilterAt(new SsoAutoAuthorizeGatewayFilterFactory.AuthWebFilter(this.parseGrantedAuthorities(config)), SecurityWebFiltersOrder.ANONYMOUS_AUTHENTICATION)
+                .authorizeExchange(exchanges -> exchanges.anyExchange().permitAll())
+                .build();
         return new RolesSecurityGatewayFilter(chain);
     }
 

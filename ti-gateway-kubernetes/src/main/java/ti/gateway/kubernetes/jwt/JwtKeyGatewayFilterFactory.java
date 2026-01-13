@@ -59,9 +59,12 @@ public class JwtKeyGatewayFilterFactory implements GatewayFilterFactory<JwtKeyGa
     }
 
     public GatewayFilter apply(JwtKeyGatewayFilterFactory.Config config) {
-        SecurityWebFilterChain customChain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http()).oauth2ResourceServer().authenticationManagerResolver((exchange) -> {
-            return this.resolveAuthentication(exchange, config);
-        }).and().authorizeExchange().anyExchange().authenticated().and().build();
+        SecurityWebFilterChain customChain = CommonSecurity.configureCommonSecurity(ServerHttpSecurity.http())
+                .oauth2ResourceServer(oauth2 -> oauth2.authenticationManagerResolver((exchange) -> {
+                    return this.resolveAuthentication(exchange, config);
+                }))
+                .authorizeExchange(exchanges -> exchanges.anyExchange().authenticated())
+                .build();
         return (exchange, chain) -> {
             WebFilterChainProxy var10000 = new WebFilterChainProxy(new SecurityWebFilterChain[]{customChain});
             Objects.requireNonNull(chain);

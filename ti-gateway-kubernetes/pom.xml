@@ -241,6 +241,17 @@
             <artifactId>spring-cloud-kubernetes-client-config</artifactId>
         </dependency>
 
+        <!-- Caffeine Cache for Spring Cloud LoadBalancer (recommended for production) -->
+        <!-- Spring Cloud LoadBalancer requires both Caffeine and Spring Cache support -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+
         <!-- Netty DNS Native for macOS (optional, eliminates DNS resolution warnings on macOS)
              Note: These dependencies are optional and will only be used on macOS systems.
              On other platforms (Linux, Windows), they will be ignored automatically.
@@ -302,6 +313,13 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <buildInfo>
+                        <properties>
+                            <encoding>UTF-8</encoding>
+                        </properties>
+                    </buildInfo>
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -10,6 +10,7 @@ import io.kubernetes.client.util.Watch;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,6 +27,11 @@ import java.util.concurrent.TimeUnit;
  * 监听Kubernetes Ingress资源的变化并触发路由刷新
  */
 @Component
+@ConditionalOnProperty(
+    value = "spring.cloud.gateway.kubernetes.ingress.enabled",
+    havingValue = "true",
+    matchIfMissing = false
+)
 public class IngressWatcher {
 
     private static final Logger logger = LoggerFactory.getLogger(IngressWatcher.class);

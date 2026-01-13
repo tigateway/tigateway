@@ -13,6 +13,7 @@ import io.kubernetes.client.openapi.models.V1ServiceBackendPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
@@ -29,6 +30,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * 从Kubernetes Ingress资源中读取路由配置并转换为Spring Cloud Gateway路由
  */
 @Component
+@ConditionalOnProperty(
+    value = "spring.cloud.gateway.kubernetes.ingress.enabled",
+    havingValue = "true",
+    matchIfMissing = false
+)
 public class IngressRouteDefinitionLocator implements RouteLocator {
 
     private static final Logger logger = LoggerFactory.getLogger(IngressRouteDefinitionLocator.class);

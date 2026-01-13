@@ -8,6 +8,6 @@
 ║        ╚═╝   ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝    ║
 ║                                                               ║
 ║     Spring Cloud Gateway for Kubernetes                       ║
-║     Version: ${application.formatted-version}                 ║
+║     Version: ${application.version}                           ║
 ║                                                               ║
 ╚═══════════════════════════════════════════════════════════════╝

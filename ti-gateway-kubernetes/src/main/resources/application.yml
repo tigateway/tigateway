@@ -57,10 +57,20 @@ spring:
   # 抑制 BeanPostProcessor 警告
   context:
     allow-circular-references: true
+  # Thymeleaf 配置 - 禁用模板位置检查（因为这是 API Gateway，不需要模板）
+  thymeleaf:
+    check-template-location: false
   cloud:
     loadbalancer:
       cache:
+        enabled: true
         ttl: 5S
+        caffeine:
+          spec: maximumSize=256,expireAfterWrite=5s
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=256,expireAfterWrite=5s
     gateway:
       filter:
         token-relay:
@@ -104,11 +114,13 @@ spring:
 sso:
   roles-attribute-name: roles
 
-# 日志配置 - 抑制 Spring Cloud LoadBalancer BeanPostProcessor 警告
+# 日志配置 - 抑制各种警告
 logging:
   level:
-    # 抑制 BeanPostProcessorChecker 的警告
-    org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: ERROR
+    # 抑制 BeanPostProcessorChecker 的警告（使用父类配置，因为内部类配置可能不生效）
+    org.springframework.context.support.PostProcessorRegistrationDelegate: ERROR
     # 如果需要，也可以抑制 LoadBalancer 相关的其他警告
     org.springframework.cloud.client.loadbalancer: INFO
     org.springframework.cloud.loadbalancer: INFO
+    # 抑制 Hazelcast CP Subsystem 警告（对于会话存储和限流，不需要 CP Subsystem）
+    com.hazelcast.cp.CPSubsystem: ERROR

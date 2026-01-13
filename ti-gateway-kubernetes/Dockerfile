@@ -48,8 +48,14 @@ VOLUME /app/logs
 # 暴露端口：8080 (Gateway), 8081 (Admin), 8090 (Management)
 EXPOSE 8080/tcp 8081/tcp 8090/tcp
 
-# 设置JVM参数以支持Kubernetes环境
+# 设置JVM参数以支持Kubernetes环境和Hazelcast
 ENTRYPOINT [ "sh", "-c", "java \
+    --add-modules java.se \
+    --add-exports java.base/jdk.internal.ref=ALL-UNNAMED \
+    --add-opens java.base/java.lang=ALL-UNNAMED \
+    --add-opens java.base/sun.nio.ch=ALL-UNNAMED \
+    --add-opens java.management/sun.management=ALL-UNNAMED \
+    --add-opens jdk.management/com.sun.management.internal=ALL-UNNAMED \
     -Djava.security.egd=file:/dev/./urandom \
     -Dspring.profiles.active=kubernetes \
     -Dspring.cloud.kubernetes.config.enabled=true \

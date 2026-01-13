@@ -7,6 +7,7 @@ import io.kubernetes.client.openapi.models.V1IngressList;
 import io.kubernetes.client.openapi.models.V1ListMeta;
 import io.kubernetes.client.openapi.models.V1ObjectMeta;
 import io.kubernetes.client.util.Watch;
+import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -116,25 +117,26 @@ public class IngressWatcher {
 
                 logger.debug("Starting to watch Ingress resources from version: {}", resourceVersion);
 
-                // 创建Watch对象 - 使用正确的参数类型
+                // 创建Watch对象 - 使用 TypeToken 指定泛型类型
+                // 方法签名: listNamespacedIngressCall(String, String, Boolean, String, String, String, Integer, String, String, Boolean, Integer, Boolean, ApiCallback)
                 watch = Watch.createWatch(
                     networkingV1Api.getApiClient(),
                     networkingV1Api.listNamespacedIngressCall(
-                        namespace,
-                        null, // pretty
-                        null, // allowWatchBookmarks
-                        null, // continue
-                        null, // fieldSelector
-                        null, // labelSelector
-                        null, // limit
-                        resourceVersion,
-                        null, // resourceVersionMatch
-                        null, // timeoutSeconds (Integer)
-                        true, // watch (boolean)
-                        null, // sendInitialEvents
-                        null  // callback
+                        namespace,              // String namespace
+                        null,                  // String pretty
+                        Boolean.TRUE,          // Boolean allowWatchBookmarks
+                        null,                  // String continue
+                        null,                  // String fieldSelector
+                        null,                  // String labelSelector
+                        null,                  // Integer limit
+                        resourceVersion,       // String resourceVersion
+                        null,                  // String resourceVersionMatch
+                        null,                  // Boolean timeoutSeconds
+                        1,                     // Integer watch (1 for true)
+                        null,                  // Boolean sendInitialEvents
+                        null                   // ApiCallback callback
                     ),
-                    V1Ingress.class
+                    new TypeToken<Watch.Response<V1Ingress>>() {}.getType()
                 );
 
                 // 处理Watch事件 - 使用 next() 方法

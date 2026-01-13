@@ -7,13 +7,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,metrics,prometheus,gateway
   server:
     port: 8090
   metrics:
     export:
+      prometheus:
+        enabled: true
       wavefront:
-        enabled:false
+        enabled: false
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5, 0.95, 0.99
 
 # Admin配置
 admin:
@@ -82,10 +89,8 @@ spring:
             - Path=/test/**
           filters:
             - StripPrefix=1
-        - id: admin-route
-          uri: http://localhost:8080
-          predicates:
-            - Path=/admin/**
+        # Admin 路由已集成到主应用中，不需要单独路由
+        # Admin UI 通过 /admin 路径直接访问
   session:
     timeout: 30m
   kubernetes:

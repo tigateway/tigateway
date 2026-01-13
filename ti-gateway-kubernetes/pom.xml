@@ -242,11 +242,20 @@
         </dependency>
 
         <!-- Netty DNS Native for macOS (optional, eliminates DNS resolution warnings on macOS)
-             Note: This dependency is optional and will only be used on macOS systems.
-             On other platforms (Linux, Windows), it will be ignored automatically. -->
+             Note: These dependencies are optional and will only be used on macOS systems.
+             On other platforms (Linux, Windows), they will be ignored automatically.
+             We include both classifiers to support both Apple Silicon (aarch_64) and Intel (x86_64) Macs. -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <classifier>osx-aarch_64</classifier>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <classifier>osx-x86_64</classifier>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>

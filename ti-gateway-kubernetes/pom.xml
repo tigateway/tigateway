@@ -241,6 +241,16 @@
             <artifactId>spring-cloud-kubernetes-client-config</artifactId>
         </dependency>
 
+        <!-- Netty DNS Native for macOS (optional, eliminates DNS resolution warnings on macOS)
+             Note: This dependency is optional and will only be used on macOS systems.
+             On other platforms (Linux, Windows), it will be ignored automatically. -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

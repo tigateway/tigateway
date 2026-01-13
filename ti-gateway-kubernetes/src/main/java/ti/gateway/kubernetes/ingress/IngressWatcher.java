@@ -149,23 +149,44 @@ public class IngressWatcher {
                             break;
                         }
 
-                        V1Ingress ingress = response.object;
                         String eventType = response.type;
+                        V1Ingress ingress = response.object;
                         
-                        if (ingress == null || ingress.getMetadata() == null) {
-                            logger.warn("Received Ingress event with null ingress or metadata, skipping");
+                        // 处理 BOOKMARK 事件（用于更新 resourceVersion，object 可能为 null）
+                        if ("BOOKMARK".equals(eventType)) {
+                            if (ingress != null) {
+                                V1ObjectMeta bookmarkMetadata = ingress.getMetadata();
+                                if (bookmarkMetadata != null) {
+                                    String bookmarkResourceVersion = bookmarkMetadata.getResourceVersion();
+                                    if (bookmarkResourceVersion != null) {
+                                        logger.debug("Received BOOKMARK event with resourceVersion: {}", bookmarkResourceVersion);
+                                        // 可以在这里更新 resourceVersion 用于下次 Watch
+                                    }
+                                }
+                            }
+                            continue; // BOOKMARK 事件不需要处理，继续等待下一个事件
+                        }
+                        
+                        // 对于其他事件类型，object 不应该为 null
+                        // 但如果 eventType 为空或未知，且 object 为 null，可能是连接保活信号
+                        if (ingress == null) {
+                            if (eventType == null || eventType.isEmpty()) {
+                                logger.debug("Received event with null type and object (connection keep-alive), continuing");
+                                continue;
+                            }
+                            logger.debug("Received {} event with null ingress object, skipping", eventType);
                             continue;
                         }
                         
                         V1ObjectMeta metadata = ingress.getMetadata();
                         if (metadata == null) {
-                            logger.warn("Received Ingress event with null metadata, skipping");
+                            logger.warn("Received {} event with null metadata, skipping", eventType);
                             continue;
                         }
                         
                         String ingressName = metadata.getName();
                         if (ingressName == null) {
-                            logger.warn("Received Ingress event with null name, skipping");
+                            logger.warn("Received {} event with null ingress name, skipping", eventType);
                             continue;
                         }
 
@@ -177,13 +198,51 @@ public class IngressWatcher {
                             case "DELETED":
                                 handleIngressChange(eventType, ingress);
                                 break;
+                            case "ERROR":
+                                logger.warn("Received ERROR event from Watch, will recreate");
+                                break; // 退出内层循环，重新创建 Watch
                             default:
                                 logger.debug("Ignoring unknown event type: {}", eventType);
                         }
                     } catch (RuntimeException e) {
                         // Watch 可能因为各种原因失败（连接断开、解析错误等）
                         if (running) {
-                            logger.warn("Watch error: {}, will retry", e.getMessage());
+                            String errorMsg = e.getMessage();
+                            String errorClass = e.getClass().getSimpleName();
+                            
+                            // 如果错误信息是 "Null response from the server"，这可能是正常的连接保持
+                            // 或者是服务器发送的空响应（用于保持连接活跃）
+                            if (errorMsg != null && (errorMsg.contains("Null response") || 
+                                errorMsg.contains("null response") ||
+                                errorMsg.contains("Response is null"))) {
+                                logger.debug("Watch received null response (connection keep-alive), continuing: {}", errorMsg);
+                                // 继续等待下一个事件，不退出循环
+                                try {
+                                    Thread.sleep(500); // 短暂等待后继续
+                                } catch (InterruptedException ie) {
+                                    Thread.currentThread().interrupt();
+                                    break;
+                                }
+                                continue;
+                            } 
+                            // 检查是否是 ClassCastException（可能是类型转换问题，需要重新创建 Watch）
+                            else if (e instanceof ClassCastException) {
+                                logger.warn("Watch ClassCastException: {}, will recreate Watch", errorMsg);
+                                break; // 重新创建 Watch
+                            }
+                            // 其他运行时异常
+                            else {
+                                logger.warn("Watch error [{}]: {}, will retry", errorClass, errorMsg);
+                                break; // 重新创建 Watch
+                            }
+                        } else {
+                            break;
+                        }
+                    } catch (Exception e) {
+                        // 捕获其他所有异常
+                        if (running) {
+                            String errorMsg = e.getMessage();
+                            logger.warn("Unexpected Watch exception: {}, will retry", errorMsg != null ? errorMsg : e.getClass().getSimpleName());
                         }
                         break; // 重新创建 Watch
                     }

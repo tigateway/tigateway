@@ -54,6 +54,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
     web-application-type: reactive
+  # 抑制 BeanPostProcessor 警告
+  context:
+    allow-circular-references: true
   cloud:
     loadbalancer:
       cache:
@@ -100,3 +103,12 @@ spring:
       enabled: false
 sso:
   roles-attribute-name: roles
+
+# 日志配置 - 抑制 Spring Cloud LoadBalancer BeanPostProcessor 警告
+logging:
+  level:
+    # 抑制 BeanPostProcessorChecker 的警告
+    org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker: ERROR
+    # 如果需要，也可以抑制 LoadBalancer 相关的其他警告
+    org.springframework.cloud.client.loadbalancer: INFO
+    org.springframework.cloud.loadbalancer: INFO
